@@ -1,0 +1,45 @@
+{
+  "name": "anyfetch-test",
+  "version": "0.1.0",
+  "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
+  "contributors": [
+    {
+      "name": "Robin Ricard",
+      "email": "ricard.robin@gmail.com"
+    },
+    {
+      "name": "Pierre-Marie Dartus",
+      "email": "dartus.pierremarie@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "NODE_ENV=test mocha -R spec test/ test/tests/*",
+    "lint": "jshint lib/ test/ config/ bin/",
+    "coverage": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/ test/tests/*"
+  },
+  "main": "./lib/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Papiel/anyfetch-test"
+  },
+  "keywords": [
+    "papiel",
+    "big data",
+    "api",
+    "document processing",
+    "anyfetch"
+  ],
+  "dependencies": {
+    "async": "0.2.x"
+  },
+  "devDependencies": {
+    "mocha": "1.15.x",
+    "should": "2.1.x",
+    "supertest": "0.8.x",
+    "jshint": "2.3.x"
+  },
+  "licence": "Copyright Papiel",
+  "engines": {
+    "node": ">=0.10"
+  }
+}
