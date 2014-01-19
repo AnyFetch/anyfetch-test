@@ -1,5 +1,6 @@
 {
   "name": "anyfetch-test",
+  "description": "Very high level functional test to check Anyfetch deployment and status.",
   "version": "0.1.0",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "contributors": [
