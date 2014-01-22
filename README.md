@@ -9,8 +9,17 @@ We also need to check the ops worked, everything is deployed and available on th
 Introducing this repo.
 
 ## What's the point?
-* Checking every provider is up and running,
-* Checking every hydrater is up and running,
-* Checking the api is up and running,
-* Checking complex hydration dependencies are properly executed
-* Checking complex endpoints react properly.
+### Checking every provider is up and running
+* Ping on `/init/connect?code=123`, check for redirect code (302 ?)
+
+### Checking every hydrater is up and running,
+* Ping on `/hydrate`, check for error code (405)
+* Ping on `/hydrate` with file_path and callback and long_poll, check for return
+
+### Creating an account on core
+* settings.anyfetch.com/users/sign_up
+(DELETE it afterward, even if the test fails)
+
+### Checking the api is up and running, and providers works
+### Checking complex hydration dependencies are properly executed
+### Checking complex endpoints react properly.
