@@ -5,18 +5,13 @@
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "contributors": [
     {
-      "name": "Robin Ricard",
-      "email": "ricard.robin@gmail.com"
-    },
-    {
-      "name": "Pierre-Marie Dartus",
-      "email": "dartus.pierremarie@gmail.com"
+      "name": "Florian Rossiaud",
+      "email": "florianrossiaud@gmail.com"
     }
   ],
   "scripts": {
-    "test": "NODE_ENV=test mocha -R spec test/ test/tests/* -t 60000",
-    "lint": "jshint lib/ test/ config/ bin/",
-    "coverage": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/ test/tests/*"
+    "test": "NODE_ENV=test mocha -R spec test/hydraters/* -t 60000",
+    "lint": "jshint lib/ test/ config/ bin/"
   },
   "main": "./lib/",
   "repository": {
