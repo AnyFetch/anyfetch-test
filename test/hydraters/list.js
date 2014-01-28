@@ -9,8 +9,8 @@ module.exports.params = {
   'plaintext' : {
     url : "http://plaintext.hydrater.anyfetch.com",
     post :  {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.doc",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : "file",
       metadatas : {},
@@ -21,12 +21,12 @@ module.exports.params = {
   'pdf' : {
     url : "http://pdf.hydrater.anyfetch.com",
     post : {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/pdf.hydrater.anyfetch.com.test.pdf",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : 'document',
       metadatas : {
-        path: '\\.pdf$',
+        path: 'pdf.hydrater.anyfetch.com.test.pdf',
         mime_type: 'application/pdf'
       },
       datas : {},
@@ -36,12 +36,12 @@ module.exports.params = {
   'office' : {
     url : "http://office.hydrater.anyfetch.com",
     post : {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.doc",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : 'document',
       metadatas : {
-        path: '\\.(doc|docx|odt|rtf|ods|xls|xlsx|ppt|pptx|odp)$'
+        path: 'office.hydrater.anyfetch.com.test.doc'
       },
       datas : {},
       identifier : 'office-test'
@@ -50,8 +50,8 @@ module.exports.params = {
   'image' : {
     url : "http://image.hydrater.anyfetch.com",
     post : {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/image.hydrater.anyfetch.com.test.png",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : 'file',
       metadatas : {
@@ -64,8 +64,8 @@ module.exports.params = {
   'ocr' : {
     url : "http://ocr.hydrater.anyfetch.com",
     post : {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/ocr.hydrater.anyfetch.com.test.png",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : 'image',
       metadatas : {
@@ -77,12 +77,12 @@ module.exports.params = {
   'eml' : {
     url : "http://eml.hydrater.anyfetch.com",
     post : {
-      file_path : "",
-      callback : "",
+      file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
+      callback : "exemple.com",
       long_poll : 1,
       document_type : 'document',
       metadatas : {
-        path: '\\.eml$'
+        path: 'eml.hydrater.anyfetch.com.eml'
       },
       datas : {},
       identifier : 'eml-test'

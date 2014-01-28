@@ -22,11 +22,13 @@ describe("Test on the hydrators", function () {
   describe("Send a document to all the hydraters on /hydrate and test the answer", function () {
     hydraters.list.forEach(function(name) {
       var req = request(hydraters.params[name].url);
-      it.skip("should receive a json code " + name, function (done) {
-        req.post('/')
+      it("should receive a json code " + name, function (done) {
+        req.post('/hydrate')
           .send(hydraters.params[name].post)
           .expect(200)
           .end(function(err, res) {
+            console.log("Hydrater : ", name);
+            console.log(res.body);
             done();
           });
       });
