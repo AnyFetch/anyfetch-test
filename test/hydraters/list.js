@@ -7,98 +7,85 @@
 
 module.exports.params = {
   'plaintext' : {
-    url : "http://plaintext.hydrater.anyfetch.com/hydrate",
+    url : "http://plaintext.hydrater.anyfetch.com",
     post :  {
       file_path : "",
       callback : "",
       long_poll : 1,
-      document : {
-        document_type : "file",
-        metadatas : {},
-        datas : {},
-        identifier : ""
-      }
+      document_type : "file",
+      metadatas : {},
+      datas : {},
+      identifier : 'plaintext-test'
     }
   },
   'pdf' : {
-    url : "http://pdf.hydrater.anyfetch.com/hydrate/",
+    url : "http://pdf.hydrater.anyfetch.com",
     post : {
       file_path : "",
       callback : "",
       long_poll : 1,
-      document : {
-        document_type : 'document',
-        metadatas : {
-          path: '\\.pdf$',
-          mime_type: 'application/pdf'
-        },
-        datas : {},
-        identifier : ""
-      }
+      document_type : 'document',
+      metadatas : {
+        path: '\\.pdf$',
+        mime_type: 'application/pdf'
+      },
+      datas : {},
+      identifier : 'pdf-test'
     }
   },
   'office' : {
-    url : "http://office.hydrater.anyfetch.com/hydrate/",
+    url : "http://office.hydrater.anyfetch.com",
     post : {
       file_path : "",
       callback : "",
       long_poll : 1,
-      document : {
-        document_type : 'document',
-        metadatas : {
-          path: '\\.(doc|docx|odt|rtf|ods|xls|xlsx|ppt|pptx|odp)$'
-        },
-        datas : {},
-        identifier : ""
-      }
-    },
-    samples : []
-  },
-  'image' : {
-    url : "http://image.hydrater.anyfetch.com/hydrate/",
-    post : {
-      file_path : "",
-      callback : "",
-      long_poll : 1,
-      document : {
-        document_type : 'file',
-        metadatas : {
-          "content-type": '^image/'
-        },
-        datas : {},
-        identifier : ""
-      }
+      document_type : 'document',
+      metadatas : {
+        path: '\\.(doc|docx|odt|rtf|ods|xls|xlsx|ppt|pptx|odp)$'
+      },
+      datas : {},
+      identifier : 'office-test'
     }
   },
-  'orc' : {
-    url : "http://ocr.hydrater.anyfetch.com/hydrate/",
+  'image' : {
+    url : "http://image.hydrater.anyfetch.com",
     post : {
       file_path : "",
       callback : "",
       long_poll : 1,
-      document : {
-        document_type : 'image',
-        metadatas : {
-        },
-        datas : {},
-        identifier : ""
-      }
+      document_type : 'file',
+      metadatas : {
+        "content-type": '^image/'
+      },
+      datas : {},
+      identifier : 'image-test'
+    }
+  },
+  'ocr' : {
+    url : "http://ocr.hydrater.anyfetch.com",
+    post : {
+      file_path : "",
+      callback : "",
+      long_poll : 1,
+      document_type : 'image',
+      metadatas : {
+      },
+      datas : {},
+      identifier : 'ocr-test'
     }
   },
   'eml' : {
-    url : "http://eml.hydrater.anyfetch.com/hydrate/",
+    url : "http://eml.hydrater.anyfetch.com",
     post : {
       file_path : "",
       callback : "",
       long_poll : 1,
-      document : {
-        document_type : 'document',
-        metadatas : {
-          path: '\\.eml$'
-        },
-        datas : {},
-        identifier : ""
-      }
+      document_type : 'document',
+      metadatas : {
+        path: '\\.eml$'
+      },
+      datas : {},
+      identifier : 'eml-test'
     }
   },
 };
