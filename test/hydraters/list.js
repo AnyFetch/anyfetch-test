@@ -36,6 +36,7 @@ module.exports.params = {
   'office' : {
     url : "http://office.hydrater.anyfetch.com",
     post : {
+      access_token: "321",
       file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.doc",
       callback : "exemple.com",
       long_poll : 1,
@@ -55,7 +56,7 @@ module.exports.params = {
       long_poll : 1,
       document_type : 'file',
       metadatas : {
-        "content-type": '^image/'
+        "content-type": 'image/'
       },
       datas : {},
       identifier : 'image-test'
@@ -77,6 +78,7 @@ module.exports.params = {
   'eml' : {
     url : "http://eml.hydrater.anyfetch.com",
     post : {
+      access_token : "321",
       file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
       callback : "exemple.com",
       long_poll : 1,
