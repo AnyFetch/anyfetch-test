@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "test": "NODE_ENV=test mocha -R spec test/hydraters/* -t 60000",
+    "test": "NODE_ENV=test mocha -R spec test/hydraters/* -t 120000",
     "lint": "jshint lib/ test/ config/ bin/"
   },
   "main": "./lib/",

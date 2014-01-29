@@ -6,31 +6,31 @@
 
 
 module.exports.params = {
-  'plaintext' : {
-    url : "http://plaintext.hydrater.anyfetch.com",
-    post :  {
+  'http://plaintext.hydrater.anyfetch.com' : {
+    payload :  {
       file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.doc",
-      callback : "exemple.com",
       long_poll : 1,
-      document_type : "file",
-      metadatas : {},
-      datas : {},
-      identifier : 'plaintext-test'
+      document: {
+        document_type : "file",
+        metadatas : {},
+        datas : {},
+        identifier : 'plaintext-test'
+      }
     }
   },
-  'pdf' : {
-    url : "http://pdf.hydrater.anyfetch.com",
-    post : {
+  'http://pdf.hydrater.anyfetch.com' : {
+    payload : {
       file_path : "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/pdf.hydrater.anyfetch.com.test.pdf",
-      callback : "exemple.com",
       long_poll : 1,
-      document_type : 'document',
-      metadatas : {
-        path: 'pdf.hydrater.anyfetch.com.test.pdf',
-        mime_type: 'application/pdf'
-      },
-      datas : {},
-      identifier : 'pdf-test'
+      document: {
+        document_type : 'document',
+        metadatas : {
+          path: 'pdf.hydrater.anyfetch.com.test.pdf',
+          mime_type: 'application/pdf'
+        },
+        datas : {},
+        identifier : 'pdf-test'
+      }
     }
   },
   'office' : {
