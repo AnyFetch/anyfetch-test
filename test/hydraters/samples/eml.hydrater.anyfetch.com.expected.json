@@ -1,0 +1,19 @@
+{
+  "document_type":"email",
+  "metadatas":
+  {
+    "path":"/file.eml",
+    "to":[{"address":"hugo.duroux@gmail.com",
+    "name":"Hugo DUROUX"}],
+    "cc":[],
+    "bcc":[],
+    "from":[{"address":"jessym.reziga@gmail.com",
+    "name":"Jessym Reziga"}],
+    "subject":"Re: Aderoid",
+    "text":"Oui le SDK android était positionné sur l'API level 7... Mais n'ayant pas\nconstaté de bugs sur mon galaxy S3 je me suis dis que ça passerait lol, je\nregarde ça ce soir et je fais une update.\n\nMerci de la remarque.\n\n\nLe 19 mars 2013 13:04, Hugo DUROUX &lt;hugo.duroux@gmail.com&gt; a écrit :\n\n&gt; La connexion se passe sur le même thread que celui de l'application. Elle\n&gt; affiche donc le message d'erreur demandant d'attendre ou de forcer la\n&gt; fermeture de l'application à chaque chargement :/\n&gt; La norme Android 4.0 et supérieur t'impose de faire toutes les connexions\n&gt; dans un thread à part pour éviter ça :p\n&gt;"
+    },
+    "datas":{
+      "html":"<div dir=\"ltr\">Oui le SDK android était positionné sur l'API level 7... Mais n'ayant pas constaté de bugs sur mon galaxy S3 je me suis dis que ça passerait lol, je regarde ça ce soir et je fais une update.<br><br>Merci de la remarque.<br>\n</div><div class=\"gmail_extra\"><br><br><div class=\"gmail_quote\">Le 19 mars 2013 13:04, Hugo DUROUX <span dir=\"ltr\"><<a href=\"mailto:hugo.duroux@gmail.com\" target=\"_blank\">hugo.duroux@gmail.com</a>></span> a écrit :<br>\n<blockquote class=\"gmail_quote\" style=\"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex\"><p dir=\"ltr\">La connexion se passe sur le même thread que celui de l'application. Elle affiche donc le message d'erreur demandant d'attendre ou de forcer la fermeture de l'application à chaque chargement :/<br>\n\n\nLa norme Android 4.0 et supérieur t'impose de faire toutes les connexions dans un thread à part pour éviter ça :p</p>\n</blockquote></div><br></div>"
+  },
+  "identifier":"eml-test","creation_date":"2013-03-19T12:12:20.000Z"
+}

@@ -1,0 +1,85 @@
+X-GM-THRID: 1429937533445154972
+X-Gmail-Labels: =?ANSI_X3.4-1968?Q?Messages_envoy=3Fs,Bo=3Fte_de_r=3Fception,Important?=
+Delivered-To: hugo.duroux@gmail.com
+Received: by 10.50.212.106 with SMTP id nj10csp132942igc;
+        Tue, 19 Mar 2013 05:12:21 -0700 (PDT)
+Return-Path: <jessym.reziga@gmail.com>
+Received-SPF: pass (google.com: domain of jessym.reziga@gmail.com designates 10.229.77.24 as permitted sender) client-ip=10.229.77.24
+Authentication-Results: mr.google.com;
+       spf=pass (google.com: domain of jessym.reziga@gmail.com designates 10.229.77.24 as permitted sender) smtp.mail=jessym.reziga@gmail.com;
+       dkim=pass header.i=@gmail.com
+X-Received: from mr.google.com ([10.229.77.24])
+        by 10.229.77.24 with SMTP id e24mr398137qck.50.1363695140788 (num_hops = 1);
+        Tue, 19 Mar 2013 05:12:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:x-received:in-reply-to:references:date:message-id
+         :subject:from:to:content-type;
+        bh=yVX9WR/OCvzlIFtKPqdi89fER6qk7macqeG4DTm0nUM=;
+        b=U0DbQLS0c4o9O2gVHvaxHKelZ6i4p7uSnvaRQjy58QpdXZ9zyz9EwZHpmJNkr3bIrp
+         E6FAPT5cmx5E5aF9KOtX6bR3KBsEFlkssST0j3CpxP2AeFd2ZvSwQwE4NF/hhkaJnwiY
+         G/lPzkFmJxe2dwP2UusEYUpAiCIL4hHZ+ysKbD+bp2c31ViFmOvFh4W9sZHq3DHmwDcT
+         8kCKXsQ8uOUl1zaczE4ySj209LhTGqb83n8Mq+dMY/ERS6x3jDgTbFBbhxyIBpEqeNaE
+         QYdoFvKlTFO3MjoVNycO35alJf8Df3yNZQ8E0Vb8KzEAuVuk/1q0ew/mn79d4UxNIE4H
+         fHqg==
+MIME-Version: 1.0
+X-Received: by 10.229.77.24 with SMTP id e24mr398137qck.50.1363695140781; Tue,
+ 19 Mar 2013 05:12:20 -0700 (PDT)
+Received: by 10.49.72.136 with HTTP; Tue, 19 Mar 2013 05:12:20 -0700 (PDT)
+In-Reply-To: <CACPyoXU8XdNqLZj4QaSsd-qdcmbnBD9m1XzkDh7FGdzrtUDJnQ@mail.gmail.com>
+References: <CACPyoXU8XdNqLZj4QaSsd-qdcmbnBD9m1XzkDh7FGdzrtUDJnQ@mail.gmail.com>
+Date: Tue, 19 Mar 2013 13:12:20 +0100
+Message-ID: <CAATQadUBsMyHXJzN_4e2o37qvAFbcZ6TwYV09evQUpC9TtURbQ@mail.gmail.com>
+Subject: Re: Aderoid
+From: Jessym Reziga <jessym.reziga@gmail.com>
+To: Hugo DUROUX <hugo.duroux@gmail.com>
+Content-Type: multipart/alternative; boundary=002354470b1872cac604d8460413
+
+--002354470b1872cac604d8460413
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Oui le SDK android =E9tait positionn=E9 sur l'API level 7... Mais n'ayant p=
+as
+constat=E9 de bugs sur mon galaxy S3 je me suis dis que =E7a passerait lol,=
+ je
+regarde =E7a ce soir et je fais une update.
+
+Merci de la remarque.
+
+
+Le 19 mars 2013 13:04, Hugo DUROUX <hugo.duroux@gmail.com> a =E9crit :
+
+> La connexion se passe sur le m=EAme thread que celui de l'application. El=
+le
+> affiche donc le message d'erreur demandant d'attendre ou de forcer la
+> fermeture de l'application =E0 chaque chargement :/
+> La norme Android 4.0 et sup=E9rieur t'impose de faire toutes les connexio=
+ns
+> dans un thread =E0 part pour =E9viter =E7a :p
+>
+
+--002354470b1872cac604d8460413
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Oui le SDK android =E9tait positionn=E9 sur l&#39;API leve=
+l 7... Mais n&#39;ayant pas constat=E9 de bugs sur mon galaxy S3 je me suis=
+ dis que =E7a passerait lol, je regarde =E7a ce soir et je fais une update.=
+<br><br>Merci de la remarque.<br>
+</div><div class=3D"gmail_extra"><br><br><div class=3D"gmail_quote">Le 19 m=
+ars 2013 13:04, Hugo DUROUX <span dir=3D"ltr">&lt;<a href=3D"mailto:hugo.du=
+roux@gmail.com" target=3D"_blank">hugo.duroux@gmail.com</a>&gt;</span> a =
+=E9crit :<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex"><p dir=3D"ltr">La connexion se passe sur le =
+m=EAme thread que celui de l&#39;application. Elle affiche donc le message =
+d&#39;erreur demandant d&#39;attendre ou de forcer la fermeture de l&#39;ap=
+plication =E0 chaque chargement :/<br>
+
+
+La norme Android 4.0 et sup=E9rieur t&#39;impose de faire toutes les connex=
+ions dans un thread =E0 part pour =E9viter =E7a :p</p>
+</blockquote></div><br></div>
+
+--002354470b1872cac604d8460413--
