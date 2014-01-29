@@ -1,10 +1,7 @@
 'use strict';
 
-var request = require('supertest');
 require('should');
-
-var fs = require('fs');
-
+var request = require('supertest');
 var hydraters = require('./list.js');
 
 describe("Test hydraters", function() {
@@ -20,10 +17,10 @@ describe("Test hydraters", function() {
     });
   });
 
-  describe("are working", function() {
+  describe.skip("are working", function() {
     hydraters.list.forEach(function(name) {
       var url = hydraters.params[name].url;
-      it("`" + url + "` should return expected results with sample file", function(done) {
+      it("`" + url + "` should return expected results", function(done) {
         request(url)
           .post('/hydrate')
           .send(hydraters.params[name].post)
@@ -34,8 +31,8 @@ describe("Test hydraters", function() {
             }
 
             var expected = require('./samples/' + name + '.hydrater.anyfetch.com.expected.json');
-
             res.body.should.eql(expected);
+
             done();
           });
       });
