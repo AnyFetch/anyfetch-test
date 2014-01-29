@@ -61,7 +61,7 @@ var hydraters = {
     payload: {
       file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/image.hydrater.anyfetch.com.test.png",
       long_poll: 1,
-      example: {
+      document: {
         document_type: 'file',
         metadatas: {},
         datas: {},
@@ -79,12 +79,13 @@ var hydraters = {
         datas: {},
         identifier: 'ocr-test'
       }
-    }
+    },
+    expected: generateCompareFunction('./samples/ocr.hydrater.anyfetch.com.expected.json')
   },
   'http://eml.hydrater.anyfetch.com': {
     payload: {
-      access_token: "321",
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
+      access_token: "123",
+      file_path: "https://raw.github.com/Papiel/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
       long_poll: 1,
       document: {
         document_type: 'document',
@@ -94,12 +95,14 @@ var hydraters = {
         datas: {},
         identifier: 'eml-test'
       }
-    }
+    },
+    expected: generateCompareFunction('./samples/eml.hydrater.anyfetch.com.expected.json')
+
   },
 };
 
 describe("Test hydraters", function() {
-  describe.skip("are up", function() {
+  describe("are up", function() {
     Object.keys(hydraters).forEach(function(url) {
       it("`" + url + "` should be up", function(done) {
         request(url)
