@@ -1,0 +1,1 @@
+{"code":"InvalidContent","message":"ERR hydrating https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.docError: AnyFetch returned non-200 code: 401. {\"code\":\"UnauthorizedError\",\"message\":\"You must be authentified in order to access this resource.\"}"}

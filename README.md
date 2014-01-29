@@ -13,7 +13,7 @@ Introducing this repo.
 * Ping on `/init/connect?code=123`, check for redirect code (302 ?)
 
 ### Checking every hydrater is up and running,
-* Ping on `/hydrate`, check for error code (405)
+* Ping on `/status`, check for 200
 * Ping on `/hydrate` with file_path and callback and long_poll, check for return
 
 ### Creating an account on core
