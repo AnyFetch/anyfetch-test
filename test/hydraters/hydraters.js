@@ -99,7 +99,7 @@ var hydraters = {
 };
 
 describe("Test hydraters", function() {
-  describe("are up", function() {
+  describe.skip("are up", function() {
     Object.keys(hydraters).forEach(function(url) {
       it("`" + url + "` should be up", function(done) {
         request(url)
