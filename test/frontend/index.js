@@ -5,7 +5,7 @@ var request = require('supertest');
 
 var url = 'http://anyfetch.com';
 
-describe.only("Test frontend", function() {
+describe("Test frontend", function() {
   it("`" + url + "` should be up", function(done) {
     request(url)
       .get('/')
