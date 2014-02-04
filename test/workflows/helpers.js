@@ -59,6 +59,7 @@ module.exports.resetAccount = function(done) {
  */
 module.exports.expectJSON = function(key, value) {
   return function(res) {
+    console.log(res.body);
     res.body.should.have.property(key, value);
   };
 };
