@@ -4,7 +4,7 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-describe.only("Test workflow", function() {
+describe("Test workflow", function() {
   before(helpers.createAccount);
   before(helpers.resetAccount);
 
@@ -15,5 +15,6 @@ describe.only("Test workflow", function() {
       .expect(helpers.expectJSON('name', 'test@anyfetch.com'))
       .end(done);
   });
+
   after(helpers.deleteAccount);
 });
