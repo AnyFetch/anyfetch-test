@@ -61,5 +61,17 @@ describe("Test providers workflow", function() {
     }, 1000);
   });
 
+  it("should be removed with a reset", function(done) {
+    helpers.resetAccount(function(err) {
+      if(err) {
+        throw err;
+      }
+
+      helpers.basicApiRequest('get', '/documents/' + payload.id)
+        .expect(404)
+        .end(done);
+    });
+  });
+
   after(helpers.deleteAccount);
 });
