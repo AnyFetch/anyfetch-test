@@ -7,6 +7,9 @@ var SETTINGS_URL = "http://settings.anyfetch.com";
 var SIGN_UP_URL = '/users/sign_up';
 var DELETE_URL = '/users/';
 
+var basicCredential = "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
+var oauthCredential = null;
+
 /**
  * Base helper for all api requests.
  * Returns an authentified supertest client
@@ -14,8 +17,9 @@ var DELETE_URL = '/users/';
 module.exports.basicApiRequest = function(method, url) {
   return request("http://api.anyfetch.com")
     [method](url)
-    .set('Authorization', 'Basic dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=');
+    .set('Authorization', 'Basic ' + basicCredential);
 };
+
 
 module.exports.createAccount = function(done) {
   // Skipping for now
@@ -31,6 +35,7 @@ module.exports.createAccount = function(done) {
   //   .end(done);
 };
 
+
 module.exports.deleteAccount = function(done) {
   // Skipping for now
   return done();
@@ -45,6 +50,7 @@ module.exports.deleteAccount = function(done) {
   //   .end(done);
 };
 
+
 /**
  * Reset the account to pristine state
  */
@@ -53,6 +59,7 @@ module.exports.resetAccount = function(done) {
     .expect(204)
     .end(done);
 };
+
 
 /**
  * Request helper to expect JSON results
@@ -63,28 +70,19 @@ module.exports.expectJSON = function(key, value) {
   };
 };
 
-var getToken = function(cb) {
+
+module.exports.getToken = function(cb) {
   module.exports.basicApiRequest('get', '/token')
   .expect(200)
   .end(function(err, res){
-    console.log(res.body);
+    oauthCredential = res.body.token;
     cb(err, res.body.token);
   });
 };
 
-module.exports.tokenApiRequest = function(method, url, cb) {
-  getToken(function(err, token) {
-    if(err) {
-      return cb(err);
-    }
 
-    var r = request("http://api.anyfetch.com")
-      [method](url)
-      .set('token', token);
-    cb(null, r);
-  });
+module.exports.tokenApiRequest = function(method, url) {
+  return request("http://api.anyfetch.com")
+    [method](url)
+    .set('Authorization', "token " + oauthCredential);
 };
-
-
-
-
