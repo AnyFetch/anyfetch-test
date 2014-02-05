@@ -4,7 +4,7 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-describe.only("Test providers workflow", function() {
+describe("Test providers workflow", function() {
   before(helpers.createAccount);
   before(helpers.getToken);
 
