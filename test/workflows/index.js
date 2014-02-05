@@ -10,7 +10,7 @@ describe("Test workflow", function() {
 
   it("should be able to create an account", function(done) {
     // We should be able to login using supplied credentials
-    helpers.apiRequest('get', '/')
+    helpers.basicApiRequest('get', '/')
       .expect(200)
       .expect(helpers.expectJSON('name', 'test@anyfetch.com'))
       .end(done);
