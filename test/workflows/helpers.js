@@ -11,7 +11,7 @@ var basicCredential = "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
 var oauthCredential = null;
 
 /**
- * Base helper for all api requests.
+ * Base helper for api requests authentified by basic.
  * Returns an authentified supertest client
  */
 module.exports.basicApiRequest = function(method, url) {
@@ -70,7 +70,9 @@ module.exports.expectJSON = function(key, value) {
   };
 };
 
-
+/** Helper to get a token
+ *
+ */
 module.exports.getToken = function(cb) {
   module.exports.basicApiRequest('get', '/token')
   .expect(200)
@@ -80,7 +82,10 @@ module.exports.getToken = function(cb) {
   });
 };
 
-
+/**
+ * Base helper for api requests authentidief by tokens.
+ * Returns an authentified supertest client
+ */
 module.exports.tokenApiRequest = function(method, url) {
   return request("http://api.anyfetch.com")
     [method](url)

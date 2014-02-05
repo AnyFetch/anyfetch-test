@@ -30,6 +30,7 @@ describe.only("Test providers workflow", function() {
   });
 
   it("should be able to get a document", function(done) {
+    // We should be able to get the document, and it should be the correct doc
     helpers.basicApiRequest('get', '/documents?search=hello')
       .expect(function(res){
         res.body.datas[0].should.have.property('id', payload.id);
