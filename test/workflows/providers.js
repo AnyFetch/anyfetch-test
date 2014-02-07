@@ -10,7 +10,7 @@ describe("Test providers workflow", function() {
   before(helpers.getToken);
 
   var payload = {
-    identifier:'test-identifier',
+    identifier:'test-workflow-identifier',
     metadatas: {
       text:'hello world'
     },
