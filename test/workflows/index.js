@@ -4,9 +4,9 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-describe.only("Test workflow", function() {
+describe("Test workflow", function() {
   before(helpers.createAccount);
-  before(helpers.resetAccount);
+  //before(helpers.resetAccount);
 
   it("should be able to create an account", function(done) {
     // We should be able to login using supplied credentials
