@@ -56,6 +56,7 @@ module.exports.deleteAccount = function(done) {
  */
 module.exports.resetAccount = function(done) {
   module.exports.basicApiRequest('del', '/reset')
+    .set('Content-Length', 0)
     .expect(204)
     .end(done);
 };
