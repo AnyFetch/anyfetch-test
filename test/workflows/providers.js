@@ -56,7 +56,6 @@ describe("Test providers workflow", function() {
           res.body.should.have.property('datas').with.lengthOf(1);
           res.body.datas[0].should.have.property('id', payload.id);
         })
-        .expect(200)
         .end(done);
     }, 1000);
   });
