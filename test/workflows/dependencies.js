@@ -10,6 +10,8 @@ describe("Test hydraters dependencies", function() {
   before(helpers.getToken);
 
   describe("should work for office documents", function() {
+    this.bail(true);
+
     var payload = {
       no_hydration: true,
       identifier:'test-office-dependencies-identifier',
@@ -76,6 +78,7 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe.only("should hydrate attachments", function() {
+    this.bail(true);
 
     var payload = {
       no_hydration: true,
