@@ -10,6 +10,7 @@ var DELETE_URL = '/users/';
 var basicCredential = "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
 var oauthCredential = null;
 
+
 /**
  * Base helper for api requests authentified by basic.
  * Returns an authentified supertest client
@@ -71,6 +72,7 @@ module.exports.expectJSON = function(key, value) {
   };
 };
 
+
 /** Helper to get a token
  *
  */
@@ -83,6 +85,7 @@ module.exports.getToken = function(cb) {
   });
 };
 
+
 /**
  * Base helper for api requests authentidief by tokens.
  * Returns an authentified supertest client
@@ -91,4 +94,67 @@ module.exports.tokenApiRequest = function(method, url) {
   return request("http://api.anyfetch.com")
     [method](url)
     .set('Authorization', "token " + oauthCredential);
+};
+
+
+/**
+ * Complex helper, used to send `payload` document, then send associated `file`, and finally wait until `hydraterToWait` has returned with datas.
+ * Use multiple it().
+ * Example usage in dependencies.js
+ */
+module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToWait, cb) {
+
+  it('... sending document', function(done) {
+    module.exports.tokenApiRequest('post', '/providers/documents')
+      .send(payload)
+      .expect(200)
+      .end(function(err, res) {
+        if(err) {
+          throw err;
+        }
+
+        payload.id = res.body.id;
+
+        done();
+      });
+  });
+
+  it('... sending file', function(done) {
+    module.exports.tokenApiRequest('post', '/providers/documents/file')
+      .field('identifier', payload.identifier)
+      .attach('file', file)
+      .expect(204)
+      .end(done);
+  });
+
+  it('... waiting for hydration', function(done) {
+    var retry = setInterval(function() {
+      module.exports.tokenApiRequest('get', '/documents/' + payload.id + "/raw")
+      .expect(200)
+      .expect(function(res) {
+        if(res.body.hydrated_by.indexOf(hydraterToWait) !== -1) {
+
+          // Return to original caller with document information
+          if(cb) {
+            cb(res.body);
+          }
+
+          // Office hydrater completed!
+          // We can now finish the test.
+          clearInterval(retry);
+
+          if(!done.called) {
+            done();
+            done.called = true;
+          }
+        }
+      })
+      .end(function(err) {
+        // Do nothing and retry.
+        if(err) {
+          throw err;
+        }
+      });
+    }, 1500);
+  });
 };

@@ -4,7 +4,7 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-describe("Test hydraters dependencies", function() {
+describe.only("Test hydraters dependencies", function() {
   before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);
@@ -21,53 +21,12 @@ describe("Test hydraters dependencies", function() {
       document_type: 'file',
       user_access: null
     };
+    var file = __dirname + '/samples/office-file.doc';
+    var hydraterToWait = 'http://office.hydrater.anyfetch.com/hydrate';
     var hydratedDocument = null;
 
-    it('... sending document', function(done) {
-      helpers.tokenApiRequest('post', '/providers/documents')
-        .send(payload)
-        .expect(200)
-        .end(function(err, res) {
-          if(err) {
-            throw err;
-          }
-
-          payload.id = res.body.id;
-
-          done();
-        });
-    });
-
-    it('... sending file', function(done) {
-      helpers.tokenApiRequest('post', '/providers/documents/file')
-        .field('identifier', payload.identifier)
-        .attach('file', __dirname + '/samples/office-file.doc')
-        .expect(204)
-        .end(done);
-    });
-
-    it('... waiting for hydration', function(done) {
-      var retry = setInterval(function() {
-        helpers.tokenApiRequest('get', '/documents/' + payload.id + "/raw")
-        .expect(200)
-        .expect(function(res) {
-          if(res.body.hydrated_by.indexOf('http://office.hydrater.anyfetch.com/hydrate') !== -1) {
-
-            hydratedDocument = res.body;
-            // Office hydrater completed!
-            // We can now finish the test.
-            clearInterval(retry);
-
-            done();
-          }
-        })
-        .end(function(err) {
-          // Do nothing and retry.
-          if(err) {
-            throw err;
-          }
-        });
-      }, 1500);
+    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait, function(document) {
+      hydratedDocument = document;
     });
 
     it('should have been properly hydrated', function(done) {
@@ -77,7 +36,7 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
-  describe.only("should hydrate attachments", function() {
+  describe("should hydrate attachments", function() {
     this.bail(true);
 
     var payload = {
@@ -89,57 +48,10 @@ describe("Test hydraters dependencies", function() {
       document_type: 'file',
       user_access: null
     };
-    var hydratedDocument = null;
+    var file = __dirname + '/samples/eml-with-attachment.eml';
+    var hydraterToWait = 'http://eml.hydrater.anyfetch.com/hydrate';
 
-    it('... sending document', function(done) {
-      helpers.tokenApiRequest('post', '/providers/documents')
-        .send(payload)
-        .expect(200)
-        .end(function(err, res) {
-          if(err) {
-            throw err;
-          }
-
-          payload.id = res.body.id;
-
-          done();
-        });
-    });
-
-    it('... sending file', function(done) {
-      helpers.tokenApiRequest('post', '/providers/documents/file')
-        .field('identifier', payload.identifier)
-        .attach('file', __dirname + '/samples/eml-with-attachment.eml')
-        .expect(204)
-        .end(done);
-    });
-
-    it('... waiting for hydration', function(done) {
-      var retry = setInterval(function() {
-        helpers.tokenApiRequest('get', '/documents/' + payload.id + "/raw")
-        .expect(200)
-        .expect(function(res) {
-          if(res.body.hydrated_by.indexOf('http://eml.hydrater.anyfetch.com/hydrate') !== -1) {
-
-            hydratedDocument = res.body;
-            // Eml hydrater completed!
-            // We can now finish the test.
-            clearInterval(retry);
-
-            if(!done.called) {
-              done();
-              done.called = true;
-            }
-          }
-        })
-        .end(function(err) {
-          // Do nothing and retry.
-          if(err) {
-            throw err;
-          }
-        });
-      }, 1500);
-    });
+    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait);
 
     it('should have been properly hydrated', function(done) {
       // Real test.
