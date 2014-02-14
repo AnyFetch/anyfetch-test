@@ -1,9 +1,7 @@
 'use strict';
 
 require('should');
-require('longjohn');
 
-var async = require('async');
 var helpers = require('./helpers.js');
 
 describe.only("Test hydraters dependencies", function() {
