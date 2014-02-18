@@ -187,6 +187,6 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
           throw err;
         }
       });
-    }, 1500);
+    }, 2000);
   };
 };

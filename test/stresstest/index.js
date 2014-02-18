@@ -6,9 +6,10 @@ var async = require('async');
 var helpers = require('../workflows/helpers.js');
 
 
-var COUNT = 2;
+var COUNT = 8;
 
-describe.only("Stress test", function() {
+describe("Stress test", function() {
+  this.timeout(15 * 60 * 1000);
   this.bail(true);
   before(helpers.createAccount);
   before(helpers.resetAccount);
@@ -22,10 +23,8 @@ describe.only("Stress test", function() {
 
   // Store all documents sent
   var payloads = new Array(COUNT);
-  var start;
 
   it("sending " + COUNT + " documents and files", function(done) {
-    start = new Date();
 
     var sender = function(i, cb) {
       var payload = {
@@ -47,7 +46,7 @@ describe.only("Stress test", function() {
     };
 
 
-    async.each(range, sender, done);
+    async.eachLimit(range, 4, sender, done);
   });
 
   it("checking for hydration", function(done) {
@@ -57,7 +56,7 @@ describe.only("Stress test", function() {
       helpers.waitForHydration(id, 'http://office.hydrater.anyfetch.com/hydrate')(cb);
     };
 
-    async.each(range, checker, done);
+    async.eachLimit(range, 4, checker, done);
   });
 
   after(helpers.deleteAccount);
