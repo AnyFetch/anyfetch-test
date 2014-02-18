@@ -56,6 +56,7 @@ module.exports.deleteAccount = function(done) {
  * Reset the account to pristine state
  */
 module.exports.resetAccount = function(done) {
+  oauthCredential = null;
   module.exports.basicApiRequest('del', '/reset')
     .set('Content-Length', 0)
     .expect(204)
@@ -91,6 +92,9 @@ module.exports.getToken = function(cb) {
  * Returns an authentified supertest client
  */
 module.exports.tokenApiRequest = function(method, url) {
+  if(!oauthCredential) {
+    throw new Error("Call getToken() before doing tokenApiRequest.");
+  }
   return request("http://api.anyfetch.com")
     [method](url)
     .set('Authorization', "token " + oauthCredential);
@@ -136,6 +140,9 @@ module.exports.sendDocument = function(payload) {
 };
 
 
+/**
+ * Associate file with identifier
+ */
 module.exports.sendFile = function(identifier, file) {
   return function(done) {
     module.exports.tokenApiRequest('post', '/providers/documents/file')
@@ -146,6 +153,11 @@ module.exports.sendFile = function(identifier, file) {
   };
 };
 
+
+/**
+ * Block until hydraterToWait has hydrated id.
+ * If cb is provided, it will be called with the result document once hydraterToWait has finished.
+ */
 module.exports.waitForHydration = function(id, hydraterToWait, cb) {
   return function(done) {
     var retry = setInterval(function() {
