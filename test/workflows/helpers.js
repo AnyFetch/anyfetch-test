@@ -56,6 +56,7 @@ module.exports.deleteAccount = function(done) {
  * Reset the account to pristine state
  */
 module.exports.resetAccount = function(done) {
+  oauthCredential = null;
   module.exports.basicApiRequest('del', '/reset')
     .set('Content-Length', 0)
     .expect(204)
@@ -91,6 +92,9 @@ module.exports.getToken = function(cb) {
  * Returns an authentified supertest client
  */
 module.exports.tokenApiRequest = function(method, url) {
+  if(!oauthCredential) {
+    throw new Error("Call getToken() before doing tokenApiRequest.");
+  }
   return request("http://api.anyfetch.com")
     [method](url)
     .set('Authorization', "token " + oauthCredential);
@@ -104,7 +108,22 @@ module.exports.tokenApiRequest = function(method, url) {
  */
 module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToWait, cb) {
 
-  it('... sending document', function(done) {
+  it('... sending document', module.exports.sendDocument(payload));
+
+  it('... sending file', module.exports.sendFile(payload.identifier, file));
+
+  it('... waiting for hydration', function(done) {
+    module.exports.waitForHydration(payload.id, hydraterToWait, cb)(done);
+  });
+};
+
+
+/**
+ * Send payload document.
+ * Insert resulting id in payload.id
+ */
+module.exports.sendDocument = function(payload) {
+  return function(done) {
     module.exports.tokenApiRequest('post', '/providers/documents')
       .send(payload)
       .expect(200)
@@ -117,19 +136,32 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
 
         done();
       });
-  });
+  };
+};
 
-  it('... sending file', function(done) {
+
+/**
+ * Associate file with identifier
+ */
+module.exports.sendFile = function(identifier, file) {
+  return function(done) {
     module.exports.tokenApiRequest('post', '/providers/documents/file')
-      .field('identifier', payload.identifier)
+      .field('identifier', identifier)
       .attach('file', file)
       .expect(204)
       .end(done);
-  });
+  };
+};
 
-  it('... waiting for hydration', function(done) {
+
+/**
+ * Block until hydraterToWait has hydrated id.
+ * If cb is provided, it will be called with the result document once hydraterToWait has finished.
+ */
+module.exports.waitForHydration = function(id, hydraterToWait, cb) {
+  return function(done) {
     var retry = setInterval(function() {
-      module.exports.tokenApiRequest('get', '/documents/' + payload.id + "/raw")
+      module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .expect(function(res) {
         if(res.body.hydrated_by.indexOf(hydraterToWait) !== -1) {
@@ -155,6 +187,6 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
           throw err;
         }
       });
-    }, 1500);
-  });
+    }, 2000);
+  };
 };
