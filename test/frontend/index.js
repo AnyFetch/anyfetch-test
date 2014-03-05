@@ -11,7 +11,11 @@ describe("Test front and back ends", function() {
     it("`" + url + "` should be up", function(done) {
       request(url)
       .get('/')
-      .expect(200)
+      .expect(function(res){
+        if (res.statusCode !== 200 && res.statusCode !== 302){
+          throw new Error(res.statusCode);
+        }
+      })
       .end(done);
     });
   });
