@@ -152,7 +152,6 @@ describe("Test hydraters", function() {
           .send(hydraters[url].payload)
           .expect(200)
           .end(function(err, res) {
-            console.log(res.body);
             if(err) {
               throw err;
             }
