@@ -3,11 +3,8 @@
 require('should');
 var request = require('supertest');
 
-var SETTINGS_URL = "http://settings.anyfetch.com";
-var SIGN_UP_URL = '/users/sign_up';
-var DELETE_URL = '/users/';
+var config = require('../config.js');
 
-var basicCredential = "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
 var oauthCredential = null;
 
 
@@ -16,9 +13,9 @@ var oauthCredential = null;
  * Returns an authentified supertest client
  */
 module.exports.basicApiRequest = function(method, url) {
-  return request("http://api.anyfetch.com")
+  return request(config.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + basicCredential);
+    .set('Authorization', 'Basic ' + config.basicCredential);
 };
 
 
@@ -95,7 +92,7 @@ module.exports.tokenApiRequest = function(method, url) {
   if(!oauthCredential) {
     throw new Error("Call getToken() before doing tokenApiRequest.");
   }
-  return request("http://api.anyfetch.com")
+  return request(config.apiUrl)
     [method](url)
     .set('Authorization', "token " + oauthCredential);
 };

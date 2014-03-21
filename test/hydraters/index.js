@@ -73,7 +73,9 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'file',
-        metadatas: {},
+        metadatas: {
+          path: 'image.hydrater.anyfetch.com.test.png',
+        },
         datas: {},
         identifier: 'image-test'
       }
@@ -97,7 +99,9 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'image',
-        metadatas: {},
+        metadatas: {
+          path: 'ocr.hydrater.anyfetch.com.test.png',
+        },
         datas: {},
         identifier: 'ocr-test'
       }

@@ -3,6 +3,7 @@
 require('should');
 
 var helpers = require('./helpers.js');
+var config = require('../config.js');
 
 describe("Test hydraters dependencies", function() {
   before(helpers.createAccount);
@@ -14,7 +15,7 @@ describe("Test hydraters dependencies", function() {
 
     var payload = {
       no_hydration: true,
-      identifier:'test-office-dependencies-identifier',
+      identifier: config.apiUrl + 'test-office-dependencies-identifier',
       metadatas: {
         path: '/test-dependencies-sample.doc',
       },
@@ -41,7 +42,7 @@ describe("Test hydraters dependencies", function() {
 
     var payload = {
       no_hydration: true,
-      identifier:'test-eml-dependencies-identifier',
+      identifier: config.apiUrl + 'test-eml-dependencies-identifier',
       metadatas: {
         path: '/test-dependencies-sample.eml',
       },
