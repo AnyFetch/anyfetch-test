@@ -41,7 +41,7 @@ describe("Stress test", function() {
 
       async.series([
         helpers.sendDocument(payload),
-        helpers.sendFile(payload.identifier, file)
+        helpers.sendFile(payload, file)
       ], cb);
     };
 
