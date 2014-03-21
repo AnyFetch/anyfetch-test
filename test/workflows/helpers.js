@@ -5,7 +5,7 @@ var request = require('supertest');
 
 var apiUrl = process.env.API_URL || "http://api.anyfetch.com";
 var basicCredential = process.env.CREDENTIALS || "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
-
+console.log(basicCredential);
 var oauthCredential = null;
 
 
