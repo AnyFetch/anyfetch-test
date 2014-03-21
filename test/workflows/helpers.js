@@ -107,7 +107,7 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
 
   it('... sending document', module.exports.sendDocument(payload));
 
-  it('... sending file', module.exports.sendFile(payload.identifier, file));
+  it('... sending file', module.exports.sendFile(payload, file));
 
   it('... waiting for hydration', function(done) {
     module.exports.waitForHydration(payload.id, hydraterToWait, cb)(done);
