@@ -3,13 +3,9 @@
 require('should');
 var request = require('supertest');
 
-var SETTINGS_URL = "http://settings.anyfetch.com";
-var SIGN_UP_URL = '/users/sign_up';
-var DELETE_URL = '/users/';
-
 var apiUrl = process.env.API_URL || "http://api.anyfetch.com";
+var basicCredential = process.env.CREDENTIALS || "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
 
-var basicCredential = "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
 var oauthCredential = null;
 
 
