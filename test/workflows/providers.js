@@ -57,7 +57,7 @@ describe("Test providers workflow", function() {
           res.body.datas[0].should.have.property('id', payload.id);
         })
         .end(done);
-    }, 2000);
+    }, 5000);
   });
 
   it("should be removed with a reset", function(done) {

@@ -1,6 +1,6 @@
 {
   "name": "anyfetch-test",
-  "description": "Very high level functional test to check Anyfetch deployment and status.",
+  "description": "Very high level functionals test to check anyFetch deployment and status.",
   "version": "0.1.0",
   "author": "Matthieu Bacconnier <matthieu.bacconnier@papiel.fr>",
   "contributors": [
@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "test": "NODE_ENV=test mocha -R spec test/*/* -t 120000  -s 20000",
+    "test": "NODE_ENV=test mocha -R spec test/*/* -t 120000 -s 20000",
     "lint": "jshint lib/ test/ config/ bin/"
   },
   "main": "./lib/",
