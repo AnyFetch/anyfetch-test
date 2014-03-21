@@ -12,7 +12,6 @@ describe("Test workflow", function() {
     // We should be able to login using supplied credentials
     helpers.basicApiRequest('get', '/')
       .expect(200)
-      .expect(helpers.expectJSON('name', 'test@anyfetch.com'))
       .end(done);
   });
 
