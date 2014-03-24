@@ -8,18 +8,7 @@ We also need to check the ops worked, everything is deployed and available on th
 
 Introducing this repo.
 
-## What's the point?
-### Checking every provider is up and running
-* Ping on `/init/connect?code=123`, check for redirect code (302 ?)
+## How to use?
+A simple `npm test` can do the trick.
 
-### Checking every hydrater is up and running,
-* Ping on `/status`, check for 200
-* Ping on `/hydrate` with file_path and callback and long_poll, check for return
-
-### Creating an account on core
-* settings.anyfetch.com/users/sign_up
-(DELETE it afterward, even if the test fails)
-
-### Checking the api is up and running, and providers works
-### Checking complex hydration dependencies are properly executed
-### Checking complex endpoints react properly.
+If you want to test staging API, you'll need to set `API_URL=http://staging.api.anyfetch.com`. You can also set your own credentials using `CREDENTIALS=base64encoded`.
