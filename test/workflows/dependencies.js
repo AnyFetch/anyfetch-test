@@ -5,7 +5,7 @@ require('should');
 var helpers = require('./helpers.js');
 var config = require('../config.js');
 
-describe.only("Test hydraters dependencies", function() {
+describe("Test hydraters dependencies", function() {
   before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);

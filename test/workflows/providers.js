@@ -20,7 +20,7 @@ describe("Test providers workflow", function() {
 
   it("should be able to send a document", function(done) {
     // We should be able to login using supplied credentials
-    helpers.tokenApiRequest('post', '/providers/documents')
+    helpers.tokenApiRequest('post', '/documents')
       .send(payload)
       .expect(helpers.expectJSON('identifier', payload.identifier))
       .expect(200)
