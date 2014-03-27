@@ -15,7 +15,8 @@ describe("Test providers workflow", function() {
       text:'hello world'
     },
     document_type: null,
-    user_access: null
+    user_access: null,
+    no_hydration:true,
   };
 
   it("should be able to send a document", function(done) {
