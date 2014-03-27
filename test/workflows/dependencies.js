@@ -32,7 +32,8 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.datas.content.should.include('pers<span class="_ _1"></span>onnalité</div><div class="t m0 x5 h4 yc ff3 fs1 fc0 sc0 ls0 ws0">juridique)');
+      hydratedDocument.datas.html.should.include('pers<span class="_ _1"></span>onnalité</div><div class="t m0 x5 h4 yc ff3 fs1 fc0 sc0 ls0 ws0">juridique)');
+      hydratedDocument.metadatas.text.should.include('pour les processus');
       done();
     });
   });

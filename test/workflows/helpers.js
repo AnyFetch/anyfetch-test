@@ -54,7 +54,7 @@ module.exports.deleteAccount = function(done) {
  */
 module.exports.resetAccount = function(done) {
   oauthCredential = null;
-  module.exports.basicApiRequest('del', '/reset')
+  module.exports.basicApiRequest('del', '/company/reset')
     .set('Content-Length', 0)
     .expect(204)
     .end(done);
@@ -107,7 +107,7 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
 
   it('... sending document', module.exports.sendDocument(payload));
 
-  it('... sending file', module.exports.sendFile(payload.identifier, file));
+  it('... sending file', module.exports.sendFile(payload, file));
 
   it('... waiting for hydration', function(done) {
     module.exports.waitForHydration(payload.id, hydraterToWait, cb)(done);
@@ -121,14 +121,13 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
  */
 module.exports.sendDocument = function(payload) {
   return function(done) {
-    module.exports.tokenApiRequest('post', '/providers/documents')
+    module.exports.tokenApiRequest('post', '/documents')
       .send(payload)
       .expect(200)
       .end(function(err, res) {
         if(err) {
           throw err;
         }
-
         payload.id = res.body.id;
 
         done();
@@ -140,10 +139,9 @@ module.exports.sendDocument = function(payload) {
 /**
  * Associate file with identifier
  */
-module.exports.sendFile = function(identifier, file) {
+module.exports.sendFile = function(payload, file) {
   return function(done) {
-    module.exports.tokenApiRequest('post', '/providers/documents/file')
-      .field('identifier', identifier)
+    module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
       .attach('file', file)
       .expect(204)
       .end(done);

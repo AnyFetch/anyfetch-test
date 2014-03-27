@@ -15,12 +15,13 @@ describe("Test providers workflow", function() {
       text:'hello world'
     },
     document_type: null,
-    user_access: null
+    user_access: null,
+    no_hydration:true,
   };
 
   it("should be able to send a document", function(done) {
     // We should be able to login using supplied credentials
-    helpers.tokenApiRequest('post', '/providers/documents')
+    helpers.tokenApiRequest('post', '/documents')
       .send(payload)
       .expect(helpers.expectJSON('identifier', payload.identifier))
       .expect(200)
