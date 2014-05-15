@@ -94,7 +94,7 @@ module.exports.tokenApiRequest = function(method, url) {
   }
   return request(config.apiUrl)
     [method](url)
-    .set('Authorization', "token " + oauthCredential);
+    .set('Authorization', "Bearer " + oauthCredential);
 };
 
 
