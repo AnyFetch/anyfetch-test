@@ -29,9 +29,6 @@ describe("Stress test", function() {
     var sender = function(i, cb) {
       var payload = {
         identifier:'test-office-dependencies-identifier-' + i,
-        metadatas: {
-          path: '/test-dependencies-sample.doc',
-        },
         document_type: 'file',
         user_access: null
       };
