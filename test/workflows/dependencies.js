@@ -14,7 +14,6 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      no_hydration: true,
       identifier: config.apiUrl + 'test-office-dependencies-identifier',
       metadatas: {
         path: '/test-dependencies-sample.doc',

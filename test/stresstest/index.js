@@ -6,7 +6,7 @@ var async = require('async');
 var helpers = require('../workflows/helpers.js');
 
 
-var COUNT = 8;
+var COUNT = process.env.STRESSTEST || 8;
 
 describe("Stress test", function() {
   this.timeout(15 * 60 * 1000);
@@ -28,7 +28,6 @@ describe("Stress test", function() {
 
     var sender = function(i, cb) {
       var payload = {
-        no_hydration: true,
         identifier:'test-office-dependencies-identifier-' + i,
         metadatas: {
           path: '/test-dependencies-sample.doc',
