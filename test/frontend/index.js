@@ -3,7 +3,7 @@
 require('should');
 var request = require('supertest');
 
-var urlFront = ['http://anyfetch.com', 'http://staging.anyfetch.com'];
+var urlFront = ['http://app.anyfetch.com', 'http://staging.app.anyfetch.com'];
 var urlBack = ['http://api.anyfetch.com', 'http://staging.api.anyfetch.com'];
 
 describe("Test front and back ends", function() {
