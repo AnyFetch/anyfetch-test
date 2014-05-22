@@ -87,7 +87,10 @@ describe("Test hydraters dependencies", function() {
         helpers.basicApiRequest('get', '/documents/identifier/' + payload.identifier + '/raw')
         .expect(404)
         .end(function(err) {
-          if(!err) {
+          if(err) {
+            throw err;
+          }
+          else {
             done(),
             clearInterval(retry);
           }
