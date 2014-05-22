@@ -84,19 +84,22 @@ describe("Test hydraters dependencies", function() {
     it('... sending file', helpers.sendFile(payload, file));
 
     it('should have been properly removed', function(done) {
-      var retry = setInterval(function() {
+      function checkHydration() {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
-        .expect(404)
-        .end(function(err) {
+        .end(function(err, res) {
           if(err) {
             throw err;
           }
-          else {
+          if(res.statusCode === 404) {
             done();
-            clearInterval(retry);
+          }
+          else {
+            // Let's try again
+            setTimeout(checkHydration, 2000);
           }
         });
-      }, 2000);
+      }
+      setTimeout(checkHydration, 2000);
     });
   });
 
