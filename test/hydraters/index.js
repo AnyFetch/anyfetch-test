@@ -125,6 +125,8 @@ var hydraters = {
     expected: generateCompareFunction('./samples/eml.hydrater.anyfetch.com.expected.json')
 
   },
+  'http://filecleaner.hydrater.anyfetch.com': {
+  },
 };
 
 describe("Test hydraters", function() {

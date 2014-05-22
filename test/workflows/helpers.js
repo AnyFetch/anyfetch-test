@@ -166,7 +166,6 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
             cb(res.body);
           }
 
-          // Office hydrater completed!
           // We can now finish the test.
           clearInterval(retry);
 

@@ -41,8 +41,6 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      no_hydration: true,
-      identifier: config.apiUrl + 'test-eml-dependencies-identifier',
       metadatas: {
         path: '/test-dependencies-sample.eml',
       },
@@ -65,6 +63,36 @@ describe("Test hydraters dependencies", function() {
           })
           .end(done);
       }, 1000);
+    });
+  });
+
+  describe("should remove useless files", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: config.apiUrl + 'test-filecleaner-identifier',
+      metadatas: {
+        path: '/test-filecleaner.DS_STORE',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/samples/.DS_STORE';
+
+    it('... sending document', helpers.sendDocument(payload));
+    it('... sending file', helpers.sendFile(payload, file));
+
+    it('should have been properly hydrated', function(done) {
+      var retry = setInterval(function() {
+        helpers.basicApiRequest('get', '/documents/identifier/' + payload.identifier + '/raw')
+        .expect(404)
+        .end(function(err) {
+          if(!err) {
+            done(),
+            clearInterval(retry);
+          }
+        });
+      }, 2000);
     });
   });
 
