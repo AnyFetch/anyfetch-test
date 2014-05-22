@@ -84,7 +84,7 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       var retry = setInterval(function() {
-        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier + '/raw')
+        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .expect(404)
         .end(function(err) {
           if(err) {
