@@ -41,6 +41,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
+      identifier: config.apiUrl + 'test-eml-identifier',
       metadatas: {
         path: '/test-dependencies-sample.eml',
       },
@@ -82,7 +83,7 @@ describe("Test hydraters dependencies", function() {
     it('... sending document', helpers.sendDocument(payload));
     it('... sending file', helpers.sendFile(payload, file));
 
-    it('should have been properly hydrated', function(done) {
+    it('should have been properly removed', function(done) {
       var retry = setInterval(function() {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .expect(404)
@@ -91,7 +92,7 @@ describe("Test hydraters dependencies", function() {
             throw err;
           }
           else {
-            done(),
+            done();
             clearInterval(retry);
           }
         });
