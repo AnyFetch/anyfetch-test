@@ -155,10 +155,14 @@ module.exports.sendFile = function(payload, file) {
  */
 module.exports.waitForHydration = function(id, hydraterToWait, cb) {
   return function(done) {
-    var retry = setInterval(function() {
+    function checkHydration() {
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
-      .expect(function(res) {
+      .end(function(err, res) {
+        if(err) {
+          throw err;
+        }
+
         if(res.body.hydrated_by.indexOf(hydraterToWait) !== -1) {
 
           // Return to original caller with document information
@@ -166,22 +170,16 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
             cb(res.body);
           }
 
-          // Office hydrater completed!
-          // We can now finish the test.
-          clearInterval(retry);
+          done();
+        }
+        else {
+          // Let's try again
+          setTimeout(checkHydration, 2000);
+        }
 
-          if(!done.called) {
-            done();
-            done.called = true;
-          }
-        }
-      })
-      .end(function(err) {
-        // Do nothing and retry.
-        if(err) {
-          throw err;
-        }
       });
-    }, 2000);
+    }
+
+    setTimeout(checkHydration, 2000);
   };
 };
