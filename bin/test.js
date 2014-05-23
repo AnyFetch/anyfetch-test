@@ -6,13 +6,13 @@ var async = require('async');
 var request = require('request');
 
 var prodEnv = {
-  prodApiUrl: "https://api.anyfetch.com",
-  prodCredentials: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ="
+  API_URL: "https://api.anyfetch.com",
+  CREDENTIALS: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ="
 };
 
 var stagingEnv = {
-  prodApiUrl: "http://staging.api.anyfetch.com",
-  prodCredentials: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA=="
+  API_URL: "http://staging.api.anyfetch.com",
+  CREDENTIALS: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA=="
 };
 
 async.parallel([
