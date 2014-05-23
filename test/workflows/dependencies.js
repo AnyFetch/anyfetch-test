@@ -41,8 +41,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      no_hydration: true,
-      identifier: config.apiUrl + 'test-eml-dependencies-identifier',
+      identifier: config.apiUrl + 'test-eml-identifier',
       metadatas: {
         path: '/test-dependencies-sample.eml',
       },
@@ -65,6 +64,42 @@ describe("Test hydraters dependencies", function() {
           })
           .end(done);
       }, 1000);
+    });
+  });
+
+  describe("should remove useless files", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: config.apiUrl + 'test-filecleaner-identifier',
+      metadatas: {
+        path: '/test-filecleaner.DS_STORE',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/samples/.DS_STORE';
+
+    it('... sending document', helpers.sendDocument(payload));
+    it('... sending file', helpers.sendFile(payload, file));
+
+    it('should have been properly removed', function(done) {
+      function checkHydration() {
+        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
+        .end(function(err, res) {
+          if(err) {
+            throw err;
+          }
+          if(res.statusCode === 404) {
+            done();
+          }
+          else {
+            // Let's try again
+            setTimeout(checkHydration, 2000);
+          }
+        });
+      }
+      setTimeout(checkHydration, 2000);
     });
   });
 
