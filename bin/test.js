@@ -6,18 +6,18 @@ var async = require('async');
 var request = require('request');
 
 var prodEnv = {
-  prodApiUrl:"https://api.anyfetch.com",
-  prodCredentials:"dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ="
+  prodApiUrl: "https://api.anyfetch.com",
+  prodCredentials: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ="
 };
 
 var stagingEnv = {
-  prodApiUrl:"http://staging.api.anyfetch.com",
-  prodCredentials:"c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA=="
+  prodApiUrl: "http://staging.api.anyfetch.com",
+  prodCredentials: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA=="
 };
 
 async.parallel([
   function prodTest(cb) {
-    shellExec('npm test', {env: prodEnv, cwd: "/home/node/anyfetch-test"}, function (err, stderr) {
+    shellExec('npm test', {env: prodEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
       if(err) {
         throw err;
       }
@@ -37,7 +37,7 @@ async.parallel([
     });
   },
   function prodTest(cb) {
-    shellExec('npm test', {env: stagingEnv, cwd: "/home/node/anyfetch-test"}, function (err, stderr) {
+    shellExec('npm test', {env: stagingEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
       if(err) {
         throw err;
       }
