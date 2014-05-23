@@ -7,20 +7,23 @@ var request = require('request');
 
 var prodEnv = {
   API_URL: "https://api.anyfetch.com",
-  CREDENTIALS: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ="
+  CREDENTIALS: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=",
+  NODE_ENV: 'test',
 };
 
 var stagingEnv = {
   API_URL: "http://staging.api.anyfetch.com",
-  CREDENTIALS: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA=="
+  CREDENTIALS: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==",
+  NODE_ENV: 'test',
 };
 
 async.parallel([
   function prodTest(cb) {
-    shellExec('/usr/local/bin/npm test', {env: prodEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
+    shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: prodEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(err) {
         throw err;
       }
+      console.log(stdout);
       if(stderr){
         var json = {
           "subject": "anyfetch-test on PROD FAILED",
@@ -37,7 +40,7 @@ async.parallel([
     });
   },
   function prodTest(cb) {
-    shellExec('/usr/local/bin/npm test', {env: stagingEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
+    shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: stagingEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(err) {
         throw err;
       }
