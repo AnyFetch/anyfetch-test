@@ -17,6 +17,11 @@ var stagingEnv = {
   NODE_ENV: 'test',
 };
 
+
+var removeColor = function(input) {
+  return input.replace(/\[[0-9]+m/g, '').replace(/\\u[0-9]+b/, '');
+};
+
 async.parallel([
   function prodTest(cb) {
     shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: prodEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
@@ -25,7 +30,7 @@ async.parallel([
           "subject": "anyfetch-test on PROD FAILED",
           "from_address": "deploy@anyfetch.com",
           "source": "anyfetch-test",
-          "content": JSON.stringify(stderr),
+          "content": JSON.stringify(removeColor(stderr)),
           "tags": ["server", "api", "test", "#FAIL", "#PRODUCTION"]
         };
         request.post({url: "https://api.flowdock.com/v1/messages/team_inbox/" + process.env.FLOWDOCK, json: json}, cb);
@@ -42,7 +47,7 @@ async.parallel([
           "subject": "anyfetch-test on STAGING FAILED",
           "from_address": "deploy@anyfetch.com",
           "source": "anyfetch-test",
-          "content": JSON.stringify(stderr),
+          "content": JSON.stringify(removeColor(stderr)),
           "tags": ["server", "api", "test", "#FAIL", "#STAGING"]
         };
         request.post({url: "https://api.flowdock.com/v1/messages/team_inbox/" + process.env.FLOWDOCK, json: json}, cb);
