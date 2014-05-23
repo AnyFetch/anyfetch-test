@@ -19,7 +19,11 @@ var stagingEnv = {
 
 
 var removeColor = function(input) {
-  return input.replace(/\[[0-9]+m/g, '').replace(/\\u[0-9]+b/g, '').replace(/\\n/g, '<br>');
+  var output = input.replace(/\[[0-9]+m/g, '');
+  output = output.replace(/\\u[0-9]+b/g, '');
+  output = output.replace(/\\n/g, '<br>');
+  return output;
+
 };
 
 async.parallel([
