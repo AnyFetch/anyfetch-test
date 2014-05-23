@@ -20,10 +20,6 @@ var stagingEnv = {
 async.parallel([
   function prodTest(cb) {
     shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: prodEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
-      if(err) {
-        throw err;
-      }
-      console.log(stdout);
       if(stderr){
         var json = {
           "subject": "anyfetch-test on PROD FAILED",
@@ -41,9 +37,6 @@ async.parallel([
   },
   function prodTest(cb) {
     shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: stagingEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
-      if(err) {
-        throw err;
-      }
       if(stderr){
         var json = {
           "subject": "anyfetch-test on STAGING FAILED",
