@@ -17,7 +17,7 @@ var stagingEnv = {
 
 async.parallel([
   function prodTest(cb) {
-    shellExec('npm test', {env: prodEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
+    shellExec('/usr/local/bin/npm test', {env: prodEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
       if(err) {
         throw err;
       }
@@ -37,7 +37,7 @@ async.parallel([
     });
   },
   function prodTest(cb) {
-    shellExec('npm test', {env: stagingEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
+    shellExec('/usr/local/bin/npm test', {env: stagingEnv, cwd: "/home/node/anyfetch-test/"}, function (err, stderr) {
       if(err) {
         throw err;
       }
