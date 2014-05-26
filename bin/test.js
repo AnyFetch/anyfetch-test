@@ -20,7 +20,7 @@ var stagingEnv = {
 
 var removeColor = function(input) {
   var output = input.replace(/\[[0-9]+m/g, '');
-  output = output.replace(/[^a-z0-9 \n:\-&\(\)\/;]/gi, '');
+  output = output.replace(/[^a-z0-9 \n:\-\.&\(\)\/;]/gi, '');
   output = output.replace(/\n/g, '<br>');
   return output;
 };
