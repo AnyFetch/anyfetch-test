@@ -169,7 +169,6 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
           if(cb) {
             cb(res.body);
           }
-
           done();
         }
         else {

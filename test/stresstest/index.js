@@ -9,7 +9,7 @@ var helpers = require('../workflows/helpers.js');
 var COUNT = process.env.STRESSTEST || 8;
 
 describe("Stress test", function() {
-  this.timeout(15 * 60 * 1000);
+  this.timeout(120 * 1000);
   this.bail(true);
   before(helpers.createAccount);
   before(helpers.resetAccount);
