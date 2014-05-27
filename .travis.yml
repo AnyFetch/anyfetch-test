@@ -5,7 +5,7 @@ env:
   - API_URL=https://api.anyfetch.com CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
   - API_URL=http://staging.api.anyfetch.com CREDENTIALS=c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==
 script:
-  - travis_retry npm test
+  - npm test
 notifications:
   flowdock:
     secure: "aW1gJrsvE9zxkH8q2qmqwYJH3fen4jKbeocX/rm99HB7rOnXW3fJ/6KA3hD2ThUMa1jNnrxJbPSrEcpZe77mXwYAg7aBLQ1sP4GOGVyjIObgYld541OGvGsgtlGX8cwwj4fIu3WiKvUeGL2y2HjlJ1fn32JUjjAFssJHePmJ+X8="
