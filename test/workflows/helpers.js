@@ -2,6 +2,8 @@
 
 require('should');
 var request = require('supertest');
+var path = require('path');
+
 
 var config = require('../config.js');
 
@@ -137,12 +139,13 @@ module.exports.sendDocument = function(payload) {
 
 
 /**
- * Associate file with identifier
+ * Associate file with identifier.
+ * File must be an absolute path.
  */
 module.exports.sendFile = function(payload, file) {
   return function(done) {
     module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
-      .attach('file', file)
+      .attach('file', file, path.basename(file))
       .expect(204)
       .end(done);
   };

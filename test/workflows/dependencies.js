@@ -60,6 +60,7 @@ describe("Test hydraters dependencies", function() {
           .expect(200)
           .expect(function(res)
           {
+            res.body.datas.should.have.lengthOf(1);
             res.body.datas[0].datas.path.should.include('CV.docx');
           })
           .end(done);
