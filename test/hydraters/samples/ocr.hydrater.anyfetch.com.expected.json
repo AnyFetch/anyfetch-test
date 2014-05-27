@@ -1,1 +1,8 @@
-{"document_type":"image","metadatas":{"path":"ocr.hydrater.anyfetch.com.test.png","text":"Tesseract sample image. The quick brown fox jumps over the lazy dog.\n\n"},"datas":{},"identifier":"ocr-test"}
+{
+  "document_type":"image",
+  "metadatas":{
+    "text":"Tesseract sample image. The quick brown fox jumps over the lazy dog.\n\n"
+  },
+  "datas":{},
+  "actions": {}
+}
