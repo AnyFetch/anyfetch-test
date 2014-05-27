@@ -1,8 +1,5 @@
 {
   "document_type":"document",
   "metadatas":{
-    "path":"pdf.hydrater.anyfetch.com.test.pdf",
-    "mime_type":"application/pdf"
-  },
-  "identifier":"pdf-test"
+  }
 }
