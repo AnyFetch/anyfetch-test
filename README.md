@@ -12,3 +12,7 @@ Introducing this repo.
 A simple `npm test` can do the trick.
 
 If you want to test staging API, you'll need to set `API_URL=http://staging.api.anyfetch.com`. You can also set your own credentials using `CREDENTIALS=base64encoded`.
+
+### As a crontab...
+The `bin/test.js` script can be used as a cron task.
+You should then specify a `FLOWDOCK` env variable to send a notification to your Flowdock.
