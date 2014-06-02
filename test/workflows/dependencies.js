@@ -15,7 +15,7 @@ describe("Test hydraters dependencies", function() {
 
     var payload = {
       identifier: config.apiUrl + 'test-office-dependencies-identifier',
-      metadatas: {
+      metadata: {
         path: '/test-dependencies-sample.doc',
       },
       document_type: 'file',
@@ -31,8 +31,8 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.datas.html.should.include('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
-      hydratedDocument.metadatas.text.should.include('pour les processus');
+      hydratedDocument.data.html.should.include('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
+      hydratedDocument.metadata.text.should.include('pour les processus');
       done();
     });
   });
@@ -42,7 +42,7 @@ describe("Test hydraters dependencies", function() {
 
     var payload = {
       identifier: config.apiUrl + 'test-eml-identifier',
-      metadatas: {
+      metadata: {
         path: '/test-dependencies-sample.eml',
       },
       document_type: 'file',
@@ -60,7 +60,7 @@ describe("Test hydraters dependencies", function() {
           .expect(200)
           .expect(function(res)
           {
-            res.body.datas[0].datas.path.should.include('CV.docx');
+            res.body.data[0].data.path.should.include('CV.docx');
           })
           .end(done);
       }, 1000);
@@ -72,7 +72,7 @@ describe("Test hydraters dependencies", function() {
 
     var payload = {
       identifier: config.apiUrl + 'test-filecleaner-identifier',
-      metadatas: {
+      metadata: {
         path: '/test-filecleaner.DS_STORE',
       },
       document_type: 'file',
