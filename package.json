@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "mocha": "1.15.x",
-    "should": "2.1.x",
+    "should": "3.x.x",
     "supertest": "0.9.x"
   },
   "licence": "MIT",
