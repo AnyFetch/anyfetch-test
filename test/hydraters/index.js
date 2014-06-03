@@ -20,8 +20,8 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: "file",
-        metadatas: {},
-        datas: {},
+        metadata: {},
+        data: {},
         identifier: 'plaintext-test'
       }
     },
@@ -33,11 +33,11 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'document',
-        metadatas: {
+        metadata: {
           path: 'pdf.hydrater.anyfetch.com.test.pdf',
           mime_type: 'application/pdf'
         },
-        datas: {},
+        data: {},
         identifier: 'pdf-test'
       }
     },
@@ -47,8 +47,8 @@ var hydraters = {
         data.should.have.property(key);
         data[key].should.eql(expected[key]);
       }
-      data.datas.should.have.property('html');
-      data.datas.html.should.match(/mail est un/);
+      data.data.should.have.property('html');
+      data.data.html.should.match(/mail est un/);
       done();
     }
   },
@@ -59,10 +59,10 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'document',
-        metadatas: {
+        metadata: {
           path: 'office.hydrater.anyfetch.com.test.doc'
         },
-        datas: {},
+        data: {},
         identifier: 'office-test'
       }
     }
@@ -73,10 +73,10 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'file',
-        metadatas: {
+        metadata: {
           path: 'image.hydrater.anyfetch.com.test.png',
         },
-        datas: {},
+        data: {},
         identifier: 'image-test'
       }
     },
@@ -86,10 +86,10 @@ var hydraters = {
         data.should.have.property(key);
         data[key].should.eql(expected[key]);
       }
-      data.datas.should.have.property('thumb');
-      data.datas.should.have.property('display');
-      data.datas.display.should.include("data:image/jpeg;base64,");
-      data.datas.thumb.should.include("data:image/png;base64,");
+      data.data.should.have.property('thumb');
+      data.data.should.have.property('display');
+      data.data.display.should.include("data:image/jpeg;base64,");
+      data.data.thumb.should.include("data:image/png;base64,");
       done();
     }
   },
@@ -99,10 +99,10 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'image',
-        metadatas: {
+        metadata: {
           path: 'ocr.hydrater.anyfetch.com.test.png',
         },
-        datas: {},
+        data: {},
         identifier: 'ocr-test'
       }
     },
@@ -115,10 +115,10 @@ var hydraters = {
       long_poll: 1,
       document: {
         document_type: 'document',
-        metadatas: {
+        metadata: {
           path: '/file.eml'
         },
-        datas: {},
+        data: {},
         identifier: 'eml-test'
       }
     },

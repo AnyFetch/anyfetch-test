@@ -11,7 +11,7 @@ describe("Test providers workflow", function() {
 
   var payload = {
     identifier:'test-workflow-identifier',
-    metadatas: {
+    metadata: {
       text:'hello world'
     },
     document_type: null,
@@ -40,7 +40,7 @@ describe("Test providers workflow", function() {
       .expect(200)
       .expect(function(res) {
         res.body.should.have.property('id', payload.id);
-        res.body.should.have.property('datas');
+        res.body.should.have.property('data');
       })
       .expect(200)
       .end(done);
@@ -53,8 +53,8 @@ describe("Test providers workflow", function() {
       helpers.basicApiRequest('get', '/documents?search=hello')
         .expect(200)
         .expect(function(res) {
-          res.body.should.have.property('datas').with.lengthOf(1);
-          res.body.datas[0].should.have.property('id', payload.id);
+          res.body.should.have.property('data').with.lengthOf(1);
+          res.body.data[0].should.have.property('id', payload.id);
         })
         .end(done);
     }, 5000);

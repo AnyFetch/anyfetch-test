@@ -1,8 +1,8 @@
 {
   "document_type":"image",
-  "metadatas":{
+  "metadata":{
     "text":"Tesseract sample image. The quick brown fox jumps over the lazy dog.\n\n"
   },
-  "datas":{},
+  "data":{},
   "actions": {}
 }
