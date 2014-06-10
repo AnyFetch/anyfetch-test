@@ -99,7 +99,7 @@ module.exports.tokenApiRequest = function(method, url) {
 
 
 /**
- * Complex helper, used to send `payload` document, then send associated `file`, and finally wait until `hydraterToWait` has returned with datas.
+ * Complex helper, used to send `payload` document, then send associated `file`, and finally wait until `hydraterToWait` has returned with data.
  * Use multiple it().
  * Example usage in dependencies.js
  */

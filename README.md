@@ -1,4 +1,5 @@
 # Anyfetch high-level functional tests
+![Build Status](https://travis-ci.org/AnyFetch/anyfetch-test.svg?branch=master)
 
 Here at Anyfetch, we enjoy providing the best user experience.
 All our projects are thoroughly tested on [Travis](https://travis-ci.org/) after each push, and we aim to keep our test-suite as exhaustive as can possibly be. Heck, we even provide [mock servers](https://github.com/Papiel/anyfetch.js#helper-functions) to check your libraries locally!
