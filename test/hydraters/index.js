@@ -111,7 +111,7 @@ var hydraters = {
   'http://eml.hydrater.anyfetch.com': {
     payload: {
       access_token: "123",
-      file_path: "https://raw.github.com/AnyFetchœ/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
+      file_path: "https://raw.github.com/AnyFetch/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
       long_poll: 1,
       document: {
         document_type: 'document',
