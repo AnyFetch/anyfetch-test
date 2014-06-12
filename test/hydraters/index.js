@@ -16,7 +16,7 @@ var generateCompareFunction = function(file) {
 var hydraters = {
   'http://plaintext.hydrater.anyfetch.com': {
     payload: {
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.doc",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.doc",
       long_poll: 1,
       document: {
         document_type: "file",
@@ -29,7 +29,7 @@ var hydraters = {
   },
   'http://pdf.hydrater.anyfetch.com': {
     payload: {
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/pdf.hydrater.anyfetch.com.test.pdf",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/pdf.hydrater.anyfetch.com.test.pdf",
       long_poll: 1,
       document: {
         document_type: 'document',
@@ -55,7 +55,7 @@ var hydraters = {
   'http://office.hydrater.anyfetch.com': {
     payload: {
       access_token: "123",
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.doc",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.doc",
       long_poll: 1,
       document: {
         document_type: 'document',
@@ -69,7 +69,7 @@ var hydraters = {
   },
   'http://image.hydrater.anyfetch.com': {
     payload: {
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/image.hydrater.anyfetch.com.test.png",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/image.hydrater.anyfetch.com.test.png",
       long_poll: 1,
       document: {
         document_type: 'file',
@@ -95,7 +95,7 @@ var hydraters = {
   },
   'http://ocr.hydrater.anyfetch.com': {
     payload: {
-      file_path: "https://raw2.github.com/Papiel/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/ocr.hydrater.anyfetch.com.test.png",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/ocr.hydrater.anyfetch.com.test.png",
       long_poll: 1,
       document: {
         document_type: 'image',
@@ -111,7 +111,7 @@ var hydraters = {
   'http://eml.hydrater.anyfetch.com': {
     payload: {
       access_token: "123",
-      file_path: "https://raw.github.com/Papiel/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
+      file_path: "https://raw.github.com/AnyFetchœ/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
       long_poll: 1,
       document: {
         document_type: 'document',
