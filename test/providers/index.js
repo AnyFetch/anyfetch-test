@@ -7,6 +7,7 @@ var providers = [
   'http://dropbox.provider.anyfetch.com',
   'http://gmail.provider.anyfetch.com',
   'http://gcontacts.provider.anyfetch.com',
+  'http://gdrive.provider.anyfetch.com',
 ];
 
 describe("Test providers", function() {
@@ -14,8 +15,8 @@ describe("Test providers", function() {
     providers.forEach(function(url) {
       it("`" + url + "` should be up", function(done) {
         request(url)
-          .get('/update')
-          .expect(405)
+          .post('/update')
+          .expect(409)
           .end(done);
       });
     });
