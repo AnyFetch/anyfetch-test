@@ -1,8 +1,9 @@
 {
-  "metadata":
-  {
-    "data":{
+  "document_type":"document",
+  "data":{
       "html":"<h1>Test document</h1>\n\n<blockquote><p>Citation</p></blockquote>\n\n<p>Normal text</p>"
-  },
-  "document_type":"document"
+    },
+  "metadata":{},
+  "userAccess":[],
+  "actions":{}
 }
