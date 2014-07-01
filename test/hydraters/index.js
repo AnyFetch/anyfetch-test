@@ -132,7 +132,7 @@ var hydraters = {
       document: {
         document_type: 'document',
         metadata: {
-          path: 'markdown.hydrater.anyfetch.com.test.md',
+          path: '/markdown.hydrater.anyfetch.com.test.md',
         },
         data: {},
         identifier: 'markdown-test'
