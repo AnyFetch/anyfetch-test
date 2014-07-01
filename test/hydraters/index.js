@@ -127,7 +127,7 @@ var hydraters = {
   },
   'http://markdown.hydrater.anyfetch.com': {
     payload: {
-      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/markdown.hydrater.anyfetch.com.test.md",
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/25a82595891eba0979ec4d4283e99258dfaeef88/test/hydraters/samples/markdown.hydrater.anyfetch.com.test.md",
       long_poll: 1,
       document: {
         document_type: 'document',
