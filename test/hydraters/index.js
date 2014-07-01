@@ -125,6 +125,21 @@ var hydraters = {
     expected: generateCompareFunction('./samples/eml.hydrater.anyfetch.com.expected.json')
 
   },
+  'http://markdown.hydrater.anyfetch.com': {
+    payload: {
+      file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/markdown.hydrater.anyfetch.com.test.md",
+      long_poll: 1,
+      document: {
+        document_type: 'document',
+        metadata: {
+          path: 'markdown.hydrater.anyfetch.com.test.md',
+        },
+        data: {},
+        identifier: 'markdown-test'
+      }
+    },
+    expected: generateCompareFunction('./samples/markdown.hydrater.anyfetch.com.expected.json')
+  },
   'http://filecleaner.hydrater.anyfetch.com': {
   },
 };
