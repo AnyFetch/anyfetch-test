@@ -2,8 +2,11 @@ language: node_js
 node_js:
   - '0.10'
 env:
-  - API_URL=https://api.anyfetch.com CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
-  - API_URL=http://staging.api.anyfetch.com CREDENTIALS=c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==
+  global:
+    - CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
+  matrix:
+    - API_URL=https://api.anyfetch.com
+    - API_URL=http://staging.api.anyfetch.com
 script:
   - npm test
 notifications:
