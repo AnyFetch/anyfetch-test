@@ -6,10 +6,10 @@ var async = require('async');
 var config = require('./config.js');
 
 before(function createUserCredential(done) {
-  var timestamp = (new Date()).getTime();
-
   async.waterfall([
-    function(cb) {
+    function createUser(cb) {
+      var timestamp = (new Date()).getTime();
+
       request(config.apiUrl)
       .post('/users')
       .set('Authorization', 'Basic ' + config.masterCredential)
@@ -19,36 +19,31 @@ before(function createUserCredential(done) {
         "password": "test_password",
         "is_admin": false
       })
-      .end(function(err, res) {
-        config.user = res.body;
-        config.user.password = "test_password";
-        cb();
-      });
+      .end(cb);
     },
-    function(cb) {
+    function createSubcompanyAndUpdateCredential(res, cb) {
+      config.basicCredential = (new Buffer(res.body.email + ":test_password")).toString('base64');
+
       request(config.apiUrl)
       .post('/subcompanies')
       .set('Authorization', 'Basic ' + config.masterCredential)
       .send({
-        "user": config.user.id,
-        "name": "test-company-" + timestamp,
+        "user": res.body.id,
+        "name": "test-company-" + (new Date()).getTime(),
       })
-      .end(function(err, res) {
-        config.subcompany = res.body;
-        cb();
-      });
+      .end(cb);
+    },
+    function saveSubcompanyId(res, cb) {
+      config.subcompany_id = res.body.id;
+      cb();
     }
-  ],
-  function() {
-    config.basicCredential = (new Buffer(config.user.email + ":" + config.user.password)).toString('base64');
-    done();
-  });
+  ], done);
 });
 
 
-after(function deleteUserCredential(done) {
+after(function deleteSubcompany(done) {
   request(config.apiUrl)
-  .del('/subcompanies/' + config.subcompany.id)
+  .del('/subcompanies/' + config.subcompany_id)
   .set('Authorization', 'Basic ' + config.masterCredential)
   .end(done);
 });
