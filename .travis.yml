@@ -4,8 +4,9 @@ node_js:
 env:
   global:
     - CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
-  - API_URL=https://api.anyfetch.com
-  - API_URL=http://staging.api.anyfetch.com
+  matrix:
+    - API_URL=https://api.anyfetch.com
+    - API_URL=http://staging.api.anyfetch.com
 script:
   - npm test
 notifications:
