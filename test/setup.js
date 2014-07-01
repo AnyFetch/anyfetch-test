@@ -50,7 +50,5 @@ after(function deleteUserCredential(done) {
   request(config.apiUrl)
   .del('/subcompanies/' + config.subcompany.id)
   .set('Authorization', 'Basic ' + config.masterCredential)
-  .end(function(err, res) {
-    done();
-  });
+  .end(done);
 });
