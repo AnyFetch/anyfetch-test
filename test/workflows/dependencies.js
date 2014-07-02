@@ -64,8 +64,7 @@ describe("Test hydraters dependencies", function() {
       hydratedDocument.metadata.should.have.property('keywords', '500px, Adulte, Blog FR, Fotografar2014, Homme, Personne, Xavier Bernard, iPhoto');
       hydratedDocument.data.should.have.property('display');
       hydratedDocument.data.should.have.property('thumb');
-      hydratedDocument.should.have.property('hydrated_by');
-      hydratedDocument.hydrated_by.should.containDeep(hydratersToWait);
+      hydratedDocument.should.have.property('hydrated_by').and.containDeep(hydratersToWait);
 
       done();
     });
