@@ -66,7 +66,7 @@ describe("Test hydraters dependencies", function() {
       hydratedDocument.data.should.have.property('thumb');
       hydratedDocument.should.have.property('hydrated_by');
       hydratersToWait.forEach(function(hydraterToWait) {
-        hydratedDocument.hydrated_by.containEql(hydraterToWait);
+        hydratedDocument.hydrated_by.should.containEql(hydraterToWait);
       });
 
       done();
