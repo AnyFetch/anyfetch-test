@@ -48,7 +48,7 @@ describe("Test hydraters dependencies", function() {
       document_type: 'file',
       user_access: null
     };
-    var file = __dirname + '/../../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
+    var file = __dirname + '/../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
     var hydratersToWait = ['http://iptc.hydrater.anyfetch.com/hydrate', 'http://image.hydrater.anyfetch.com/hydrate', 'http://ocr.hydrater.anyfetch.com/hydrate'];
     var hydratedDocument = null;
 
