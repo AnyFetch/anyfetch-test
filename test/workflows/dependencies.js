@@ -37,6 +37,39 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
+  describe("should work for image documents", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: config.apiUrl + 'test-image-dependencies-identifier',
+      metadata: {
+        path: '/test-dependancies-photo.jpg',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/../../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
+    var hydratersToWait = ['http://iptc.hydrater.anyfetch.com/hydrate', 'http://image.hydrater.anyfetch.com/hydrate', 'http://ocr.hydrater.anyfetch.com/hydrate'];
+    var hydratedDocument = null;
+
+    helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
+      hydratedDocument = document;
+    });
+
+    it('should have been properly hydrated', function(done) {
+      hydratedDocument.should.have.property('document_type', '5252ce4ce4cfcd16f55cfa3d');
+      hydratedDocument.should.have.property('metadata');
+      hydratedDocument.metadata.should.have.property('author', 'Frédéric RUAUDEL');
+      hydratedDocument.metadata.should.have.property('description', '© 2010 Frédéric Ruaudel, All Rights Reserved');
+      hydratedDocument.metadata.should.have.property('keywords', '500px, Adulte, Blog FR, Fotografar2014, Homme, Personne, Xavier Bernard, iPhoto');
+      hydratedDocument.data.should.have.property('display');
+      hydratedDocument.data.should.have.property('thumb');
+      hydratedDocument.should.have.property('hydrated_by').and.containDeep(hydratersToWait);
+
+      done();
+    });
+  });
+
   describe("should hydrate attachments", function() {
     this.bail(true);
 
