@@ -2,6 +2,7 @@
 
 require('should');
 var request = require('supertest');
+var async = require('async');
 
 
 // Build a checker-function to compare a reply with a file
@@ -162,11 +163,13 @@ var hydraters = {
 describe("Test hydraters", function() {
   describe("are up", function() {
     Object.keys(hydraters).forEach(function(url) {
-      it("`" + url + "` should be up", function(done) {
-        request(url)
-          .get('/status')
-          .expect(200)
-          .end(done);
+      it("`" + url + "` should be up", function() {
+        async.retry(3, function(cb) {
+          request(url)
+            .get('/status')
+            .expect(200)
+            .end(cb);
+        });
       });
     });
   });
@@ -178,18 +181,20 @@ describe("Test hydraters", function() {
         return;
       }
 
-      it("`" + url + "` should hydrate file", function(done) {
-        request(url)
-          .post('/hydrate')
-          .send(hydraters[url].payload)
-          .expect(200)
-          .end(function(err, res) {
-            if(err) {
-              throw err;
-            }
+      it("`" + url + "` should hydrate file", function() {
+        async.retry(3, function(cb) {
+          request(url)
+            .post('/hydrate')
+            .send(hydraters[url].payload)
+            .expect(200)
+            .end(function(err, res) {
+              if(err) {
+                throw err;
+              }
 
-            hydraters[url].expected(res.body, done);
-          });
+              hydraters[url].expected(res.body, cb);
+            });
+        });
       });
     });
   });

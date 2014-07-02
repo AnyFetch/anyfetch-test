@@ -2,6 +2,7 @@
 
 require('should');
 var request = require('supertest');
+var async = require('async');
 
 var providers = [
   'http://dropbox.provider.anyfetch.com',
@@ -13,11 +14,13 @@ var providers = [
 describe("Test providers", function() {
   describe("are up", function() {
     providers.forEach(function(url) {
-      it("`" + url + "` should be up", function(done) {
-        request(url)
-          .post('/update')
-          .expect(409)
-          .end(done);
+      async.retry(3, function(cb) {
+        it("`" + url + "` should be up", function() {
+          request(url)
+            .post('/update')
+            .expect(409)
+            .end(cb);
+        });
       });
     });
   });
