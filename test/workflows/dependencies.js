@@ -57,6 +57,16 @@ describe("Test hydraters dependencies", function() {
     });
 
     it('should have been properly hydrated', function(done) {
+      hydratedDocument.should.have.property('document_type', '5252ce4ce4cfcd16f55cfa3d');
+      hydratedDocument.should.have.property('metadata');
+      hydratedDocument.metadata.should.have.property('author', 'Frédéric RUAUDEL');
+      hydratedDocument.metadata.should.have.property('description', '© 2010 Frédéric Ruaudel, All Rights Reserved');
+      hydratedDocument.metadata.should.have.property('keywords', '500px, Adulte, Blog FR, Fotografar2014, Homme, Personne, Xavier Bernard, iPhoto');
+      hydratedDocument.data.should.have.property('display');
+      hydratedDocument.data.should.have.property('thumb');
+      hydratedDocument.should.have.property('hydrated_by');
+      hydratedDocument.hydrated_by.should.containDeep(hydratersToWait);
+
       done();
     });
   });
