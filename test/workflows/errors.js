@@ -5,6 +5,8 @@ require('should');
 var helpers = require('./helpers.js');
 var config = require('../config.js');
 
+var env = require('../../' + process.env.NODE_ENV + ".json");
+
 
 var checkErroredHydration = function(id, hydraterToWait, cb) {
   return function(done) {
@@ -52,7 +54,7 @@ describe("Test errored documents", function() {
       user_access: null
     };
     var file = __dirname + '/samples/errored.pdf';
-    var hydraterToWait = 'http://pdf.hydrater.anyfetch.com/hydrate';
+    var hydraterToWait = env.hydraters.pdf;
     var hydratedDocument = null;
 
     it('... sending document', helpers.sendDocument(payload));
@@ -60,14 +62,14 @@ describe("Test errored documents", function() {
     it('... sending file', helpers.sendFile(payload, file));
 
     it('... waiting for hydration', function(done) {
-      checkErroredHydration(payload.id, hydraterToWait, function(document) {
+      checkErroredHydration(payload.id, hydraterToWait + "/hydrate", function(document) {
         hydratedDocument = document;
       })(done);
     });
 
     it('should have been properly errored', function(done) {
       // Real test.
-      hydratedDocument.should.have.property("hydrater_errored", "http://pdf.hydrater.anyfetch.com/hydrate");
+      hydratedDocument.should.have.property("hydrater_errored", env.hydraters.pdf + "/hydrate");
       hydratedDocument.should.have.property("hydration_error").and.containDeep("May not be a PDF file (continuing anyway)\nSyntax Error:");
       done();
     });

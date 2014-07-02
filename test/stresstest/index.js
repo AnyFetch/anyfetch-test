@@ -5,6 +5,7 @@ var async = require('async');
 
 var helpers = require('../workflows/helpers.js');
 
+var env = require('../../' + process.env.NODE_ENV + ".json");
 
 var COUNT = process.env.STRESSTEST || 8;
 
@@ -49,7 +50,7 @@ describe("Stress test", function() {
     var checker = function(i, cb) {
       var id = payloads[i].id;
 
-      helpers.waitForHydration(id, 'http://office.hydrater.anyfetch.com/hydrate')(cb);
+      helpers.waitForHydration(id, env.hydraters.office)(cb);
     };
 
     async.eachLimit(range, 4, checker, done);

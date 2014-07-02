@@ -3,16 +3,16 @@
 var request = require('supertest');
 var async = require('async');
 
-var config = require('./config.js');
+var env = require('../' + process.env.NODE_ENV + ".json");
 
 before(function createUserCredential(done) {
   async.waterfall([
     function createUser(cb) {
       var timestamp = (new Date()).getTime();
 
-      request(config.apiUrl)
+      request(env.apiUrl)
       .post('/users')
-      .set('Authorization', 'Basic ' + config.masterCredential)
+      .set('Authorization', 'Basic ' + env.credentials)
       .send({
         "email": "test-" + timestamp + "@anyfetch.com",
         "name": "test-" + timestamp,
@@ -22,11 +22,11 @@ before(function createUserCredential(done) {
       .end(cb);
     },
     function createSubcompanyAndUpdateCredential(res, cb) {
-      config.basicCredential = (new Buffer(res.body.email + ":test_password")).toString('base64');
+      env.basicCredential = (new Buffer(res.body.email + ":test_password")).toString('base64');
 
-      request(config.apiUrl)
+      request(env.apiUrl)
       .post('/subcompanies')
-      .set('Authorization', 'Basic ' + config.masterCredential)
+      .set('Authorization', 'Basic ' + env.credentials)
       .send({
         "user": res.body.id,
         "name": "test-company-" + (new Date()).getTime(),
@@ -34,7 +34,7 @@ before(function createUserCredential(done) {
       .end(cb);
     },
     function saveSubcompanyId(res, cb) {
-      config.subcompany_id = res.body.id;
+      env.subcompany_id = res.body.id;
       cb();
     }
   ], done);
@@ -42,8 +42,8 @@ before(function createUserCredential(done) {
 
 
 after(function deleteSubcompany(done) {
-  request(config.apiUrl)
-  .del('/subcompanies/' + config.subcompany_id)
-  .set('Authorization', 'Basic ' + config.masterCredential)
+  request(env.apiUrl)
+  .del('/subcompanies/' + env.subcompany_id)
+  .set('Authorization', 'Basic ' + env.credentials)
   .end(done);
 });

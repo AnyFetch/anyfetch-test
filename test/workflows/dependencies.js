@@ -5,6 +5,9 @@ require('should');
 var helpers = require('./helpers.js');
 var config = require('../config.js');
 
+var env = require('../../' + process.env.NODE_ENV + ".json");
+
+
 describe("Test hydraters dependencies", function() {
   before(helpers.createAccount);
   before(helpers.resetAccount);
@@ -22,7 +25,7 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     };
     var file = __dirname + '/samples/office-file.doc';
-    var hydraterToWait = 'http://office.hydrater.anyfetch.com/hydrate';
+    var hydraterToWait = env.hydraters.office;
     var hydratedDocument = null;
 
     helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait, function(document) {
@@ -49,7 +52,7 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     };
     var file = __dirname + '/samples/eml-with-attachment.eml';
-    var hydraterToWait = 'http://eml.hydrater.anyfetch.com/hydrate';
+    var hydraterToWait = env.hydraters.eml;
 
     helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait);
 

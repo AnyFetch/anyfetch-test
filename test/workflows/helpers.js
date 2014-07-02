@@ -5,6 +5,8 @@ var request = require('supertest');
 
 var config = require('../config.js');
 
+var env = require('../../' + process.env.NODE_ENV + ".json");
+
 var oauthCredential = null;
 
 
@@ -13,9 +15,9 @@ var oauthCredential = null;
  * Returns an authentified supertest client
  */
 module.exports.basicApiRequest = function(method, url) {
-  return request(config.apiUrl)
+  return request(env.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + config.basicCredential);
+    .set('Authorization', 'Basic ' + env.credentials);
 };
 
 
@@ -163,7 +165,8 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
           throw err;
         }
 
-        if(res.body.hydrated_by.indexOf(hydraterToWait) !== -1) {
+        console.log("waiting for", hydraterToWait + "/hydrate");
+        if(res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1) {
 
           // Return to original caller with document information
           if(cb) {

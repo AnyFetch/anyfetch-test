@@ -1,0 +1,22 @@
+{
+  "api_url": "http://staging.api.anyfetch.com",
+  "app_url": "http://staging.app.anyfetch.com",
+  "credentials": "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==",
+  "hydraters": {
+    "plaintext": "http://plaintext.hydrater.anyfetch.com",
+    "image": "http://image.hydrater.anyfetch.com",
+    "office": "http://office.hydrater.anyfetch.com",
+    "pdf": "http://pdf.hydrater.anyfetch.com",
+    "ocr": "http://ocr.hydrater.anyfetch.com",
+    "iptc": "http://iptc.hydrater.anyfetch.com",
+    "markdown": "http://markdown.hydrater.anyfetch.com",
+    "filecleaner": "http://filecleaner.hydrater.anyfetch.com",
+    "eml": "http://eml.hydrater.anyfetch.com"
+  },
+  "providers": {
+    "gmail": "http://gmail.provider.anyfetch.com",
+    "gdrive": "http://gdrive.provider.anyfetch.com",
+    "gcontacts": "http://gcontacts.provider.anyfetch.com",
+    "dropbox": "http://dropbox.provider.anyfetch.com"
+  }
+}
