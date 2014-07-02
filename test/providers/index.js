@@ -14,14 +14,12 @@ var providers = [
 describe("Test providers", function() {
   describe("are up", function() {
     providers.forEach(function(url) {
-      async.retry(3, function(cb) {
-        it("`" + url + "` should be up", function() {
-          request(url)
-            .post('/update')
-            .expect(409)
-            .end(cb);
-        });
-      });
+      it("`" + url + "` should be up", async.retry(3, function(cb) {
+        request(url)
+          .post('/update')
+          .expect(409)
+          .end(cb);
+      }));
     });
   });
 });
