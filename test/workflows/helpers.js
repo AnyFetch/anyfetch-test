@@ -103,14 +103,13 @@ module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
  * Use multiple it().
  * Example usage in dependencies.js
  */
-module.exports.sendFileAndWaitForHydration = function sendFileAndWaitForHydration(payload, file, hydraterToWait, cb) {
-
+module.exports.sendFileAndWaitForHydration = function sendFileAndWaitForHydration(payload, file, hydratersToWait, cb) {
   it('... sending document', module.exports.sendDocument(payload));
 
   it('... sending file', module.exports.sendFile(payload, file));
 
   it('... waiting for hydration', function(done) {
-    module.exports.waitForHydration(payload.id, hydraterToWait, cb)(done);
+    module.exports.waitForHydration(payload.id, hydratersToWait, cb)(done);
   });
 };
 
@@ -151,9 +150,14 @@ module.exports.sendFile = function sendFile(payload, file) {
 
 /**
  * Block until hydraterToWait has hydrated id.
- * If cb is provided, it will be called with the result document once hydraterToWait has finished.
+ * If cb is provided, it will be called with the result document once all hydraters in hydratersToWait have finished.
  */
-module.exports.waitForHydration = function waitForHydration(id, hydraterToWait, cb) {
+module.exports.waitForHydration = function waitForHydration(id, hydratersToWait, cb) {
+  // transform a string to array
+  if(!(hydratersToWait instanceof Array)) {
+    hydratersToWait = [hydratersToWait];
+  }
+
   return function(done) {
     function checkHydration() {
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
@@ -163,8 +167,11 @@ module.exports.waitForHydration = function waitForHydration(id, hydraterToWait, 
           throw err;
         }
 
-        if(res.body.hydrated_by.indexOf(hydraterToWait) !== -1) {
+        var isAllHydrated = function(hydraterToWait) {
+          return res.body.hydrated_by.indexOf(hydraterToWait) !== -1;
+        };
 
+        if(hydratersToWait.every(isAllHydrated)) {
           // Return to original caller with document information
           if(cb) {
             cb(res.body);
