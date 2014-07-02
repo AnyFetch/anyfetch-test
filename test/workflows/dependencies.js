@@ -37,6 +37,30 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
+  describe("should work for image documents", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: config.apiUrl + 'test-image-dependencies-identifier',
+      metadata: {
+        path: '/test-dependancies-photo.jpg',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/samples/photo.jpg';
+    var hydratersToWait = ['http://iptc.hydrater.anyfetch.com/hydrate', 'http://image.hydrater.anyfetch.com/hydrate', 'http://ocr.hydrater.anyfetch.com/hydrate'];
+    var hydratedDocument = null;
+
+    helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
+      hydratedDocument = document;
+    });
+
+    it('should have been properly hydrated', function(done) {
+      done();
+    });
+  });
+
   describe("should hydrate attachments", function() {
     this.bail(true);
 
