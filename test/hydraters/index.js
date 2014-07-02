@@ -88,8 +88,8 @@ var hydraters = {
       }
       data.data.should.have.property('thumb');
       data.data.should.have.property('display');
-      data.data.display.should.include("data:image/jpeg;base64,");
-      data.data.thumb.should.include("data:image/png;base64,");
+      data.data.display.should.containDeep("data:image/jpeg;base64,");
+      data.data.thumb.should.containDeep("data:image/png;base64,");
       done();
     }
   },

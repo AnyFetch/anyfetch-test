@@ -31,8 +31,8 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.data.html.should.include('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
-      hydratedDocument.metadata.text.should.include('pour les processus');
+      hydratedDocument.data.html.should.containDeep('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
+      hydratedDocument.metadata.text.should.containDeep('pour les processus');
       done();
     });
   });
@@ -96,7 +96,7 @@ describe("Test hydraters dependencies", function() {
           .expect(200)
           .expect(function(res)
           {
-            res.body.data[0].data.path.should.include('CV.docx');
+            res.body.data[0].data.path.should.containDeep('CV.docx');
           })
           .end(done);
       }, 1000);
