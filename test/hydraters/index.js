@@ -140,6 +140,21 @@ var hydraters = {
     },
     expected: generateCompareFunction('./samples/markdown.hydrater.anyfetch.com.expected.json')
   },
+  'http://iptc.hydrater.anyfetch.com': {
+    payload: {
+      file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/327eb029b969a820b04868d219c5f797238874b8/test/hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg",
+      long_poll: 1,
+      document: {
+        document_type: 'document',
+        metadata: {
+          path: '/iptc.hydrater.anyfetch.com.test.jpg',
+        },
+        data: {},
+        identifier: 'iptc-test'
+      }
+    },
+    expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
+  },
   'http://filecleaner.hydrater.anyfetch.com': {
   },
 };

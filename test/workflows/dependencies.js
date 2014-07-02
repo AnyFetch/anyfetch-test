@@ -71,7 +71,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-filecleaner-identifier',
+      identifier: config.apiUrl + '/test-filecleaner-identifier',
       metadata: {
         path: '/test-filecleaner.DS_STORE',
       },
