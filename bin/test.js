@@ -5,18 +5,6 @@ var shellExec = require('child_process').exec;
 var async = require('async');
 var request = require('request');
 
-var prodEnv = {
-  API_URL: "https://api.anyfetch.com",
-  CREDENTIALS: "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=",
-  NODE_ENV: 'test',
-};
-
-var stagingEnv = {
-  API_URL: "http://staging.api.anyfetch.com",
-  CREDENTIALS: "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==",
-  NODE_ENV: 'test',
-};
-
 
 var removeColor = function(input) {
   var output = input.replace(/\[[0-9]+m/g, '');
@@ -27,7 +15,7 @@ var removeColor = function(input) {
 
 async.parallel([
   function prodTest(cb) {
-    shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: prodEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
+    shellExec('API_ENV="test-production" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr){
         var json = {
           "subject": "anyfetch-test on PROD FAILED",
@@ -43,8 +31,8 @@ async.parallel([
       }
     });
   },
-  function prodTest(cb) {
-    shellExec('./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: stagingEnv, cwd: __dirname + '/..'}, function (err, stdout, stderr) {
+  function stagingTest(cb) {
+    shellExec('API_ENV="test-staging" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr) {
         var json = {
           "subject": "anyfetch-test on STAGING FAILED",

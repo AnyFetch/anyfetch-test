@@ -5,8 +5,8 @@ env:
   global:
     - CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
   matrix:
-    - API_URL=https://api.anyfetch.com
-    - API_URL=http://staging.api.anyfetch.com
+    - API_ENV=production
+    - API_ENV=staging
 script:
   - npm test
 notifications:

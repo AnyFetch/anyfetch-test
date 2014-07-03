@@ -4,12 +4,11 @@ require('should');
 var request = require('supertest');
 var async = require('async');
 
-var providers = [
-  'http://dropbox.provider.anyfetch.com',
-  'http://gmail.provider.anyfetch.com',
-  'http://gcontacts.provider.anyfetch.com',
-  'http://gdrive.provider.anyfetch.com',
-];
+var env = require('../env');
+
+var providers = Object.keys(env.providers).map(function(key) {
+  return env.providers[key];
+});
 
 describe("Test providers", function() {
   describe("are up", function() {
