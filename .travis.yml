@@ -2,9 +2,11 @@ language: node_js
 node_js:
   - '0.10'
 env:
+  global:
+    - CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
   matrix:
-    - NODE_ENV=test-production
-    - NODE_ENV=test-staging
+    - NODE_ENV=production
+    - NODE_ENV=staging
 script:
   - npm test
 notifications:
