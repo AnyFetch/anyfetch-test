@@ -156,6 +156,25 @@ var hydraters = {
     },
     expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
   },
+  'http://embedmail.hydrater.anyfetch.com': {
+    payload: {
+      long_poll: 1,
+      document: {
+        document_type: 'document',
+        metadata: {
+          text: 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....'
+        },
+        data: {},
+        identifier: 'embedmail-test',
+        id: 'embedmail-test'
+      }
+    },
+    expected: function(changes, done) {
+      changes.data.should.have.property('html', 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....');
+      changes.metadata.should.have.property('text', 'Salut !');
+      done();
+    }
+  },
   'http://filecleaner.hydrater.anyfetch.com': {
   },
 };
