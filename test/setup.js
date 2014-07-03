@@ -12,7 +12,7 @@ before(function createUserCredential(done) {
 
       request(env.apiUrl)
       .post('/users')
-      .set('Authorization', 'Basic ' + env.credentials)
+      .set('Authorization', 'Basic ' + env.masterCredentials)
       .send({
         "email": "test-" + timestamp + "@anyfetch.com",
         "name": "test-" + timestamp,
@@ -26,7 +26,7 @@ before(function createUserCredential(done) {
 
       request(env.apiUrl)
       .post('/subcompanies')
-      .set('Authorization', 'Basic ' + env.credentials)
+      .set('Authorization', 'Basic ' + env.basicCredential)
       .send({
         "user": res.body.id,
         "name": "test-company-" + (new Date()).getTime(),
@@ -44,6 +44,6 @@ before(function createUserCredential(done) {
 after(function deleteSubcompany(done) {
   request(env.apiUrl)
   .del('/subcompanies/' + env.subcompany_id)
-  .set('Authorization', 'Basic ' + env.credentials)
+  .set('Authorization', 'Basic ' + env.basicCredential)
   .end(done);
 });

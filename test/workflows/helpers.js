@@ -15,7 +15,7 @@ var oauthCredential = null;
 module.exports.basicApiRequest = function basicApiRequest(method, url) {
   return request(env.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + env.credentials);
+    .set('Authorization', 'Basic ' + env.basicCredential);
 };
 
 
