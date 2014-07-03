@@ -4,7 +4,7 @@ require('should');
 var request = require('supertest');
 var async = require('async');
 
-var env = require('../../' + process.env.NODE_ENV + ".json");
+var env = require('../env');
 
 // Build a checker-function to compare a reply with a file
 var generateCompareFunction = function(file) {

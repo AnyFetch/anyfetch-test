@@ -5,7 +5,7 @@ var async = require('async');
 
 var helpers = require('../workflows/helpers.js');
 
-var env = require('../../' + process.env.NODE_ENV + ".json");
+var env = require('../env');
 
 var COUNT = process.env.STRESSTEST || 8;
 

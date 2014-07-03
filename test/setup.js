@@ -3,7 +3,7 @@
 var request = require('supertest');
 var async = require('async');
 
-var env = require('../' + process.env.NODE_ENV + ".json");
+var env = require('./env');
 
 before(function createUserCredential(done) {
   async.waterfall([

@@ -4,7 +4,7 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-var env = require('../../' + process.env.NODE_ENV + ".json");
+var env = require('../env');
 
 
 describe("Test hydraters dependencies", function() {

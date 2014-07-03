@@ -3,7 +3,7 @@
 require('should');
 var request = require('supertest');
 
-var env = require('../../' + process.env.NODE_ENV + ".json");
+var env = require('../env');
 
 describe("Test front and back ends", function() {
   it("`" + env.appUrl + "` should be up", function(done) {
