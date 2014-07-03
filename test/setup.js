@@ -19,6 +19,7 @@ before(function createUserCredential(done) {
         "password": "test_password",
         "is_admin": false
       })
+      .expect(200)
       .end(cb);
     },
     function createSubcompanyAndUpdateCredential(res, cb) {
@@ -26,15 +27,17 @@ before(function createUserCredential(done) {
 
       request(env.apiUrl)
       .post('/subcompanies')
-      .set('Authorization', 'Basic ' + env.basicCredential)
+      .set('Authorization', 'Basic ' + env.masterCredentials)
       .send({
         "user": res.body.id,
         "name": "test-company-" + (new Date()).getTime(),
       })
+      .expect(200)
       .end(cb);
     },
     function saveSubcompanyId(res, cb) {
       env.subcompany_id = res.body.id;
+      console.log(res.body.id);
       cb();
     }
   ], done);
@@ -44,6 +47,7 @@ before(function createUserCredential(done) {
 after(function deleteSubcompany(done) {
   request(env.apiUrl)
   .del('/subcompanies/' + env.subcompany_id)
-  .set('Authorization', 'Basic ' + env.basicCredential)
+  .set('Authorization', 'Basic ' + env.masterCredentials)
+  .expect(204)
   .end(done);
 });
