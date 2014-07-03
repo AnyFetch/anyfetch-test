@@ -3,7 +3,9 @@
 require('should');
 
 var helpers = require('./helpers.js');
-var config = require('../config.js');
+
+var env = require('../env');
+
 
 describe("Test hydraters dependencies", function() {
   before(helpers.createAccount);
@@ -14,7 +16,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-office-dependencies-identifier',
+      identifier: env.apiUrl + 'test-office-dependencies-identifier',
       metadata: {
         path: '/test-dependencies-sample.doc',
       },
@@ -22,7 +24,7 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     };
     var file = __dirname + '/samples/office-file.doc';
-    var hydraterToWait = 'http://office.hydrater.anyfetch.com/hydrate';
+    var hydraterToWait = env.hydraters.office;
     var hydratedDocument = null;
 
     helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait, function(document) {
@@ -41,7 +43,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-image-dependencies-identifier',
+      identifier: env.apiUrl + 'test-image-dependencies-identifier',
       metadata: {
         path: '/test-dependancies-photo.jpg',
       },
@@ -49,7 +51,7 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     };
     var file = __dirname + '/../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
-    var hydratersToWait = ['http://iptc.hydrater.anyfetch.com/hydrate', 'http://image.hydrater.anyfetch.com/hydrate', 'http://ocr.hydrater.anyfetch.com/hydrate'];
+    var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
     var hydratedDocument = null;
 
     helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
@@ -66,7 +68,7 @@ describe("Test hydraters dependencies", function() {
       hydratedDocument.data.should.have.property('thumb');
       hydratedDocument.should.have.property('hydrated_by');
       hydratersToWait.forEach(function(hydraterToWait) {
-        hydratedDocument.hydrated_by.should.containEql(hydraterToWait);
+        hydratedDocument.hydrated_by.should.containEql(hydraterToWait + "/hydrate");
       });
 
       done();
@@ -77,7 +79,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-eml-identifier',
+      identifier: env.apiUrl + 'test-eml-identifier',
       metadata: {
         path: '/test-dependencies-sample.eml',
       },
@@ -85,7 +87,7 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     };
     var file = __dirname + '/samples/eml-with-attachment.eml';
-    var hydraterToWait = 'http://eml.hydrater.anyfetch.com/hydrate';
+    var hydraterToWait = env.hydraters.eml;
 
     helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait);
 
@@ -107,7 +109,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + '/test-filecleaner-identifier',
+      identifier: env.apiUrl + '/test-filecleaner-identifier',
       metadata: {
         path: '/test-filecleaner.DS_STORE',
       },

@@ -3,7 +3,7 @@
 require('should');
 var request = require('supertest');
 
-var config = require('../config.js');
+var env = require('../env');
 
 var oauthCredential = null;
 
@@ -13,9 +13,9 @@ var oauthCredential = null;
  * Returns an authentified supertest client
  */
 module.exports.basicApiRequest = function basicApiRequest(method, url) {
-  return request(config.apiUrl)
+  return request(env.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + config.basicCredential);
+    .set('Authorization', 'Basic ' + env.basicCredential);
 };
 
 
@@ -92,7 +92,7 @@ module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
   if(!oauthCredential) {
     throw new Error("Call getToken() before doing tokenApiRequest.");
   }
-  return request(config.apiUrl)
+  return request(env.apiUrl)
     [method](url)
     .set('Authorization', "Bearer " + oauthCredential);
 };
@@ -168,7 +168,7 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
         }
 
         var isAllHydrated = function(hydraterToWait) {
-          return res.body.hydrated_by.indexOf(hydraterToWait) !== -1;
+          return res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1;
         };
 
         if(hydratersToWait.every(isAllHydrated)) {
