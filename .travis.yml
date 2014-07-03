@@ -5,8 +5,8 @@ env:
   global:
     - CREDENTIALS=dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=
   matrix:
-    - NODE_ENV=production
-    - NODE_ENV=staging
+    - API_ENV=production
+    - API_ENV=staging
 script:
   - npm test
 notifications:
