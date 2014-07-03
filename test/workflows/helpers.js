@@ -14,14 +14,14 @@ var oauthCredential = null;
  * Base helper for api requests authentified by basic.
  * Returns an authentified supertest client
  */
-module.exports.basicApiRequest = function(method, url) {
+module.exports.basicApiRequest = function basicApiRequest(method, url) {
   return request(env.apiUrl)
     [method](url)
     .set('Authorization', 'Basic ' + env.credentials);
 };
 
 
-module.exports.createAccount = function(done) {
+module.exports.createAccount = function createAccount(done) {
   // Skipping for now
   return done();
 
@@ -36,7 +36,7 @@ module.exports.createAccount = function(done) {
 };
 
 
-module.exports.deleteAccount = function(done) {
+module.exports.deleteAccount = function deleteAccount(done) {
   // Skipping for now
   return done();
 
@@ -54,7 +54,7 @@ module.exports.deleteAccount = function(done) {
 /**
  * Reset the account to pristine state
  */
-module.exports.resetAccount = function(done) {
+module.exports.resetAccount = function resetAccount(done) {
   oauthCredential = null;
   module.exports.basicApiRequest('del', '/company/reset')
     .set('Content-Length', 0)
@@ -66,7 +66,7 @@ module.exports.resetAccount = function(done) {
 /**
  * Request helper to expect JSON results
  */
-module.exports.expectJSON = function(key, value) {
+module.exports.expectJSON = function expectJSON(key, value) {
   return function(res) {
     res.body.should.have.property(key, value);
   };
@@ -76,7 +76,7 @@ module.exports.expectJSON = function(key, value) {
 /** Helper to get a token
  *
  */
-module.exports.getToken = function(cb) {
+module.exports.getToken = function getToken(cb) {
   module.exports.basicApiRequest('get', '/token')
   .expect(200)
   .end(function(err, res){
@@ -90,7 +90,7 @@ module.exports.getToken = function(cb) {
  * Base helper for api requests authentidief by tokens.
  * Returns an authentified supertest client
  */
-module.exports.tokenApiRequest = function(method, url) {
+module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
   if(!oauthCredential) {
     throw new Error("Call getToken() before doing tokenApiRequest.");
   }
@@ -105,14 +105,13 @@ module.exports.tokenApiRequest = function(method, url) {
  * Use multiple it().
  * Example usage in dependencies.js
  */
-module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToWait, cb) {
-
+module.exports.sendFileAndWaitForHydration = function sendFileAndWaitForHydration(payload, file, hydratersToWait, cb) {
   it('... sending document', module.exports.sendDocument(payload));
 
   it('... sending file', module.exports.sendFile(payload, file));
 
   it('... waiting for hydration', function(done) {
-    module.exports.waitForHydration(payload.id, hydraterToWait, cb)(done);
+    module.exports.waitForHydration(payload.id, hydratersToWait, cb)(done);
   });
 };
 
@@ -121,7 +120,7 @@ module.exports.sendFileAndWaitForHydration = function(payload, file, hydraterToW
  * Send payload document.
  * Insert resulting id in payload.id
  */
-module.exports.sendDocument = function(payload) {
+module.exports.sendDocument = function sendDocument(payload) {
   return function(done) {
     module.exports.tokenApiRequest('post', '/documents')
       .send(payload)
@@ -141,7 +140,7 @@ module.exports.sendDocument = function(payload) {
 /**
  * Associate file with identifier
  */
-module.exports.sendFile = function(payload, file) {
+module.exports.sendFile = function sendFile(payload, file) {
   return function(done) {
     module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
       .attach('file', file)
@@ -153,9 +152,15 @@ module.exports.sendFile = function(payload, file) {
 
 /**
  * Block until hydraterToWait has hydrated id.
- * If cb is provided, it will be called with the result document once hydraterToWait has finished.
+ * If cb is provided, it will be called with the result document once all hydraters in hydratersToWait have finished.
  */
-module.exports.waitForHydration = function(id, hydraterToWait, cb) {
+module.exports.waitForHydration = function waitForHydration(id, hydratersToWait, cb) {
+  console.log(hydratersToWait);
+  // transform a string to array
+  if(!(hydratersToWait instanceof Array)) {
+    hydratersToWait = [hydratersToWait];
+  }
+
   return function(done) {
     function checkHydration() {
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
@@ -165,9 +170,12 @@ module.exports.waitForHydration = function(id, hydraterToWait, cb) {
           throw err;
         }
 
-        console.log("waiting for", hydraterToWait + "/hydrate");
-        if(res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1) {
+        var isAllHydrated = function(hydraterToWait) {
+          console.log("pinging " + hydraterToWait + "/hydrate");
+          return res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1;
+        };
 
+        if(hydratersToWait.every(isAllHydrated)) {
           // Return to original caller with document information
           if(cb) {
             cb(res.body);

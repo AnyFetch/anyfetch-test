@@ -2,6 +2,7 @@
 
 require('should');
 var request = require('supertest');
+var async = require('async');
 
 var env = require('../../' + process.env.NODE_ENV + ".json");
 
@@ -93,8 +94,8 @@ hydraters[env.hydraters.image] = {
     }
     data.data.should.have.property('thumb');
     data.data.should.have.property('display');
-    data.data.display.should.include("data:image/jpeg;base64,");
-    data.data.thumb.should.include("data:image/png;base64,");
+    data.data.display.should.containDeep("data:image/jpeg;base64,");
+    data.data.thumb.should.containDeep("data:image/png;base64,");
     done();
   }
 };
@@ -130,7 +131,6 @@ hydraters[env.hydraters.eml] = {
     }
   },
   expected: generateCompareFunction('./samples/eml.hydrater.anyfetch.com.expected.json')
-
 };
 
 hydraters[env.hydraters.markdown] = {
@@ -149,17 +149,33 @@ hydraters[env.hydraters.markdown] = {
   expected: generateCompareFunction('./samples/markdown.hydrater.anyfetch.com.expected.json')
 };
 
+hydraters[env.hydraters.iptc] = {
+  payload: {
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/327eb029b969a820b04868d219c5f797238874b8/test/hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg",
+    long_poll: 1,
+    document: {
+      document_type: 'document',
+      metadata: {
+        path: '/iptc.hydrater.anyfetch.com.test.jpg',
+      },
+      data: {},
+      identifier: 'iptc-test'
+    }
+  },
+  expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
+};
+
 hydraters[env.hydraters.filecleaner] = {};
 
 describe("Test hydraters", function() {
   describe("are up", function() {
     Object.keys(hydraters).forEach(function(url) {
-      it("`" + url + "` should be up", function(done) {
+      it("`" + url + "` should be up", async.retry(3, function(cb) {
         request(url)
           .get('/status')
           .expect(200)
-          .end(done);
-      });
+          .end(cb);
+      }));
     });
   });
 
@@ -170,19 +186,19 @@ describe("Test hydraters", function() {
         return;
       }
 
-      it("`" + url + "` should hydrate file", function(done) {
+      it("`" + url + "` should hydrate file", async.retry(3, function(cb) {
         request(url)
           .post('/hydrate')
           .send(hydraters[url].payload)
           .expect(200)
           .end(function(err, res) {
             if(err) {
-              throw err;
+              return cb(err);
             }
 
-            hydraters[url].expected(res.body, done);
+            hydraters[url].expected(res.body, cb);
           });
-      });
+      }));
     });
   });
 });

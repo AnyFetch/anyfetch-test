@@ -1,6 +1,6 @@
 {
-  "api_url": "http://dev.api.anyfetch.com",
-  "app_url": "http://dev.app.anyfetch.com",
+  "apiUrl": "http://dev.api.anyfetch.com",
+  "appUrl": "http://dev.app.anyfetch.com",
   "credentials": "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=",
   "hydraters": {
     "plaintext": "http://dev.plaintext.hydrater.anyfetch.com",

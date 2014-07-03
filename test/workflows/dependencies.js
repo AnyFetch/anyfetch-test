@@ -34,8 +34,44 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.data.html.should.include('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
-      hydratedDocument.metadata.text.should.include('pour les processus');
+      hydratedDocument.data.html.should.containDeep('aux de rupture d’approvisionne<span class="_ _2"></span>m<span class="_ _0"></span>ent</div><div class="t m0 x5 h4 yb6');
+      hydratedDocument.metadata.text.should.containDeep('pour les processus');
+      done();
+    });
+  });
+
+  describe("should work for image documents", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: config.apiUrl + 'test-image-dependencies-identifier',
+      metadata: {
+        path: '/test-dependancies-photo.jpg',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
+    var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
+    var hydratedDocument = null;
+
+    helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
+      hydratedDocument = document;
+    });
+
+    it('should have been properly hydrated', function(done) {
+      hydratedDocument.should.have.property('document_type', '5252ce4ce4cfcd16f55cfa3d');
+      hydratedDocument.should.have.property('metadata');
+      hydratedDocument.metadata.should.have.property('author', 'Frédéric RUAUDEL');
+      hydratedDocument.metadata.should.have.property('description', '© 2010 Frédéric Ruaudel, All Rights Reserved');
+      hydratedDocument.metadata.should.have.property('keywords', '500px, Adulte, Blog FR, Fotografar2014, Homme, Personne, Xavier Bernard, iPhoto');
+      hydratedDocument.data.should.have.property('display');
+      hydratedDocument.data.should.have.property('thumb');
+      hydratedDocument.should.have.property('hydrated_by');
+      hydratersToWait.forEach(function(hydraterToWait) {
+        hydratedDocument.hydrated_by.should.containEql(hydraterToWait);
+      });
+
       done();
     });
   });
@@ -63,7 +99,7 @@ describe("Test hydraters dependencies", function() {
           .expect(200)
           .expect(function(res)
           {
-            res.body.data[0].data.path.should.include('CV.docx');
+            res.body.data[0].data.path.should.containDeep('CV.docx');
           })
           .end(done);
       }, 1000);
@@ -74,7 +110,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-filecleaner-identifier',
+      identifier: config.apiUrl + '/test-filecleaner-identifier',
       metadata: {
         path: '/test-filecleaner.DS_STORE',
       },

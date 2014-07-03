@@ -1,6 +1,6 @@
 {
-  "api_url": "http://staging.api.anyfetch.com",
-  "app_url": "http://staging.app.anyfetch.com",
+  "apiUrl": "http://staging.api.anyfetch.com",
+  "appUrl": "http://staging.app.anyfetch.com",
   "credentials": "c3RhZ2luZy50ZXN0QGFueWZldGNoLmNvbTpwYXNzd29yZA==",
   "hydraters": {
     "plaintext": "http://plaintext.hydrater.anyfetch.com",
