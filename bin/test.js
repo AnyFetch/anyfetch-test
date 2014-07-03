@@ -31,7 +31,7 @@ async.parallel([
       }
     });
   },
-  function prodTest(cb) {
+  function stagingTest(cb) {
     shellExec('NODE_ENV="test-staging" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr) {
         var json = {
