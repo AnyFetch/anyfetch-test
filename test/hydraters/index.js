@@ -181,7 +181,6 @@ hydraters[env.hydraters.iptc] = {
       data: {},
       identifier: 'iptc-test'
     }
->>>>>>> b51d5298f8c7e6cef8813c1fa1b04bf624ec9bd1
   },
   expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
 };
