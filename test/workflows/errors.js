@@ -3,7 +3,6 @@
 require('should');
 
 var helpers = require('./helpers.js');
-var config = require('../config.js');
 
 var env = require('../../' + process.env.NODE_ENV + ".json");
 
@@ -46,7 +45,7 @@ describe("Test errored documents", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-error-document-identifier',
+      identifier: env.apiUrl + 'test-error-document-identifier',
       metadatas: {
         path: '/test-errors-sample.pdf',
       },

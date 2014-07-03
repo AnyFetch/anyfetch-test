@@ -3,8 +3,6 @@
 require('should');
 var request = require('supertest');
 
-var config = require('../config.js');
-
 var env = require('../../' + process.env.NODE_ENV + ".json");
 
 var oauthCredential = null;
@@ -94,7 +92,7 @@ module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
   if(!oauthCredential) {
     throw new Error("Call getToken() before doing tokenApiRequest.");
   }
-  return request(config.apiUrl)
+  return request(env.apiUrl)
     [method](url)
     .set('Authorization', "Bearer " + oauthCredential);
 };
@@ -155,7 +153,6 @@ module.exports.sendFile = function sendFile(payload, file) {
  * If cb is provided, it will be called with the result document once all hydraters in hydratersToWait have finished.
  */
 module.exports.waitForHydration = function waitForHydration(id, hydratersToWait, cb) {
-  console.log(hydratersToWait);
   // transform a string to array
   if(!(hydratersToWait instanceof Array)) {
     hydratersToWait = [hydratersToWait];
@@ -171,7 +168,6 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
         }
 
         var isAllHydrated = function(hydraterToWait) {
-          console.log("pinging " + hydraterToWait + "/hydrate");
           return res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1;
         };
 

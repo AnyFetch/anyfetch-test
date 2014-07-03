@@ -3,7 +3,6 @@
 require('should');
 
 var helpers = require('./helpers.js');
-var config = require('../config.js');
 
 var env = require('../../' + process.env.NODE_ENV + ".json");
 
@@ -17,7 +16,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-office-dependencies-identifier',
+      identifier: env.apiUrl + 'test-office-dependencies-identifier',
       metadata: {
         path: '/test-dependencies-sample.doc',
       },
@@ -44,7 +43,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-image-dependencies-identifier',
+      identifier: env.apiUrl + 'test-image-dependencies-identifier',
       metadata: {
         path: '/test-dependancies-photo.jpg',
       },
@@ -69,7 +68,7 @@ describe("Test hydraters dependencies", function() {
       hydratedDocument.data.should.have.property('thumb');
       hydratedDocument.should.have.property('hydrated_by');
       hydratersToWait.forEach(function(hydraterToWait) {
-        hydratedDocument.hydrated_by.should.containEql(hydraterToWait);
+        hydratedDocument.hydrated_by.should.containEql(hydraterToWait + "/hydrate");
       });
 
       done();
@@ -80,7 +79,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + 'test-eml-identifier',
+      identifier: env.apiUrl + 'test-eml-identifier',
       metadata: {
         path: '/test-dependencies-sample.eml',
       },
@@ -110,7 +109,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: config.apiUrl + '/test-filecleaner-identifier',
+      identifier: env.apiUrl + '/test-filecleaner-identifier',
       metadata: {
         path: '/test-filecleaner.DS_STORE',
       },

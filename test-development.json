@@ -15,7 +15,6 @@
   },
   "providers": {
     "gmail": "http://dev.gmail.provider.anyfetch.com",
-    "gdrive": "http://dev.gdrive.provider.anyfetch.com",
     "gcontacts": "http://dev.gcontacts.provider.anyfetch.com",
     "dropbox": "http://dev.dropbox.provider.anyfetch.com"
   }
