@@ -149,6 +149,26 @@ hydraters[env.hydraters.markdown] = {
   expected: generateCompareFunction('./samples/markdown.hydrater.anyfetch.com.expected.json')
 };
 
+hydraters[env.hydraters.embedmail] = {
+  payload: {
+    long_poll: 1,
+    document: {
+      document_type: 'document',
+      metadata: {
+        text: 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....'
+      },
+      data: {},
+      identifier: 'embedmail-test',
+      id: 'embedmail-test'
+    }
+  },
+  expected: function(changes, done) {
+    changes.data.should.have.property('html', 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....');
+    changes.metadata.should.have.property('text', 'Salut !');
+    done();
+  }
+};
+
 hydraters[env.hydraters.iptc] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/327eb029b969a820b04868d219c5f797238874b8/test/hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg",
