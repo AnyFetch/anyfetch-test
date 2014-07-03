@@ -15,7 +15,7 @@ var removeColor = function(input) {
 
 async.parallel([
   function prodTest(cb) {
-    shellExec('NODE_ENV="test-production" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
+    shellExec('API_ENV="test-production" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr){
         var json = {
           "subject": "anyfetch-test on PROD FAILED",
@@ -32,7 +32,7 @@ async.parallel([
     });
   },
   function stagingTest(cb) {
-    shellExec('NODE_ENV="test-staging" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
+    shellExec('API_ENV="test-staging" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr) {
         var json = {
           "subject": "anyfetch-test on STAGING FAILED",
