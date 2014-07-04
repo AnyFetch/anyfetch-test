@@ -45,7 +45,6 @@ before(function createUserCredential(done) {
 
 
 after(function deleteSubcompany(done) {
-  console.log(env.masterCredentials);
   request(env.apiUrl)
     .del('/subcompanies/' + env.subcompany_id)
     .set('Authorization', 'Basic ' + env.masterCredentials)
