@@ -13,16 +13,21 @@ var removeColor = function(input) {
   return output;
 };
 
-async.parallel([
-  function prodTest(cb) {
-    shellExec('API_ENV="test-production" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
+var envArgs = process.env.argv.slice(2);
+
+var tests = [];
+
+envArgs.forEach(function(env) {
+  tests.push(function test(cb) {
+    process.env.API_ENV = env;
+    shellExec('API_ENV=' + env + ' ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr){
         var json = {
-          "subject": "anyfetch-test on PROD FAILED",
+          "subject": "anyfetch-test on " + env.toUpperCase() + "FAILED",
           "from_address": "deploy@anyfetch.com",
           "source": "anyfetch-test",
           "content": JSON.stringify(removeColor(stderr)),
-          "tags": ["server", "api", "test", "#FAIL", "#PRODUCTION"]
+          "tags": ["server", "api", "test", "#FAIL", "#" + env.toUpperCase()]
         };
         request.post({url: "https://api.flowdock.com/v1/messages/team_inbox/" + process.env.FLOWDOCK, json: json}, cb);
       }
@@ -30,22 +35,7 @@ async.parallel([
         cb();
       }
     });
-  },
-  function stagingTest(cb) {
-    shellExec('API_ENV="test-staging" ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
-      if(stderr) {
-        var json = {
-          "subject": "anyfetch-test on STAGING FAILED",
-          "from_address": "deploy@anyfetch.com",
-          "source": "anyfetch-test",
-          "content": JSON.stringify(removeColor(stderr)),
-          "tags": ["server", "api", "test", "#FAIL", "#STAGING"]
-        };
-        request.post({url: "https://api.flowdock.com/v1/messages/team_inbox/" + process.env.FLOWDOCK, json: json}, cb);
-      }
-      else {
-        cb();
-      }
-    });
-  }
-]);
+  });
+});
+
+async.parallel(tests);
