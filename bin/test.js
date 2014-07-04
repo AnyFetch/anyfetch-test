@@ -3,7 +3,7 @@
 
 var shellExec = require('child_process').exec;
 var async = require('async');
-var request = require('request');
+var request = require('supertest');
 
 
 var removeColor = function(input) {
@@ -13,7 +13,7 @@ var removeColor = function(input) {
   return output;
 };
 
-var envArgs = process.env.argv.slice(2);
+var envArgs = process.argv.slice(2);
 
 var tests = [];
 
@@ -29,7 +29,10 @@ envArgs.forEach(function(env) {
           "content": JSON.stringify(removeColor(stderr)),
           "tags": ["server", "api", "test", "#FAIL", "#" + env.toUpperCase()]
         };
-        request.post({url: "https://api.flowdock.com/v1/messages/team_inbox/" + process.env.FLOWDOCK, json: json}, cb);
+        request("https://api.flowdock.com")
+          .post("/v1/messages/team_inbox/" + process.env.FLOWDOCK)
+          .send(json)
+          .end(cb);
       }
       else {
         cb();
