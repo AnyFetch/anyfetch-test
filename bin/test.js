@@ -32,13 +32,16 @@ envArgs.forEach(function(env) {
         request("https://api.flowdock.com")
           .post("/v1/messages/team_inbox/" + process.env.FLOWDOCK)
           .send(json)
+          .expect(200)
           .end(cb);
       }
       else {
+        console.log("successfull test");
         cb();
       }
     });
   });
 });
 
+console.log(tests);
 async.parallel(tests);
