@@ -17,13 +17,15 @@ var envArgs = process.argv.slice(2);
 
 var tests = [];
 
+var json;
+
 envArgs.forEach(function(env) {
   tests.push(function test(cb) {
     process.env.API_ENV = env;
     shellExec('API_ENV=' + env + ' ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
       if(stderr){
-        var json = {
-          "subject": "anyfetch-test on " + env.toUpperCase() + "FAILED",
+        json = {
+          "subject": "anyfetch-test on " + env.toUpperCase() + " FAILED",
           "from_address": "deploy@anyfetch.com",
           "source": "anyfetch-test",
           "content": JSON.stringify(removeColor(stderr)),
@@ -36,12 +38,22 @@ envArgs.forEach(function(env) {
           .end(cb);
       }
       else {
-        console.log("successfull test");
-        cb();
+        json = {
+          "subject": "anyfetch-test on " + env.toUpperCase() + " SUCCEEDED",
+          "from_address": "deploy@anyfetch.com",
+          "source": "anyfetch-test",
+          "content": "On est trop fort",
+          "tags": ["server", "api", "test", "#WIN", "#" + env.toUpperCase()]
+        };
+        request("https://api.flowdock.com")
+          .post("/v1/messages/team_inbox/" + process.env.FLOWDOCK)
+          .send(json)
+          .expect(200)
+          .end(cb);
+
       }
     });
   });
 });
 
-console.log(tests);
 async.parallel(tests);

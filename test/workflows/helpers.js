@@ -1,6 +1,7 @@
 'use strict';
 
 require('should');
+require('../setup');
 var request = require('supertest');
 
 var env = require('../env');
@@ -15,7 +16,7 @@ var oauthCredential = null;
 module.exports.basicApiRequest = function basicApiRequest(method, url) {
   return request(env.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + env.basicCredential);
+    .set('Authorization', 'Basic ' + env.basicCredentials);
 };
 
 
