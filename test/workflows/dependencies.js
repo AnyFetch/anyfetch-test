@@ -105,6 +105,59 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
+  describe("should work for ics documents", function() {
+    this.bail(true);
+
+    var payload = {
+      identifier: 'test-ics-identifier',
+      metadata: {
+        path: '/calendar.ics',
+      },
+      document_type: 'file',
+      user_access: null
+    };
+    var file = __dirname + '/samples/calendar.ics';
+
+    it('... sending document', helpers.sendDocument(payload));
+    it('... sending file', helpers.sendFile(payload, file));
+
+    it('should have created three events', function(done) {
+      function checkEvents() {
+        helpers.basicApiRequest('get', '/documents?search=Node')
+        .end(function(err, res) {
+          if(err) {
+            throw err;
+          }
+          if(res.body.count === 3) {
+            done();
+          }
+          else {
+            setTimeout(checkEvents, 1000);
+          }
+        });
+      }
+      setTimeout(checkEvents, 1500);
+    });
+
+    it('should have been properly removed', function(done) {
+      function checkHydration() {
+        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
+        .end(function(err, res) {
+          if(err) {
+            throw err;
+          }
+          if(res.statusCode === 404) {
+            done();
+          }
+          else {
+            setTimeout(checkHydration, 2000);
+          }
+        });
+      }
+      setTimeout(checkHydration, 2000);
+    });
+  });
+
   describe("should remove useless files", function() {
     this.bail(true);
 

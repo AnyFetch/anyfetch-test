@@ -11,7 +11,8 @@
     "markdown": "http://markdown.hydrater.anyfetch.com",
     "filecleaner": "http://filecleaner.hydrater.anyfetch.com",
     "eml": "http://eml.hydrater.anyfetch.com",
-    "embedmail": "http://embedmail.hydrater.anyfetch.com"
+    "embedmail": "http://embedmail.hydrater.anyfetch.com",
+    "ics": "http://ics.hydrater.anyfetch.com"
   },
   "providers": {
     "gmail": "http://gmail.provider.anyfetch.com",
