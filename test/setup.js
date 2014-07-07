@@ -37,7 +37,6 @@ before(function createUserCredential(done) {
     },
     function saveSubcompanyId(res, cb) {
       env.subcompany_id = res.body.id;
-      console.log(res.body.id);
       cb();
     }
   ], done);

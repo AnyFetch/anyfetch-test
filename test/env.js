@@ -1,7 +1,7 @@
 'use strict';
 
 var env = process.env.API_ENV;
-console.log("Testing with", env || "test-production", "environment");
+console.log("Testing with", env || "staging", "environment");
 
-module.exports = env ? require('../' + env + '.json') : require('../production.json');
+module.exports = env ? require('../' + env + '.json') : require('../staging.json');
 module.exports.masterCredentials = process.env.CREDENTIALS || "dGVzdEBhbnlmZXRjaC5jb206cGFzc3dvcmQ=";
