@@ -185,6 +185,8 @@ hydraters[env.hydraters.iptc] = {
   expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
 };
 
+hydraters[env.hydraters.ics] = {};
+
 hydraters[env.hydraters.filecleaner] = {};
 
 describe("Test hydraters", function() {
