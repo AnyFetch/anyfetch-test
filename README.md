@@ -10,10 +10,11 @@ We also need to check the ops worked, everything is deployed and available on th
 Introducing this repo.
 
 ## How to use?
+You'll need to set your own credentials using `CREDENTIALS=base64encoded`. This will create a [subcompany](http://developers.anyfetch.com/guides/tutorials/subcompanies.html) in your account, and remove it after the test.
+
 A simple `npm test` can do the trick.
 
 You may use `API_ENV=(dev|production|staging)` to select the env you wish to test.
-You can also set your own credentials using `CREDENTIALS=base64encoded`.
 
 ### As a crontab...
 The `bin/test.js` script can be used as a cron task.
