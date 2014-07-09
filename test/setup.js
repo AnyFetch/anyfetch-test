@@ -5,6 +5,11 @@ var async = require('async');
 
 var env = require('./env');
 
+var masterAuth = 'Basic ' + env.masterCredentials;
+if(env.masterToken) {
+  auth = 'Bearer ' + env.masterToken;
+}
+
 before(function createUserCredential(done) {
   async.waterfall([
     function createUser(cb) {
@@ -12,7 +17,7 @@ before(function createUserCredential(done) {
 
       request(env.apiUrl)
         .post('/users')
-        .set('Authorization', 'Basic ' + env.masterCredentials)
+        .set('Authorization', masterAuth)
         .send({
           "email": "test-" + timestamp + "@anyfetch.com",
           "name": "test-" + timestamp,
@@ -27,7 +32,7 @@ before(function createUserCredential(done) {
 
       request(env.apiUrl)
         .post('/subcompanies')
-        .set('Authorization', 'Basic ' + env.masterCredentials)
+        .set('Authorization', masterAuth)
         .send({
           "user": res.body.id,
           "name": "test-company-" + (new Date()).getTime(),
@@ -46,7 +51,7 @@ before(function createUserCredential(done) {
 after(function deleteSubcompany(done) {
   request(env.apiUrl)
     .del('/subcompanies/' + env.subcompany_id)
-    .set('Authorization', 'Basic ' + env.masterCredentials)
+    .set('Authorization', masterAuth)
     .expect(204)
     .end(done);
 });
