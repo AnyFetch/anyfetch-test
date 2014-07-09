@@ -7,7 +7,7 @@ var env = require('./env');
 
 var masterAuth = 'Basic ' + env.masterCredentials;
 if(env.masterToken) {
-  auth = 'Bearer ' + env.masterToken;
+  masterAuth = 'Bearer ' + env.masterToken;
 }
 
 before(function createUserCredential(done) {
