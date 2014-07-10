@@ -201,7 +201,7 @@ describe("Test hydraters", function() {
     });
   });
 
-  describe.only("are working", function() {
+  describe("are working", function() {
     Object.keys(hydraters).forEach(function(url) {
       if(!hydraters[url].expected) {
         it("`" + url + "` should hydrate file");

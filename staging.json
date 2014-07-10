@@ -2,7 +2,7 @@
   "apiUrl": "http://staging.api.anyfetch.com",
   "appUrl": "http://staging.app.anyfetch.com",
   "hydraters": {
-    "plaintext": "http://anyfetch-hydrater-plaintext10.herokuapp.com",
+    "plaintext": "http://plaintext.hydrater.anyfetch.com",
     "image": "http://image.hydrater.anyfetch.com",
     "office": "http://office.hydrater.anyfetch.com",
     "pdf": "http://pdf.hydrater.anyfetch.com",
