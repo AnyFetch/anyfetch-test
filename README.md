@@ -1,6 +1,5 @@
 # Anyfetch high-level functional tests
-![Build Status](https://circleci.com/gh/AnyFetch/anyfetch-test.png)
-
+![Build Status](https://circleci.com/gh/AnyFetch/anyfetch-test.png?circle-token=9188c634889764c48de9c9bfa823bb7cf45aba36
 Here at Anyfetch, we enjoy providing the best user experience.
 All our projects are thoroughly tested on [Travis](https://travis-ci.org/) after each push, and we aim to keep our test-suite as exhaustive as can possibly be. Heck, we even provide [mock servers](https://github.com/AnyFetch/anyfetch.js#helper-functions) to check your libraries locally!
 
