@@ -1,6 +1,7 @@
 {
   "apiUrl": "http://dev.api.anyfetch.com",
   "appUrl": "http://dev.app.anyfetch.com",
+  "managerUrl": "http://manager-staging.anyfetch.com",
   "hydraters": {
     "plaintext": "http://dev.plaintext.hydrater.anyfetch.com",
     "image": "http://dev.image.hydrater.anyfetch.com",

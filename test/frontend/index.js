@@ -23,4 +23,11 @@ describe("Test front and back ends", function() {
     .expect(200)
     .end(done);
   });
+
+  it("`" + env.managerUrl + "` should be up", function(done) {
+    request(env.apiUrl)
+    .get('/status')
+    .expect(200)
+    .end(done);
+  });
 });
