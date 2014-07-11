@@ -1,23 +1,23 @@
 {
-  "apiUrl": "http://staging.api.anyfetch.com",
-  "appUrl": "http://staging.app.anyfetch.com",
+  "apiUrl": "http://api-staging.anyfetch.com",
+  "appUrl": "http://app-staging.anyfetch.com",
   "hydraters": {
-    "plaintext": "http://plaintext.hydrater.anyfetch.com",
-    "image": "http://image.hydrater.anyfetch.com",
-    "office": "http://office.hydrater.anyfetch.com",
-    "pdf": "http://pdf.hydrater.anyfetch.com",
-    "ocr": "http://ocr.hydrater.anyfetch.com",
-    "iptc": "http://iptc.hydrater.anyfetch.com",
-    "markdown": "http://markdown.hydrater.anyfetch.com",
-    "filecleaner": "http://filecleaner.hydrater.anyfetch.com",
-    "eml": "http://eml.hydrater.anyfetch.com",
-    "embedmail": "http://embedmail.hydrater.anyfetch.com",
-    "ics": "http://ics.hydrater.anyfetch.com"
+    "plaintext": "http://plaintext-staging.anyfetch.com",
+    "image": "http://image-staging.anyfetch.com",
+    "office": "http://office-staging.anyfetch.com",
+    "pdf": "http://pdf-staging.anyfetch.com",
+    "ocr": "http://ocr-staging.anyfetch.com",
+    "iptc": "http://iptc-staging.anyfetch.com",
+    "markdown": "http://markdown-staging.anyfetch.com",
+    "filecleaner": "http://filecleaner-staging.anyfetch.com",
+    "eml": "http://eml-staging.anyfetch.com",
+    "embedmail": "http://embedmail-staging.anyfetch.com",
+    "ics": "http://ics-staging.anyfetch.com"
   },
   "providers": {
-    "gmail": "http://gmail.provider.anyfetch.com",
-    "gdrive": "http://gdrive.provider.anyfetch.com",
-    "gcontacts": "http://gcontacts.provider.anyfetch.com",
-    "dropbox": "http://dropbox.provider.anyfetch.com"
+    "gmail": "http://gmail-staging.anyfetch.com",
+    "gdrive": "http://gdrive-staging.anyfetch.com",
+    "gcontacts": "http://gcontacts-staging.anyfetch.com",
+    "dropbox": "http://dropbox-staging.anyfetch.com"
   }
 }
