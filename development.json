@@ -1,0 +1,22 @@
+{
+  "apiUrl": "http://dev.api.anyfetch.com",
+  "appUrl": "http://dev.app.anyfetch.com",
+  "hydraters": {
+    "plaintext": "http://dev.plaintext.hydrater.anyfetch.com",
+    "image": "http://dev.image.hydrater.anyfetch.com",
+    "office": "http://dev.office.hydrater.anyfetch.com",
+    "pdf": "http://dev.pdf.hydrater.anyfetch.com",
+    "ocr": "http://dev.ocr.hydrater.anyfetch.com",
+    "iptc": "http://dev.iptc.hydrater.anyfetch.com",
+    "markdown": "http://dev.markdown.hydrater.anyfetch.com",
+    "filecleaner": "http://dev.filecleaner.hydrater.anyfetch.com",
+    "eml": "http://dev.eml.hydrater.anyfetch.com",
+    "embedmail": "http://dev.embedmail.hydrater.anyfetch.com",
+    "ics": "http://dev.ics.hydrater.anyfetch.com"
+  },
+  "providers": {
+    "gmail": "http://dev.gmail.provider.anyfetch.com",
+    "gcontacts": "http://dev.gcontacts.provider.anyfetch.com",
+    "dropbox": "http://dev.dropbox.provider.anyfetch.com"
+  }
+}
