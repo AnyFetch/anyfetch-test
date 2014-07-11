@@ -1,5 +1,8 @@
 'use strict';
 
+var dotenv = require('dotenv');
+dotenv.load();
+
 if(!process.env.CREDENTIALS && !process.env.TOKEN) {
   console.warn("No CREDENTIALS or TOKEN. Aborting.");
   process.exit();
