@@ -1,24 +1,24 @@
 {
-  "apiUrl": "http://api-staging.anyfetch.com",
-  "appUrl": "http://app-staging.anyfetch.com",
-  "managerUrl": "http://manager-staging.anyfetch.com",
+  "apiUrl": "https://api-staging.anyfetch.com",
+  "appUrl": "https://app-staging.anyfetch.com",
+  "managerUrl": "https://manager-staging.anyfetch.com",
   "hydraters": {
-    "plaintext": "http://plaintext-staging.anyfetch.com",
-    "image": "http://image-staging.anyfetch.com",
-    "office": "http://office-staging.anyfetch.com",
-    "pdf": "http://pdf-staging.anyfetch.com",
-    "ocr": "http://ocr-staging.anyfetch.com",
-    "iptc": "http://iptc-staging.anyfetch.com",
-    "markdown": "http://markdown-staging.anyfetch.com",
-    "filecleaner": "http://filecleaner-staging.anyfetch.com",
-    "eml": "http://eml-staging.anyfetch.com",
-    "embedmail": "http://embedmail-staging.anyfetch.com",
-    "ics": "http://ics-staging.anyfetch.com"
+    "plaintext": "https://plaintext-staging.anyfetch.com",
+    "image": "https://image-staging.anyfetch.com",
+    "office": "https://office-staging.anyfetch.com",
+    "pdf": "https://pdf-staging.anyfetch.com",
+    "ocr": "https://ocr-staging.anyfetch.com",
+    "iptc": "https://iptc-staging.anyfetch.com",
+    "markdown": "https://markdown-staging.anyfetch.com",
+    "filecleaner": "https://filecleaner-staging.anyfetch.com",
+    "eml": "https://eml-staging.anyfetch.com",
+    "embedmail": "https://embedmail-staging.anyfetch.com",
+    "ics": "https://ics-staging.anyfetch.com"
   },
   "providers": {
-    "gmail": "http://gmail-staging.anyfetch.com",
-    "gdrive": "http://gdrive-staging.anyfetch.com",
-    "gcontacts": "http://gcontacts-staging.anyfetch.com",
-    "dropbox": "http://dropbox-staging.anyfetch.com"
+    "gmail": "https://gmail-staging.anyfetch.com",
+    "gdrive": "https://gdrive-staging.anyfetch.com",
+    "gcontacts": "https://gcontacts-staging.anyfetch.com",
+    "dropbox": "https://dropbox-staging.anyfetch.com"
   }
 }
