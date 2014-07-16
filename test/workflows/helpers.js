@@ -164,6 +164,7 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .end(function(err, res) {
+        console.log(res.body.hydrated_by);
         if(err) {
           throw err;
         }
