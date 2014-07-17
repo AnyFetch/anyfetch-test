@@ -12,7 +12,6 @@ var COUNT = process.env.STRESSTEST || 8;
 describe("Stress test", function() {
   this.timeout(120 * 1000);
   this.bail(true);
-  before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);
 
@@ -55,6 +54,4 @@ describe("Stress test", function() {
 
     async.eachLimit(range, 4, checker, done);
   });
-
-  after(helpers.deleteAccount);
 });

@@ -5,7 +5,6 @@ require('should');
 var helpers = require('./helpers.js');
 
 describe("Test providers workflow", function() {
-  before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);
 
@@ -71,6 +70,4 @@ describe("Test providers workflow", function() {
         .end(done);
     });
   });
-
-  after(helpers.deleteAccount);
 });

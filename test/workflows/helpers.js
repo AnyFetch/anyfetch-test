@@ -20,36 +20,6 @@ module.exports.basicApiRequest = function basicApiRequest(method, url) {
 };
 
 
-module.exports.createAccount = function createAccount(done) {
-  // Skipping for now
-  return done();
-
-  // request(SETTINGS_URL)
-  //   .post(SIGN_UP_URL)
-  //   .send({
-  //     "user[email]": "test@anyfetch.com",
-  //     "user[password]": "password"
-  //   })
-  //   .expect(302)
-  //   .end(done);
-};
-
-
-module.exports.deleteAccount = function deleteAccount(done) {
-  // Skipping for now
-  return done();
-
-  // request("http://settings.anyfetch.com")
-  //   .del(DELETE_URL)
-  //   .send({
-  //     "user[email]": "test@anyfetch.com",
-  //     "user[password]": "password"
-  //   })
-  //   .expect(302)
-  //   .end(done);
-};
-
-
 /**
  * Reset the account to pristine state
  */
@@ -164,7 +134,6 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .end(function(err, res) {
-        console.log(res.body.hydrated_by);
         if(err) {
           throw err;
         }

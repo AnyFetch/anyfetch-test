@@ -37,7 +37,6 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
 };
 
 describe("Test errored documents", function() {
-  before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);
 
@@ -73,7 +72,4 @@ describe("Test errored documents", function() {
       done();
     });
   });
-
-
-  after(helpers.deleteAccount);
 });

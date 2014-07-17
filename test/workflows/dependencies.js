@@ -8,7 +8,6 @@ var env = require('../env');
 
 
 describe("Test hydraters dependencies", function() {
-  before(helpers.createAccount);
   before(helpers.resetAccount);
   before(helpers.getToken);
 
@@ -193,6 +192,4 @@ describe("Test hydraters dependencies", function() {
       setTimeout(checkHydration, 2000);
     });
   });
-
-  after(helpers.deleteAccount);
 });
