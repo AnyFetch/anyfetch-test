@@ -1,23 +1,24 @@
 {
-  "apiUrl": "http://dev.api.anyfetch.com",
-  "appUrl": "http://dev.app.anyfetch.com",
-  "managerUrl": "http://manager-staging.anyfetch.com",
+  "apiUrl": "https://api.dev.anyfetch.com",
+  "appUrl": "https://app.dev.anyfetch.com",
+  "managerUrl": "https://manager.dev.anyfetch.com",
   "hydraters": {
-    "plaintext": "http://dev.plaintext.hydrater.anyfetch.com",
-    "image": "http://dev.image.hydrater.anyfetch.com",
-    "office": "http://dev.office.hydrater.anyfetch.com",
-    "pdf": "http://dev.pdf.hydrater.anyfetch.com",
-    "ocr": "http://dev.ocr.hydrater.anyfetch.com",
-    "iptc": "http://dev.iptc.hydrater.anyfetch.com",
-    "markdown": "http://dev.markdown.hydrater.anyfetch.com",
-    "filecleaner": "http://dev.filecleaner.hydrater.anyfetch.com",
-    "eml": "http://dev.eml.hydrater.anyfetch.com",
-    "embedmail": "http://dev.embedmail.hydrater.anyfetch.com",
-    "ics": "http://dev.ics.hydrater.anyfetch.com"
+    "plaintext": "https://plaintext.hydrater.dev.anyfetch.com",
+    "image": "https://image.hydrater.dev.anyfetch.com",
+    "office": "https://office.hydrater.dev.anyfetch.com",
+    "pdf": "https://pdf.hydrater.dev.anyfetch.com",
+    "ocr": "https://ocr.hydrater.dev.anyfetch.com",
+    "iptc": "https://iptc.hydrater.dev.anyfetch.com",
+    "markdown": "https://markdown.hydrater.dev.anyfetch.com",
+    "filecleaner": "https://filecleaner.hydrater.dev.anyfetch.com",
+    "eml": "https://eml.hydrater.dev.anyfetch.com",
+    "embedmail": "https://embedmail.hydrater.dev.anyfetch.com",
+    "ics": "https://ics.hydrater.dev.anyfetch.com"
   },
   "providers": {
-    "gmail": "http://dev.gmail.provider.anyfetch.com",
-    "gcontacts": "http://dev.gcontacts.provider.anyfetch.com",
-    "dropbox": "http://dev.dropbox.provider.anyfetch.com"
+    "gmail": "https://gmail.provider.dev.anyfetch.com",
+    "gdrive": "https://gdrive.provider.dev.anyfetch.com",
+    "gcontacts": "https://gcontacts.provider.dev.anyfetch.com",
+    "dropbox": "https://dropbox.provider.dev.anyfetch.com"
   }
 }
