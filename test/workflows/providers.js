@@ -11,9 +11,10 @@ describe("Test providers workflow", function() {
   var payload = {
     identifier:'test-workflow-identifier',
     metadata: {
-      text:'hello world'
+      text:'hello world',
+      path: '/sample-path.txt'
     },
-    document_type: null,
+    document_type: 'file',
     user_access: null,
   };
 
@@ -54,6 +55,9 @@ describe("Test providers workflow", function() {
         .expect(function(res) {
           res.body.should.have.property('data').with.lengthOf(1);
           res.body.data[0].should.have.property('id', payload.id);
+
+          // Test projection is working too (title auto generated from path)
+          res.body.data[0].data.should.have.property('title', 'Sample path');
         })
         .end(done);
     }, 5000);
