@@ -29,7 +29,6 @@ before(function createUserCredential(done) {
     },
     function createSubcompanyAndUpdateCredential(res, cb) {
       env.basicCredentials = (new Buffer(res.body.email + ":test_password")).toString('base64');
-
       request(env.apiUrl)
         .post('/subcompanies')
         .set('Authorization', masterAuth)

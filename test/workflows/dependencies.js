@@ -15,7 +15,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: env.apiUrl + 'test-office-dependencies-identifier',
+      identifier: env.apiUrl + '/test-office-dependencies-identifier',
       metadata: {
         path: '/test-dependencies-sample.doc',
       },
@@ -42,7 +42,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: env.apiUrl + 'test-image-dependencies-identifier',
+      identifier: env.apiUrl + '/test-image-dependencies-identifier',
       metadata: {
         path: '/test-dependancies-photo.jpg',
       },
@@ -58,7 +58,7 @@ describe("Test hydraters dependencies", function() {
     });
 
     it('should have been properly hydrated', function(done) {
-      hydratedDocument.should.have.property('document_type', '5252ce4ce4cfcd16f55cfa3d');
+      hydratedDocument.should.have.property('document_type').and.have.property('id', '5252ce4ce4cfcd16f55cfa3d');
       hydratedDocument.should.have.property('metadata');
       hydratedDocument.metadata.should.have.property('author', 'Frédéric RUAUDEL');
       hydratedDocument.metadata.should.have.property('description', '© 2010 Frédéric Ruaudel, All Rights Reserved');
@@ -78,7 +78,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: env.apiUrl + 'test-eml-identifier',
+      identifier: env.apiUrl + '/test-eml-identifier',
       metadata: {
         path: '/test-dependencies-sample.eml',
       },
@@ -92,15 +92,14 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      setTimeout(function() {
-        helpers.basicApiRequest('get', '/documents?search=CV.docx')
-          .expect(200)
-          .expect(function(res)
-          {
-            res.body.data[0].data.path.should.containDeep('CV.docx');
-          })
-          .end(done);
-      }, 1000);
+      helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier + '/CV.docx'))
+        .expect(200)
+        .expect(function(res) {
+          res.body.related.should.containDeep([{
+            identifier: payload.identifier
+          }]);
+        })
+        .end(done);
     });
   });
 
@@ -108,7 +107,7 @@ describe("Test hydraters dependencies", function() {
     this.bail(true);
 
     var payload = {
-      identifier: 'test-ics-identifier',
+      identifier: env.apiUrl + '/test-ics-identifier',
       metadata: {
         path: '/calendar.ics',
       },
