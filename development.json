@@ -1,24 +1,24 @@
 {
-  "apiUrl": "https://api.dev.anyfetch.com",
-  "appUrl": "https://app.dev.anyfetch.com",
-  "managerUrl": "https://manager.anyfetch.com",
+  "apiUrl": "https://api-development.anyfetch.com",
+  "appUrl": "https://app-development.anyfetch.com",
+  "managerUrl": "https://manager-development.anyfetch.com",
   "hydraters": {
-    "plaintext": "https://plaintext-hydrater.dev.anyfetch.com",
-    "image": "https://image-hydrater.dev.anyfetch.com",
-    "office": "https://office-hydrater.dev.anyfetch.com",
-    "pdf": "https://pdf-hydrater.dev.anyfetch.com",
-    "ocr": "https://ocr-hydrater.dev.anyfetch.com",
-    "iptc": "https://iptc-hydrater.dev.anyfetch.com",
-    "markdown": "https://markdown-hydrater.dev.anyfetch.com",
-    "filecleaner": "https://filecleaner-hydrater.dev.anyfetch.com",
-    "eml": "https://eml-hydrater.dev.anyfetch.com",
-    "embedmail": "https://embedmail-hydrater.dev.anyfetch.com",
-    "ics": "https://ics-hydrater.dev.anyfetch.com"
+    "plaintext": "https://plaintext-development.anyfetch.com",
+    "image": "https://image-development.anyfetch.com",
+    "office": "https://office-development.anyfetch.com",
+    "pdf": "https://pdf-development.anyfetch.com",
+    "ocr": "https://ocr-development.anyfetch.com",
+    "iptc": "https://iptc-development.anyfetch.com",
+    "markdown": "https://markdown-development.anyfetch.com",
+    "filecleaner": "https://filecleaner-development.anyfetch.com",
+    "eml": "https://eml-development.anyfetch.com",
+    "embedmail": "https://embedmail-development.anyfetch.com",
+    "ics": "https://ics-development.anyfetch.com"
   },
   "providers": {
-    "gmail": "https://gmail-provider.dev.anyfetch.com",
-    "gdrive": "https://gdrive-provider.dev.anyfetch.com",
-    "gcontacts": "https://gcontacts-provider.dev.anyfetch.com",
-    "dropbox": "https://dropbox-provider.dev.anyfetch.com"
+    "gmail": "https://gmail-development.anyfetch.com",
+    "gdrive": "https://gdrive-development.anyfetch.com",
+    "gcontacts": "https://gcontacts-development.anyfetch.com",
+    "dropbox": "https://dropbox-development.anyfetch.com"
   }
 }
