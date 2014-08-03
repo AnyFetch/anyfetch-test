@@ -23,7 +23,7 @@ envArgs.forEach(function(env) {
   tests.push(function test(cb) {
     process.env.API_ENV = env;
     shellExec('API_ENV=' + env + ' ./node_modules/mocha/bin/_mocha -R spec test/*/* -t 120000 -s 20000', {env: require("../test/env"), cwd: __dirname + '/..'}, function (err, stdout, stderr) {
-      if(stderr){
+      if(stderr) {
         json = {
           "subject": "anyfetch-test on " + env.toUpperCase() + " FAILED",
           "from_address": "deploy@anyfetch.com",

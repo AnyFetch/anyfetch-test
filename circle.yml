@@ -1,0 +1,7 @@
+machine:
+  node:
+    version: 0.10.30
+test:
+  override:
+    - API_ENV=staging npm test
+    - API_ENV=production npm test
