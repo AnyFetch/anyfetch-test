@@ -2,6 +2,7 @@
   "apiUrl": "https://api-staging.anyfetch.com",
   "appUrl": "https://app-staging.anyfetch.com",
   "managerUrl": "https://manager-staging.anyfetch.com",
+  "kueUrl": "https://kue-staging.anyfetch.com",
   "hydraters": {
     "plaintext": "https://plaintext-staging.anyfetch.com",
     "image": "https://image-staging.anyfetch.com",
