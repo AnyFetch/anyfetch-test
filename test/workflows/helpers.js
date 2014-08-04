@@ -4,7 +4,7 @@ require('should');
 require('../setup');
 var request = require('supertest');
 
-var env = require('../env');
+var env = require('../../config');
 
 var oauthCredential = null;
 

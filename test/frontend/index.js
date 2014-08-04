@@ -3,7 +3,7 @@
 require('should');
 var request = require('supertest');
 
-var env = require('../env');
+var env = require('../../config');
 
 describe("Test front and back ends", function() {
   describe("are up", function() {

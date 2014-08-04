@@ -3,7 +3,7 @@
 var request = require('supertest');
 var async = require('async');
 
-var env = require('./env');
+var env = require('../config');
 
 var masterAuth = 'Basic ' + env.masterCredentials;
 if(env.masterToken) {
