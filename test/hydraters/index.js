@@ -155,7 +155,7 @@ hydraters[env.hydraters.embedmail] = {
     document: {
       document_type: 'document',
       metadata: {
-        text: 'Salut !<br/>\n----- forwarded message ------<br/>\nDe : buathi_q@epitech.eu....'
+        text: 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....'
       },
       data: {},
       identifier: 'embedmail-test',
@@ -163,7 +163,7 @@ hydraters[env.hydraters.embedmail] = {
     }
   },
   expected: function(changes, done) {
-    changes.data.should.have.property('html', 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....');
+    changes.data.should.have.property('html', 'Salut !<br/>\n----- forwarded message ------<br/>\nDe : buathi_q@epitech.eu....');
     changes.metadata.should.have.property('text', 'Salut !');
     done();
   }
