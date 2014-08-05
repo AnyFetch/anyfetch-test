@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 0.10.30
+    version: 0.10.26
 test:
   override:
     - API_ENV=staging npm test
