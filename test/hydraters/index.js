@@ -155,7 +155,7 @@ hydraters[env.hydraters.embedmail] = {
     document: {
       document_type: 'document',
       metadata: {
-        text: 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....'
+        text: 'Salut !<br/>\n----- forwarded message ------<br/>\nDe : buathi_q@epitech.eu....'
       },
       data: {},
       identifier: 'embedmail-test',
