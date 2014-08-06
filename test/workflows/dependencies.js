@@ -22,7 +22,7 @@ describe("Test hydraters dependencies", function() {
       document_type: 'file',
       user_access: null
     };
-    var file = __dirname + '/samples/office-file.doc';
+    var file = __dirname + '/samples/office-file.docx';
     var hydraterToWait = env.hydraters.office;
     var hydratedDocument = null;
 
@@ -34,7 +34,7 @@ describe("Test hydraters dependencies", function() {
       // Real test.
       hydratedDocument.data.html.should.containDeep('<!DOCTYPE html>');
       hydratedDocument.data.html.should.containDeep('Base CSS for pdf2htmlEX');
-      hydratedDocument.metadata.text.should.containDeep('pour les processus');
+      hydratedDocument.metadata.text.should.containDeep('Matthieu BACCONNIER');
       done();
     });
   });

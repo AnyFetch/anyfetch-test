@@ -60,12 +60,12 @@ hydraters[env.hydraters.pdf] = {
 hydraters[env.hydraters.office] = {
   payload: {
     access_token: "123",
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/office.hydrater.anyfetch.com.test.doc",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/de8030de45a6458205156d87f4f987729c8e7077/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.docx",
     long_poll: 1,
     document: {
       document_type: 'document',
       metadata: {
-        path: 'office.hydrater.anyfetch.com.test.doc'
+        path: 'office.hydrater.anyfetch.com.test.docx'
       },
       data: {},
       identifier: 'office-test'
