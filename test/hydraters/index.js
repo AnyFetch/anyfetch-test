@@ -162,11 +162,7 @@ hydraters[env.hydraters.embedmail] = {
       id: 'embedmail-test'
     }
   },
-  expected: function(changes, done) {
-    changes.data.should.have.property('html', 'Salut !\n----- forwarded message ------\nDe : buathi_q@epitech.eu....');
-    changes.metadata.should.have.property('text', 'Salut !');
-    done();
-  }
+  expected: generateCompareFunction('./samples/embedmail.hydrater.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.iptc] = {

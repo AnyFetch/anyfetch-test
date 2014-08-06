@@ -32,7 +32,7 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.data.html.should.containDeep('</span>aux de rupture produits</div>');
+      hydratedDocument.data.html.should.containDeep('<p>A. Legait, PA. Millet et H. Chambe');
       hydratedDocument.metadata.text.should.containDeep('pour les processus');
       done();
     });
