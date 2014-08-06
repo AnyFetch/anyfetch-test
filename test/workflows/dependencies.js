@@ -32,7 +32,8 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      hydratedDocument.data.html.should.containDeep('<p>A. Legait, PA. Millet et H. Chambe');
+      hydratedDocument.data.html.should.containDeep('<!DOCTYPE html>');
+      hydratedDocument.data.html.should.containDeep('Base CSS for pdf2htmlEX');
       hydratedDocument.metadata.text.should.containDeep('pour les processus');
       done();
     });
