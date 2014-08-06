@@ -1,13 +1,13 @@
 {
   "apiUrl": "https://api.anyfetch.com",
-  "appUrl": "http://app.anyfetch.com",
+  "appUrl": "https://app.anyfetch.com",
   "managerUrl": "https://manager.anyfetch.com",
   "hydraters": {
-    "plaintext": "https://plaintext.anyfetch.com",
-    "image": "https://image.anyfetch.com",
+    "plaintext": "https://anyfetch-hydrater-plaintext.herokuapp.com",
+    "image": "https://anyfetch-hydrater-image.herokuapp.com",
     "office": "https://office.anyfetch.com",
     "pdf": "https://pdf.anyfetch.com",
-    "ocr": "https://ocr.anyfetch.com",
+    "ocr": "https://anyfetch-hydrater-tesseract.herokuapp.com",
     "iptc": "https://iptc.anyfetch.com",
     "markdown": "https://markdown.anyfetch.com",
     "filecleaner": "https://filecleaner.anyfetch.com",
