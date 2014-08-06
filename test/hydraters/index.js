@@ -65,7 +65,7 @@ hydraters[env.hydraters.office] = {
     document: {
       document_type: 'document',
       metadata: {
-        path: 'office.hydrater.anyfetch.com.test.doc'
+        path: 'office.hydrater.anyfetch.com.test.docx'
       },
       data: {},
       identifier: 'office-test'

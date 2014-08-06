@@ -33,7 +33,7 @@ describe("Stress test", function() {
         user_access: null
       };
       payloads[i] = payload;
-      var file = __dirname + '/../workflows/samples/office-file.doc';
+      var file = __dirname + '/../workflows/samples/office-file.docx';
 
       async.series([
         helpers.sendDocument(payload),
