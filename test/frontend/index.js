@@ -35,7 +35,7 @@ describe("Test front and back ends", function() {
     it("`" + env.kueUrl + "` should require authentication", function(done) {
       request(env.kueUrl)
       .get('/')
-      .expect(200)
+      .expect(401)
       .end(done);
     });
   });
