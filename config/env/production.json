@@ -1,25 +1,25 @@
 {
   "apiUrl": "https://api.anyfetch.com",
-  "appUrl": "http://app.anyfetch.com",
+  "appUrl": "https://app.anyfetch.com",
   "managerUrl": "https://manager.anyfetch.com",
   "kueUrl": "https://kue.anyfetch.com",
   "hydraters": {
-    "plaintext": "http://plaintext.hydrater.anyfetch.com",
-    "image": "http://image.hydrater.anyfetch.com",
-    "office": "http://office.hydrater.anyfetch.com",
-    "pdf": "http://pdf.hydrater.anyfetch.com",
-    "ocr": "http://ocr.hydrater.anyfetch.com",
-    "iptc": "http://iptc.hydrater.anyfetch.com",
-    "markdown": "http://markdown.hydrater.anyfetch.com",
-    "filecleaner": "http://filecleaner.hydrater.anyfetch.com",
-    "eml": "http://eml.hydrater.anyfetch.com",
-    "embedmail": "http://embedmail.hydrater.anyfetch.com",
-    "ics": "http://ics.hydrater.anyfetch.com"
+    "plaintext": "https://plaintext.anyfetch.com",
+    "image": "https://image.anyfetch.com",
+    "office": "https://office.anyfetch.com",
+    "pdf": "https://pdf.anyfetch.com",
+    "ocr": "https://ocr.anyfetch.com",
+    "iptc": "https://iptc.anyfetch.com",
+    "markdown": "https://markdown.anyfetch.com",
+    "filecleaner": "https://filecleaner.anyfetch.com",
+    "eml": "https://eml.anyfetch.com",
+    "embedmail": "https://embedmail.anyfetch.com",
+    "ics": "https://ics.anyfetch.com"
   },
   "providers": {
-    "gmail": "http://gmail.provider.anyfetch.com",
-    "gdrive": "http://gdrive.provider.anyfetch.com",
-    "gcontacts": "http://gcontacts.provider.anyfetch.com",
-    "dropbox": "http://dropbox.provider.anyfetch.com"
+    "gmail": "https://gmail.anyfetch.com",
+    "gdrive": "https://gdrive.anyfetch.com",
+    "gcontacts": "https://gcontacts.anyfetch.com",
+    "dropbox": "https://dropbox.anyfetch.com"
   }
 }
