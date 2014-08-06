@@ -2,6 +2,7 @@
   "apiUrl": "https://api.anyfetch.com",
   "appUrl": "https://app.anyfetch.com",
   "managerUrl": "https://manager.anyfetch.com",
+  "kueUrl": "https://kue.anyfetch.com",
   "hydraters": {
     "plaintext": "https://plaintext.anyfetch.com",
     "image": "https://image.anyfetch.com",
