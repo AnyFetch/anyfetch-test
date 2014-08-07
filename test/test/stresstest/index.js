@@ -12,7 +12,6 @@ var COUNT = process.env.STRESSTEST || 8;
 describe("Stress test", function() {
   this.timeout(120 * 1000);
   this.bail(true);
-  before(helpers.resetAccount);
   before(helpers.getToken);
 
   // Generate a simple range to iterate over

@@ -8,7 +8,6 @@ var env = require('../../../config');
 
 
 describe("Test hydraters dependencies", function() {
-  before(helpers.resetAccount);
   before(helpers.getToken);
 
   describe("should work for office documents", function() {

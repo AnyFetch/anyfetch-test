@@ -1,4 +1,6 @@
 "use strict";
+// Check hosts are up and available
+
 
 var request = require('supertest');
 var urlParser = require("url").parse;

@@ -1,4 +1,6 @@
 "use strict";
+// Execute requests before any "it", ensuring they'll be ready and done when mocha comes.
+
 
 var async = require("async");
 
