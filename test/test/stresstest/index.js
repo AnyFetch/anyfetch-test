@@ -3,7 +3,7 @@
 require('should');
 var async = require('async');
 
-var helpers = require('../workflows/helpers.js');
+var helpers = require('../../helpers/api');
 
 var env = require('../../../config');
 

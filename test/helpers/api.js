@@ -3,7 +3,7 @@
 require('should');
 var request = require('supertest');
 
-var env = require('../../../config');
+var env = require('../../config');
 
 
 /**

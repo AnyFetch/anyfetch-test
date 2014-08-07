@@ -2,7 +2,7 @@
 
 require('should');
 
-var helpers = require('./helpers.js');
+var helpers = require('../../helpers/api');
 
 var env = require('../../../config');
 
