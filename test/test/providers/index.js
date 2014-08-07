@@ -1,24 +1,20 @@
 'use strict';
 
 require('should');
-var request = require('supertest');
-var async = require('async');
 
+var up = require('../../helpers/up');
 var env = require('../../../config');
 
-var providers = Object.keys(env.providers).map(function(key) {
-  return env.providers[key];
-});
 
 describe("Test providers", function() {
-  describe("are up", function() {
-    providers.forEach(function(url) {
-      it("`" + url + "` should be up", async.retry(3, function(cb) {
-        request(url)
-          .post('/update')
-          .expect(409)
-          .end(cb);
-      }));
-    });
+  var hosts = {};
+  Object.keys(env.providers).forEach(function(provider) {
+    provider = env.providers[provider];
+    hosts[provider] = {
+      url: provider,
+      expected: 302,
+    };
   });
+
+  up.generateDescribe(hosts);
 });

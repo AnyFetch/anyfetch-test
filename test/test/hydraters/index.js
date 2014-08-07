@@ -4,6 +4,7 @@ require('should');
 var request = require('supertest');
 var async = require('async');
 
+var up = require('../../helpers/up');
 var env = require('../../../config');
 
 // Build a checker-function to compare a reply with a file
@@ -186,16 +187,14 @@ hydraters[env.hydraters.ics] = {};
 hydraters[env.hydraters.filecleaner] = {};
 
 describe("Test hydraters", function() {
-  describe("are up", function() {
-    Object.keys(hydraters).forEach(function(url) {
-      it("`" + url + "` should be up", async.retry(3, function(cb) {
-        request(url)
-          .get('/status')
-          .expect(200)
-          .end(cb);
-      }));
-    });
+  var hosts = {};
+  Object.keys(hydraters).forEach(function(url) {
+    hosts[url] = {
+      url : url + '/status',
+      expected: 200
+    };
   });
+  up.generateDescribe(hosts);
 
   describe("are working", function() {
     Object.keys(hydraters).forEach(function(url) {
