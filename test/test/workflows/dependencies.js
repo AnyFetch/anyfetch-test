@@ -7,7 +7,7 @@ var helpers = require('./helpers.js');
 var env = require('../../../config');
 
 
-describe("Test hydraters dependencies", function() {
+describe.only("Test hydraters dependencies", function() {
   before(helpers.resetAccount);
   before(helpers.getToken);
 
