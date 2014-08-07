@@ -32,8 +32,8 @@ describe("Test front and back ends", function() {
       request(env.managerUrl)
       .post('/sign_in')
       .send({
-        email: this.email,
-        password: this.password
+        email: env.credentials.email,
+        password: env.credentials.password
       })
       .expect(302)
       .end(done);

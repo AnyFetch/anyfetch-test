@@ -4,9 +4,8 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-describe("Test providers workflow", function() {
-  before(helpers.getToken);
 
+describe("Test providers workflow", function() {
   var payload = {
     identifier:'test-workflow-identifier',
     metadata: {
@@ -67,11 +66,9 @@ describe("Test providers workflow", function() {
         done(err);
       });
     }, 5000);
-
-
   });
 
-  it("should be removed with a reset", function(done) {
+  it.skip("should be removed with a reset", function(done) {
     helpers.basicApiRequest('del', '/company/reset')
     .expect(204)
     .end(function(err) {

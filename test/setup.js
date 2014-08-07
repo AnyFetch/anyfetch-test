@@ -11,11 +11,12 @@ if(env.masterToken) {
 }
 
 before(function createUserCredential(done) {
-  this.timestamp = (new Date()).getTime();
-  this.email = "test-" + this.timestamp + "@anyfetch.com";
-  this.name = "test-" + this.timestamp;
-  this.password = "test_password";
-  var self = this;
+  env.credentials = {};
+
+  env.credentials.timestamp = (new Date()).getTime();
+  env.credentials.email = "test-" + env.credentials.timestamp + "@anyfetch.com";
+  env.credentials.name = "test-" + env.credentials.timestamp;
+  env.credentials.password = "test_password";
 
   async.waterfall([
     function createUser(cb) {
@@ -24,16 +25,16 @@ before(function createUserCredential(done) {
         .post('/users')
         .set('Authorization', masterAuth)
         .send({
-          "email": self.email,
-          "name": self.name,
-          "password": self.password,
+          "email": env.credentials.email,
+          "name": env.credentials.name,
+          "password": env.credentials.password,
           "is_admin": false
         })
         .expect(200)
         .end(cb);
     },
     function createSubcompanyAndUpdateCredential(res, cb) {
-      env.basicCredentials = (new Buffer(self.email + ":" + self.password)).toString('base64');
+      env.credentials.basic = (new Buffer(env.credentials.email + ":" + env.credentials.password)).toString('base64');
       request(env.apiUrl)
         .post('/subcompanies')
         .set('Authorization', masterAuth)
@@ -46,6 +47,17 @@ before(function createUserCredential(done) {
     },
     function saveSubcompanyId(res, cb) {
       env.subcompany_id = res.body.id;
+      cb();
+    },
+    function getToken(cb) {
+      request(env.apiUrl)
+        .get('/token')
+        .set('Authorization', 'Basic ' + env.credentials.basic)
+        .expect(200)
+        .end(cb);
+    },
+    function(res, cb) {
+      env.credentials.token = res.body.token;
       cb();
     }
   ], done);

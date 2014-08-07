@@ -5,8 +5,6 @@ var request = require('supertest');
 
 var env = require('../../../config');
 
-var oauthCredential = null;
-
 
 /**
  * Base helper for api requests authentified by basic.
@@ -15,19 +13,7 @@ var oauthCredential = null;
 module.exports.basicApiRequest = function basicApiRequest(method, url) {
   return request(env.apiUrl)
     [method](url)
-    .set('Authorization', 'Basic ' + env.basicCredentials);
-};
-
-
-/**
- * Reset the account to pristine state
- */
-module.exports.resetAccount = function resetAccount(done) {
-  oauthCredential = null;
-  module.exports.basicApiRequest('del', '/company/reset')
-    .set('Content-Length', 0)
-    .expect(204)
-    .end(done);
+    .set('Authorization', 'Basic ' + env.credentials.basic);
 };
 
 
@@ -41,30 +27,14 @@ module.exports.expectJSON = function expectJSON(key, value) {
 };
 
 
-/** Helper to get a token
- *
- */
-module.exports.getToken = function getToken(cb) {
-  module.exports.basicApiRequest('get', '/token')
-  .expect(200)
-  .end(function(err, res){
-    oauthCredential = res.body.token;
-    cb(err, res.body.token);
-  });
-};
-
-
 /**
- * Base helper for api requests authentidief by tokens.
+ * Base helper for api requests authentified by tokens.
  * Returns an authentified supertest client
  */
 module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
-  if(!oauthCredential) {
-    throw new Error("Call getToken() before doing tokenApiRequest.");
-  }
   return request(env.apiUrl)
     [method](url)
-    .set('Authorization', "Bearer " + oauthCredential);
+    .set('Authorization', "Bearer " + env.credentials.token);
 };
 
 

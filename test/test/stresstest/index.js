@@ -12,7 +12,6 @@ var COUNT = process.env.STRESSTEST || 8;
 describe("Stress test", function() {
   this.timeout(120 * 1000);
   this.bail(true);
-  before(helpers.getToken);
 
   // Generate a simple range to iterate over
   var range = [];
@@ -24,7 +23,6 @@ describe("Stress test", function() {
   var payloads = new Array(COUNT);
 
   it("sending " + COUNT + " documents and files", function(done) {
-
     var sender = function(i, cb) {
       var payload = {
         identifier:'test-office-dependencies-identifier-' + i,

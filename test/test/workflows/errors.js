@@ -37,7 +37,6 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
 };
 
 describe("Test errored documents", function() {
-  before(helpers.getToken);
 
   describe("should have an error", function() {
     this.bail(true);
