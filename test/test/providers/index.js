@@ -4,7 +4,7 @@ require('should');
 var request = require('supertest');
 var async = require('async');
 
-var env = require('../../config');
+var env = require('../../../config');
 
 var providers = Object.keys(env.providers).map(function(key) {
   return env.providers[key];

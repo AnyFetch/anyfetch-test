@@ -1,10 +1,9 @@
 'use strict';
 
 require('should');
-require('../setup');
 var request = require('supertest');
 
-var env = require('../../config');
+var env = require('../../../config');
 
 var oauthCredential = null;
 

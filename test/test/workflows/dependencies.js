@@ -4,7 +4,7 @@ require('should');
 
 var helpers = require('./helpers.js');
 
-var env = require('../../config');
+var env = require('../../../config');
 
 
 describe("Test hydraters dependencies", function() {
