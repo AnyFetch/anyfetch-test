@@ -49,17 +49,6 @@ before(function createUserCredential(done) {
       env.subcompany_id = res.body.id;
       cb();
     },
-    function getToken(cb) {
-      request(env.apiUrl)
-        .get('/token')
-        .set('Authorization', 'Basic ' + env.credentials.basic)
-        .expect(200)
-        .end(cb);
-    },
-    function(res, cb) {
-      env.credentials.token = res.body.token;
-      cb();
-    }
   ], done);
 });
 

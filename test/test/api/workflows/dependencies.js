@@ -2,16 +2,16 @@
 
 require('should');
 
-var helpers = require('../../helpers/api');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../../config');
+var env = require('../../../../config');
 
 
 describe("Test hydraters dependencies", function() {
+  before(helpers.reset);
+  before(helpers.getToken);
 
   describe("should work for office documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-office-dependencies-identifier',
       metadata: {
@@ -38,17 +38,15 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for image documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-image-dependencies-identifier',
       metadata: {
-        path: '/test-dependancies-photo.jpg',
+        path: '/test-dependencies-photo.jpg',
       },
       document_type: 'file',
       user_access: null
     };
-    var file = __dirname + '/../hydraters/samples/iptc.anyfetch.com.test.jpg';
+    var file = __dirname + '/samples/image.jpg';
     var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
     var hydratedDocument = null;
 
@@ -74,8 +72,6 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should hydrate attachments", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-eml-identifier',
       metadata: {
@@ -103,8 +99,6 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for ics documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-ics-identifier',
       metadata: {
@@ -156,8 +150,6 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should remove useless files", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-filecleaner-identifier',
       metadata: {

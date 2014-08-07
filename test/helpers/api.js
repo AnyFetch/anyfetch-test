@@ -27,6 +27,27 @@ module.exports.expectJSON = function expectJSON(key, value) {
 };
 
 
+module.exports.reset = function resetCompany(done) {
+  env.credentials.token = null;
+  request(env.apiUrl)
+    .del('/company/reset')
+    .set('Authorization', 'Basic ' + env.credentials.basic)
+    .expect(204)
+    .end(done);
+};
+
+
+module.exports.getToken = function resetCompany(done) {
+  request(env.apiUrl)
+    .get('/token')
+    .set('Authorization', 'Basic ' + env.credentials.basic)
+    .expect(200)
+    .expect(function(res) {
+      env.credentials.token = res.body.token;
+    })
+    .end(done);
+};
+
 /**
  * Base helper for api requests authentified by tokens.
  * Returns an authentified supertest client

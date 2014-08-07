@@ -2,9 +2,12 @@
 
 require('should');
 
-var helpers = require('../../helpers/api');
+var helpers = require('../../../helpers/api');
 
 describe("Test workflow", function() {
+  before(helpers.reset);
+  before(helpers.getToken);
+
   it("should be able to login", function(done) {
     // We should be able to login using supplied credentials
     helpers.basicApiRequest('get', '/')

@@ -3,15 +3,15 @@
 require('should');
 var async = require('async');
 
-var helpers = require('../../helpers/api');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../../config');
+var env = require('../../../../config');
 
 var COUNT = process.env.STRESSTEST || 8;
 
 describe("Stress test", function() {
-  this.timeout(120 * 1000);
-  this.bail(true);
+  before(helpers.reset);
+  before(helpers.getToken);
 
   // Generate a simple range to iterate over
   var range = [];

@@ -2,9 +2,9 @@
 
 require('should');
 
-var helpers = require('../../helpers/api');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../../config');
+var env = require('../../../../config');
 
 
 var checkErroredHydration = function(id, hydraterToWait, cb) {
@@ -37,10 +37,10 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
 };
 
 describe("Test errored documents", function() {
+  before(helpers.reset);
+  before(helpers.getToken);
 
   describe("should have an error", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + 'test-error-document-identifier',
       metadatas: {
