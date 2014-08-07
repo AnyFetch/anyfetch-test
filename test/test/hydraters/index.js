@@ -18,7 +18,7 @@ var hydraters = {};
 
 hydraters[env.hydraters.plaintext] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.doc",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/plaintext.anyfetch.com.test.doc",
     long_poll: 1,
     document: {
       document_type: "file",
@@ -27,17 +27,17 @@ hydraters[env.hydraters.plaintext] = {
       identifier: 'plaintext-test'
     }
   },
-  expected: generateCompareFunction('./samples/plaintext.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/plaintext.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.pdf] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/pdf.hydrater.anyfetch.com.test.pdf",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/pdf.anyfetch.com.test.pdf",
     long_poll: 1,
     document: {
       document_type: 'document',
       metadata: {
-        path: 'pdf.hydrater.anyfetch.com.test.pdf',
+        path: 'pdf.anyfetch.com.test.pdf',
         mime_type: 'application/pdf'
       },
       data: {},
@@ -45,7 +45,7 @@ hydraters[env.hydraters.pdf] = {
     }
   },
   expected: function(data) {
-    var expected = require('./samples/pdf.hydrater.anyfetch.com.expected.json');
+    var expected = require('./samples/pdf.anyfetch.com.expected.json');
     for(var key in expected) {
       data.should.have.property(key);
       data[key].should.eql(expected[key]);
@@ -58,12 +58,12 @@ hydraters[env.hydraters.pdf] = {
 hydraters[env.hydraters.office] = {
   payload: {
     access_token: "123",
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/de8030de45a6458205156d87f4f987729c8e7077/test/hydraters/samples/plaintext.hydrater.anyfetch.com.test.docx",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/plaintext.anyfetch.com.test.docx",
     long_poll: 1,
     document: {
       document_type: 'document',
       metadata: {
-        path: 'office.hydrater.anyfetch.com.test.docx'
+        path: 'office.anyfetch.com.test.docx'
       },
       data: {},
       identifier: 'office-test'
@@ -73,19 +73,19 @@ hydraters[env.hydraters.office] = {
 
 hydraters[env.hydraters.image] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/image.hydrater.anyfetch.com.test.png",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/image.anyfetch.com.test.png",
     long_poll: 1,
     document: {
       document_type: 'file',
       metadata: {
-        path: 'image.hydrater.anyfetch.com.test.png',
+        path: 'image.anyfetch.com.test.png',
       },
       data: {},
       identifier: 'image-test'
     }
   },
   expected: function(data) {
-    var expected = require('./samples/image.hydrater.anyfetch.com.expected.json');
+    var expected = require('./samples/image.anyfetch.com.expected.json');
     for(var key in expected) {
       data.should.have.property(key);
       data[key].should.eql(expected[key]);
@@ -99,24 +99,24 @@ hydraters[env.hydraters.image] = {
 
 hydraters[env.hydraters.ocr] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/cb808057f26562bec2e10975cbe7950a3a6bb6b0/test/hydraters/samples/ocr.hydrater.anyfetch.com.test.png",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/ocr.anyfetch.com.test.png",
     long_poll: 1,
     document: {
       document_type: 'image',
       metadata: {
-        path: 'ocr.hydrater.anyfetch.com.test.png',
+        path: 'ocr.anyfetch.com.test.png',
       },
       data: {},
       identifier: 'ocr-test'
     }
   },
-  expected: generateCompareFunction('./samples/ocr.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/ocr.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.eml] = {
   payload: {
     access_token: "123",
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2ac40f1b80fde346ee25b33b51240e2987a10c84/test/hydraters/samples/eml.hydrater.anyfetch.com.test.eml",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/eml.anyfetch.com.test.eml",
     long_poll: 1,
     document: {
       document_type: 'document',
@@ -127,23 +127,23 @@ hydraters[env.hydraters.eml] = {
       identifier: 'eml-test'
     }
   },
-  expected: generateCompareFunction('./samples/eml.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/eml.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.markdown] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/25a82595891eba0979ec4d4283e99258dfaeef88/test/hydraters/samples/markdown.hydrater.anyfetch.com.test.md",
+    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/markdown.anyfetch.com.test.md",
     long_poll: 1,
     document: {
       document_type: 'document',
       metadata: {
-        path: '/markdown.hydrater.anyfetch.com.test.md',
+        path: '/markdown.anyfetch.com.test.md',
       },
       data: {},
       identifier: 'markdown-test'
     }
   },
-  expected: generateCompareFunction('./samples/markdown.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/markdown.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.embedmail] = {
@@ -159,23 +159,23 @@ hydraters[env.hydraters.embedmail] = {
       id: 'embedmail-test'
     }
   },
-  expected: generateCompareFunction('./samples/embedmail.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/embedmail.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.iptc] = {
   payload: {
-    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/327eb029b969a820b04868d219c5f797238874b8/test/hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/hydraters/samples/iptc.anyfetch.com.test.jpg",
     long_poll: 1,
     document: {
       document_type: 'document',
       metadata: {
-        path: '/iptc.hydrater.anyfetch.com.test.jpg',
+        path: '/iptc.anyfetch.com.test.jpg',
       },
       data: {},
       identifier: 'iptc-test'
     }
   },
-  expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
+  expected: generateCompareFunction('./samples/iptc.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.ics] = {
