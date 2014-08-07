@@ -2,17 +2,15 @@
 
 require('should');
 var request = require('supertest');
-var async = require('async');
 
 var up = require('../../helpers/up');
+var warmer = require('../../helpers/warmer');
 var env = require('../../../config');
 
 // Build a checker-function to compare a reply with a file
 var generateCompareFunction = function(file) {
-  return function(data, done) {
+  return function(data) {
     require(file).should.eql(data);
-
-    done();
   };
 };
 
@@ -46,7 +44,7 @@ hydraters[env.hydraters.pdf] = {
       identifier: 'pdf-test'
     }
   },
-  expected: function(data, done) {
+  expected: function(data) {
     var expected = require('./samples/pdf.hydrater.anyfetch.com.expected.json');
     for(var key in expected) {
       data.should.have.property(key);
@@ -54,7 +52,6 @@ hydraters[env.hydraters.pdf] = {
     }
     data.data.should.have.property('html');
     data.data.html.should.match(/mail est un/);
-    done();
   }
 };
 
@@ -87,7 +84,7 @@ hydraters[env.hydraters.image] = {
       identifier: 'image-test'
     }
   },
-  expected: function(data, done) {
+  expected: function(data) {
     var expected = require('./samples/image.hydrater.anyfetch.com.expected.json');
     for(var key in expected) {
       data.should.have.property(key);
@@ -97,7 +94,6 @@ hydraters[env.hydraters.image] = {
     data.data.should.have.property('display');
     data.data.display.should.containDeep("data:image/jpeg;base64,");
     data.data.thumb.should.containDeep("data:image/png;base64,");
-    done();
   }
 };
 
@@ -182,9 +178,14 @@ hydraters[env.hydraters.iptc] = {
   expected: generateCompareFunction('./samples/iptc.hydrater.anyfetch.com.expected.json')
 };
 
-hydraters[env.hydraters.ics] = {};
+hydraters[env.hydraters.ics] = {
+  payload: {}
+};
 
-hydraters[env.hydraters.filecleaner] = {};
+hydraters[env.hydraters.filecleaner] = {
+  payload: {}
+};
+
 
 describe("Test hydraters", function() {
   var hosts = {};
@@ -197,25 +198,30 @@ describe("Test hydraters", function() {
   up.generateDescribe(hosts);
 
   describe("are working", function() {
+    var requests = {};
     Object.keys(hydraters).forEach(function(url) {
       if(!hydraters[url].expected) {
+        // Skip hdyraters without expectation
         it("`" + url + "` should hydrate file");
         return;
       }
 
-      it("`" + url + "` should hydrate file", async.retry(3, function(cb) {
-        request(url)
-          .post('/hydrate')
-          .send(hydraters[url].payload)
-          .expect(200)
-          .end(function(err, res) {
-            if(err) {
-              return cb(err);
-            }
-
-            hydraters[url].expected(res.body, cb);
-          });
-      }));
+      requests[url] = request(url)
+        .post('/hydrate')
+        .send(hydraters[url].payload)
+        .expect(200)
+        .expect(function(res) {
+          hydraters[url].expected(res.body);
+        });
     });
+
+    var status = warmer.prepareRequests(requests);
+
+    Object.keys(requests).forEach(function(url) {
+      it("`" + url + "` should hydrate file", function(done) {
+        warmer.untilChecker(status, url, done);
+      });
+    });
+
   });
 });

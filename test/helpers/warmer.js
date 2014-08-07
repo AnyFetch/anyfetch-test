@@ -24,7 +24,7 @@ module.exports.prepareRequests = function prepareRequests(requests) {
 /**
  * Call cb() with the results from the request made with prepareRequests
  */
-module.exports.untilChecker = function(ret, key, cb) {
+module.exports.untilChecker = function untilChecker(ret, key, cb) {
   // Return true when done() has been called
   var checker = function checker() {
     if(ret[key]) {
