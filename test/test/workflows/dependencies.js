@@ -7,7 +7,7 @@ var helpers = require('./helpers.js');
 var env = require('../../../config');
 
 
-describe.only("Test hydraters dependencies", function() {
+describe("Test hydraters dependencies", function() {
   before(helpers.resetAccount);
   before(helpers.getToken);
 
@@ -50,7 +50,7 @@ describe.only("Test hydraters dependencies", function() {
       document_type: 'file',
       user_access: null
     };
-    var file = __dirname + '/../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
+    var file = __dirname + '/../hydraters/samples/iptc.anyfetch.com.test.jpg';
     var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
     var hydratedDocument = null;
 
