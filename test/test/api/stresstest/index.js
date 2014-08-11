@@ -39,7 +39,7 @@ describe("Stress test", function() {
     };
 
 
-    async.eachLimit(range, 4, sender, done);
+    async.eachLimit(range, 8, sender, done);
   });
 
   it("checking for hydration", function(done) {
@@ -49,6 +49,6 @@ describe("Stress test", function() {
       helpers.waitForHydration(id, env.hydraters.office)(cb);
     };
 
-    async.eachLimit(range, 4, checker, done);
+    async.eachLimit(range, 8, checker, done);
   });
 });
