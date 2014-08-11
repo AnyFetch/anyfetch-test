@@ -2,12 +2,18 @@
 
 require('should');
 
-var helpers = require('../../../helpers/api');
+var helpers = require('../../helpers/api');
 
-
-describe("Test providers workflow", function() {
+describe("Test common API usage", function() {
   before(helpers.reset);
   before(helpers.getToken);
+
+  it("should be able to login", function(done) {
+    // We should be able to login using supplied credentials
+    helpers.basicApiRequest('get', '/')
+      .expect(200)
+      .end(done);
+  });
 
   var payload = {
     identifier:'test-workflow-identifier',
