@@ -3,6 +3,8 @@
 require('should');
 var request = require('supertest');
 
+var warmer = require('./warmer');
+
 var env = require('../../config');
 
 
@@ -60,14 +62,52 @@ module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
 
 
 /**
+ * Send one document and an associated file to the API using the warmer API for faster results.
+ * You need to send your `this` context from mocha. A specific `before` will be registered one level higher than the current `describe()`, letting us pre-warm the query before entering the describe.
+ */
+module.exports.sendDocumentAndFile = function sendFile(payload, file) {
+  if(!this.parent) {
+    throw new Error("Call sendDocumentAndFile with a this context from Mocha -- a before() will be hooked onto your parent describe.");
+  }
+
+  var documentWarmer;
+  var fileWarmer = {};
+  this.parent.beforeAll.call(this.parent, function(done) {
+    documentWarmer = warmer.prepareRequests({
+      document: module.exports.sendDocumentRequest(payload)
+    });
+
+    warmer.untilChecker(documentWarmer, 'document', function(err, res) {
+      if(!err) {
+        payload.id = res.body.id;
+
+        fileWarmer = warmer.prepareRequests({
+          file: module.exports.sendFileRequest(payload, file)
+        });
+      }
+    });
+
+    // Call done directly, without waiting for any return
+    done();
+  });
+
+  it('... sending document', function(done) {
+    warmer.untilChecker(documentWarmer, 'document', done);
+  });
+
+  it('... sending file', function(done) {
+    warmer.untilChecker(fileWarmer, 'file', done);
+  });
+};
+
+/**
  * Complex helper, used to send `payload` document, then send associated `file`, and finally wait until `hydraterToWait` has returned with data.
  * Use multiple it().
  * Example usage in dependencies.js
  */
-module.exports.sendFileAndWaitForHydration = function sendFileAndWaitForHydration(payload, file, hydratersToWait, cb) {
-  it('... sending document', module.exports.sendDocument(payload));
+module.exports.sendDocumentAndFileAndWaitForHydration = function sendFileAndWaitForHydration(payload, file, hydratersToWait, cb) {
 
-  it('... sending file', module.exports.sendFile(payload, file));
+  module.exports.sendDocumentAndFile.call(this, payload, file);
 
   it('... waiting for hydration', function(done) {
     module.exports.waitForHydration(payload.id, hydratersToWait, cb)(done);
@@ -81,9 +121,7 @@ module.exports.sendFileAndWaitForHydration = function sendFileAndWaitForHydratio
  */
 module.exports.sendDocument = function sendDocument(payload) {
   return function(done) {
-    module.exports.tokenApiRequest('post', '/documents')
-      .send(payload)
-      .expect(200)
+    module.exports.sendDocumentRequest(payload)
       .end(function(err, res) {
         if(err) {
           throw err;
@@ -97,6 +135,17 @@ module.exports.sendDocument = function sendDocument(payload) {
 
 
 /**
+ * Send payload document.
+ * Insert resulting id in payload.id
+ */
+module.exports.sendDocumentRequest = function sendDocument(payload) {
+  return module.exports.tokenApiRequest('post', '/documents')
+    .send(payload)
+    .expect(200);
+};
+
+
+/**
  * Associate file with identifier
  */
 module.exports.sendFile = function sendFile(payload, file) {
@@ -106,6 +155,16 @@ module.exports.sendFile = function sendFile(payload, file) {
       .expect(204)
       .end(done);
   };
+};
+
+
+/**
+ * Associate file with identifier
+ */
+module.exports.sendFileRequest = function sendFile(payload, file) {
+  return module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
+    .attach('file', file)
+    .expect(204);
 };
 
 

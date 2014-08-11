@@ -53,9 +53,7 @@ describe("Test errored documents", function() {
     var hydraterToWait = env.hydraters.pdf;
     var hydratedDocument = null;
 
-    it('... sending document', helpers.sendDocument(payload));
-
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('... waiting for hydration', function(done) {
       checkErroredHydration(payload.id, hydraterToWait + "/hydrate", function(document) {

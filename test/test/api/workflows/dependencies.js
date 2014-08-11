@@ -24,7 +24,7 @@ describe("Test hydraters dependencies", function() {
     var hydraterToWait = env.hydraters.office;
     var hydratedDocument = null;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait, function(document) {
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydraterToWait, function(document) {
       hydratedDocument = document;
     });
 
@@ -50,7 +50,7 @@ describe("Test hydraters dependencies", function() {
     var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
     var hydratedDocument = null;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydratersToWait, function(document) {
       hydratedDocument = document;
     });
 
@@ -83,7 +83,7 @@ describe("Test hydraters dependencies", function() {
     var file = __dirname + '/samples/eml-with-attachment.eml';
     var hydraterToWait = env.hydraters.eml;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait);
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydraterToWait);
 
     it('should have been properly hydrated', function(done) {
       // Real test.
@@ -109,8 +109,7 @@ describe("Test hydraters dependencies", function() {
     };
     var file = __dirname + '/samples/calendar.ics';
 
-    it('... sending document', helpers.sendDocument(payload));
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have created three events', function(done) {
       function checkEvents() {
@@ -163,8 +162,7 @@ describe("Test hydraters dependencies", function() {
     };
     var file = __dirname + '/samples/.DS_STORE';
 
-    it('... sending document', helpers.sendDocument(payload));
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have been properly removed', function(done) {
       function checkHydration() {
