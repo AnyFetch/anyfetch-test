@@ -114,13 +114,16 @@ describe("Test hydraters dependencies", function() {
 
     it('should have created three events', function(done) {
       function checkEvents() {
-        helpers.basicApiRequest('get', '/documents?search=Node')
+        helpers.basicApiRequest('get', '/documents?search=Node&document_type=5252ce4ce4cfcd16f55cfa40')
         .end(function(err, res) {
           if(err) {
             throw err;
           }
           if(res.body.count === 3) {
             done();
+          }
+          else if(res.body.count > 3) {
+            done(new Error("Too many documents matching!"));
           }
           else {
             setTimeout(checkEvents, 1000);
