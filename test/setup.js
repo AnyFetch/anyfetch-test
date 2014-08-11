@@ -60,3 +60,12 @@ after(function deleteSubcompany(done) {
     .expect(204)
     .end(done);
 });
+
+
+var http = require('http');
+var https = require('https');
+
+// See max socket value, default is 5.
+// See http://markdawson.tumblr.com/post/17525116003/node
+http.globalAgent.maxSockets = 50;
+https.globalAgent.maxSockets = 50;
