@@ -62,7 +62,7 @@ module.exports.tokenApiRequest = function tokenApiRequest(method, url) {
 
 
 /**
- * Send one document and an associated file to the API using the warmer API for faster results.
+ * Send one document and an associated file to the API using the warmer for faster results.
  * You need to send your `this` context from mocha. A specific `before` will be registered one level higher than the current `describe()`, letting us pre-warm the query before entering the describe.
  */
 module.exports.sendDocumentAndFile = function sendFile(payload, file) {
@@ -72,6 +72,8 @@ module.exports.sendDocumentAndFile = function sendFile(payload, file) {
 
   var documentWarmer;
   var fileWarmer = {};
+
+  // Register a before on the parent describe
   this.parent.beforeAll.call(this.parent, function(done) {
     documentWarmer = warmer.prepareRequests({
       document: module.exports.buildDocumentRequest(payload)
@@ -84,6 +86,7 @@ module.exports.sendDocumentAndFile = function sendFile(payload, file) {
         });
       }
       // if there is an error, it will be handled later, in the `it` call
+      documentWarmer.documentSent = [err];
     });
 
     // Call done directly, without waiting for any return
@@ -91,7 +94,8 @@ module.exports.sendDocumentAndFile = function sendFile(payload, file) {
   });
 
   it('... sending document', function(done) {
-    warmer.untilChecker(documentWarmer, 'document', done);
+    // Listen the `documentSent` key, not `document`, to ensure the fileWarmer object is initialized.
+    warmer.untilChecker(documentWarmer, 'documentSent', done);
   });
 
   it('... sending file', function(done) {

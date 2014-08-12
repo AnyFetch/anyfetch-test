@@ -30,7 +30,10 @@ module.exports.untilChecker = function untilChecker(ret, key, cb) {
   // Return true when done() has been called
   var checker = function checker() {
     if(ret[key]) {
-      cb.apply(this, ret[key]);
+      // Wrap in process.nextTick to avoid weird concurrency issues
+      process.nextTick(function() {
+        cb.apply(this, ret[key]);
+      });
       return true;
     }
 
