@@ -74,17 +74,16 @@ module.exports.sendDocumentAndFile = function sendFile(payload, file) {
   var fileWarmer = {};
   this.parent.beforeAll.call(this.parent, function(done) {
     documentWarmer = warmer.prepareRequests({
-      document: module.exports.sendDocumentRequest(payload)
+      document: module.exports.buildDocumentRequest(payload)
     });
 
-    warmer.untilChecker(documentWarmer, 'document', function(err, res) {
+    warmer.untilChecker(documentWarmer, 'document', function(err) {
       if(!err) {
-        payload.id = res.body.id;
-
         fileWarmer = warmer.prepareRequests({
-          file: module.exports.sendFileRequest(payload, file)
+          file: module.exports.buildFileRequest(payload, file)
         });
       }
+      // if there is an error, it will be handled later, in the `it` call
     });
 
     // Call done directly, without waiting for any return
@@ -121,15 +120,8 @@ module.exports.sendDocumentAndFileAndWaitForHydration = function sendFileAndWait
  */
 module.exports.sendDocument = function sendDocument(payload) {
   return function(done) {
-    module.exports.sendDocumentRequest(payload)
-      .end(function(err, res) {
-        if(err) {
-          throw err;
-        }
-        payload.id = res.body.id;
-
-        done();
-      });
+    module.exports.buildDocumentRequest(payload)
+      .end(done);
   };
 };
 
@@ -138,10 +130,13 @@ module.exports.sendDocument = function sendDocument(payload) {
  * Send payload document.
  * Insert resulting id in payload.id
  */
-module.exports.sendDocumentRequest = function sendDocument(payload) {
+module.exports.buildDocumentRequest = function sendDocument(payload) {
   return module.exports.tokenApiRequest('post', '/documents')
     .send(payload)
-    .expect(200);
+    .expect(200)
+    .expect(function(res) {
+      payload.id = res.body.id;
+    });
 };
 
 
@@ -150,9 +145,7 @@ module.exports.sendDocumentRequest = function sendDocument(payload) {
  */
 module.exports.sendFile = function sendFile(payload, file) {
   return function(done) {
-    module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
-      .attach('file', file)
-      .expect(204)
+    module.exports.buildFileRequest(payload, file)
       .end(done);
   };
 };
@@ -161,7 +154,7 @@ module.exports.sendFile = function sendFile(payload, file) {
 /**
  * Associate file with identifier
  */
-module.exports.sendFileRequest = function sendFile(payload, file) {
+module.exports.buildFileRequest = function sendFile(payload, file) {
   return module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
     .attach('file', file)
     .expect(204);
