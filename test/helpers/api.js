@@ -120,7 +120,6 @@ module.exports.sendDocumentAndFileAndWaitForHydration = function sendFileAndWait
 
 /**
  * Send payload document.
- * Insert resulting id in payload.id
  */
 module.exports.sendDocument = function sendDocument(payload) {
   return function(done) {
@@ -131,10 +130,10 @@ module.exports.sendDocument = function sendDocument(payload) {
 
 
 /**
- * Send payload document.
+ * Build a request to send a document
  * Insert resulting id in payload.id
  */
-module.exports.buildDocumentRequest = function sendDocument(payload) {
+module.exports.buildDocumentRequest = function buildDocumentRequest(payload) {
   return module.exports.tokenApiRequest('post', '/documents')
     .send(payload)
     .expect(200)
@@ -156,9 +155,9 @@ module.exports.sendFile = function sendFile(payload, file) {
 
 
 /**
- * Associate file with identifier
+ * Build the request to send a file
  */
-module.exports.buildFileRequest = function sendFile(payload, file) {
+module.exports.buildFileRequest = function buildFileRequest(payload, file) {
   return module.exports.tokenApiRequest('post', '/documents/' + payload.id + '/file')
     .attach('file', file)
     .expect(204);
@@ -197,12 +196,12 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
         }
         else {
           // Let's try again
-          setTimeout(checkHydration, 2000);
+          setTimeout(checkHydration, 500);
         }
 
       });
     }
 
-    setTimeout(checkHydration, 2000);
+    setTimeout(checkHydration, 100);
   };
 };

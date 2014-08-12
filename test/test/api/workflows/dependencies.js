@@ -125,11 +125,11 @@ describe("Test hydraters dependencies", function() {
             done(new Error("Too many documents matching!"));
           }
           else {
-            setTimeout(checkEvents, 1000);
+            setTimeout(checkEvents, 500);
           }
         });
       }
-      setTimeout(checkEvents, 1500);
+      setTimeout(checkEvents, 100);
     });
 
     it('should have been properly removed', function(done) {
