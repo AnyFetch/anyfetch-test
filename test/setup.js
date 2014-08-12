@@ -11,11 +11,12 @@ if(env.masterToken) {
 }
 
 before(function createUserCredential(done) {
-  this.timestamp = (new Date()).getTime();
-  this.email = "test-" + this.timestamp + "@anyfetch.com";
-  this.name = "test-" + this.timestamp;
-  this.password = "test_password";
-  var self = this;
+  env.credentials = {};
+
+  env.credentials.timestamp = (new Date()).getTime();
+  env.credentials.email = "test-" + env.credentials.timestamp + "@anyfetch.com";
+  env.credentials.name = "test-" + env.credentials.timestamp;
+  env.credentials.password = "test_password";
 
   async.waterfall([
     function createUser(cb) {
@@ -24,16 +25,16 @@ before(function createUserCredential(done) {
         .post('/users')
         .set('Authorization', masterAuth)
         .send({
-          "email": self.email,
-          "name": self.name,
-          "password": self.password,
+          "email": env.credentials.email,
+          "name": env.credentials.name,
+          "password": env.credentials.password,
           "is_admin": false
         })
         .expect(200)
         .end(cb);
     },
     function createSubcompanyAndUpdateCredential(res, cb) {
-      env.basicCredentials = (new Buffer(self.email + ":" + self.password)).toString('base64');
+      env.credentials.basic = (new Buffer(env.credentials.email + ":" + env.credentials.password)).toString('base64');
       request(env.apiUrl)
         .post('/subcompanies')
         .set('Authorization', masterAuth)
@@ -47,7 +48,7 @@ before(function createUserCredential(done) {
     function saveSubcompanyId(res, cb) {
       env.subcompany_id = res.body.id;
       cb();
-    }
+    },
   ], done);
 });
 
@@ -59,3 +60,12 @@ after(function deleteSubcompany(done) {
     .expect(204)
     .end(done);
 });
+
+
+var http = require('http');
+var https = require('https');
+
+// See max socket value, default is 5.
+// See http://markdawson.tumblr.com/post/17525116003/node
+http.globalAgent.maxSockets = 50;
+https.globalAgent.maxSockets = 50;

@@ -2,14 +2,14 @@
 
 require('should');
 
-var helpers = require('./helpers.js');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../config');
+var env = require('../../../../config');
 
 
 var checkErroredHydration = function(id, hydraterToWait, cb) {
   return function(done) {
-    function checkErroredHydration() {
+    function checkErroredHydration(tryAgain) {
       helpers.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .end(function(err, res) {
@@ -26,23 +26,21 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
         }
         else {
           // Let's try again
-          setTimeout(checkErroredHydration, 2000);
+          tryAgain();
         }
 
       });
     }
-    setTimeout(checkErroredHydration, 2000);
+    helpers.wait(checkErroredHydration);
   };
 
 };
 
 describe("Test errored documents", function() {
-  before(helpers.resetAccount);
+  before(helpers.reset);
   before(helpers.getToken);
 
   describe("should have an error", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + 'test-error-document-identifier',
       metadatas: {
@@ -55,9 +53,7 @@ describe("Test errored documents", function() {
     var hydraterToWait = env.hydraters.pdf;
     var hydratedDocument = null;
 
-    it('... sending document', helpers.sendDocument(payload));
-
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('... waiting for hydration', function(done) {
       checkErroredHydration(payload.id, hydraterToWait + "/hydrate", function(document) {

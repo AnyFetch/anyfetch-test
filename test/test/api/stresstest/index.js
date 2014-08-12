@@ -3,16 +3,14 @@
 require('should');
 var async = require('async');
 
-var helpers = require('../workflows/helpers.js');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../config');
+var env = require('../../../../config');
 
 var COUNT = process.env.STRESSTEST || 8;
 
 describe("Stress test", function() {
-  this.timeout(120 * 1000);
-  this.bail(true);
-  before(helpers.resetAccount);
+  before(helpers.reset);
   before(helpers.getToken);
 
   // Generate a simple range to iterate over
@@ -25,7 +23,6 @@ describe("Stress test", function() {
   var payloads = new Array(COUNT);
 
   it("sending " + COUNT + " documents and files", function(done) {
-
     var sender = function(i, cb) {
       var payload = {
         identifier:'test-office-dependencies-identifier-' + i,
@@ -42,7 +39,7 @@ describe("Stress test", function() {
     };
 
 
-    async.eachLimit(range, 4, sender, done);
+    async.eachLimit(range, 8, sender, done);
   });
 
   it("checking for hydration", function(done) {
@@ -52,6 +49,6 @@ describe("Stress test", function() {
       helpers.waitForHydration(id, env.hydraters.office)(cb);
     };
 
-    async.eachLimit(range, 4, checker, done);
+    async.eachLimit(range, 8, checker, done);
   });
 });

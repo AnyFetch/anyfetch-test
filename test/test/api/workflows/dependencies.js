@@ -2,18 +2,16 @@
 
 require('should');
 
-var helpers = require('./helpers.js');
+var helpers = require('../../../helpers/api');
 
-var env = require('../../config');
+var env = require('../../../../config');
 
 
 describe("Test hydraters dependencies", function() {
-  before(helpers.resetAccount);
+  before(helpers.reset);
   before(helpers.getToken);
 
   describe("should work for office documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-office-dependencies-identifier',
       metadata: {
@@ -26,7 +24,7 @@ describe("Test hydraters dependencies", function() {
     var hydraterToWait = env.hydraters.office;
     var hydratedDocument = null;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait, function(document) {
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydraterToWait, function(document) {
       hydratedDocument = document;
     });
 
@@ -40,21 +38,19 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for image documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-image-dependencies-identifier',
       metadata: {
-        path: '/test-dependancies-photo.jpg',
+        path: '/test-dependencies-photo.jpg',
       },
       document_type: 'file',
       user_access: null
     };
-    var file = __dirname + '/../hydraters/samples/iptc.hydrater.anyfetch.com.test.jpg';
+    var file = __dirname + '/samples/image.jpg';
     var hydratersToWait = [env.hydraters.iptc, env.hydraters.image, env.hydraters.ocr];
     var hydratedDocument = null;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydratersToWait, function(document) {
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydratersToWait, function(document) {
       hydratedDocument = document;
     });
 
@@ -76,8 +72,6 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should hydrate attachments", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-eml-identifier',
       metadata: {
@@ -89,7 +83,7 @@ describe("Test hydraters dependencies", function() {
     var file = __dirname + '/samples/eml-with-attachment.eml';
     var hydraterToWait = env.hydraters.eml;
 
-    helpers.sendFileAndWaitForHydration(payload, file, hydraterToWait);
+    helpers.sendDocumentAndFileAndWaitForHydration.call(this, payload, file, hydraterToWait);
 
     it('should have been properly hydrated', function(done) {
       // Real test.
@@ -105,8 +99,6 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for ics documents", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-ics-identifier',
       metadata: {
@@ -117,52 +109,50 @@ describe("Test hydraters dependencies", function() {
     };
     var file = __dirname + '/samples/calendar.ics';
 
-    it('... sending document', helpers.sendDocument(payload));
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have created three events', function(done) {
-      function checkEvents() {
+      function checkEvents(tryAgain) {
         helpers.basicApiRequest('get', '/documents?search=Node&document_type=5252ce4ce4cfcd16f55cfa40')
         .end(function(err, res) {
           if(err) {
-            throw err;
+            return done(err);
           }
           if(res.body.count === 3) {
-            done();
+            return done();
           }
           else if(res.body.count > 3) {
-            done(new Error("Too many documents matching!"));
+            return done(new Error("Too many documents matching!"));
           }
           else {
-            setTimeout(checkEvents, 1000);
+            return tryAgain();
           }
         });
       }
-      setTimeout(checkEvents, 1500);
+
+      helpers.wait(checkEvents);
     });
 
     it('should have been properly removed', function(done) {
-      function checkHydration() {
+      function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
-            throw err;
+            done(err);
           }
-          if(res.statusCode === 404) {
+          else if(res.statusCode === 404) {
             done();
           }
           else {
-            setTimeout(checkHydration, 2000);
+            tryAgain();
           }
         });
       }
-      setTimeout(checkHydration, 2000);
+      helpers.wait(checkHydration);
     });
   });
 
   describe("should remove useless files", function() {
-    this.bail(true);
-
     var payload = {
       identifier: env.apiUrl + '/test-filecleaner-identifier',
       metadata: {
@@ -173,11 +163,10 @@ describe("Test hydraters dependencies", function() {
     };
     var file = __dirname + '/samples/.DS_STORE';
 
-    it('... sending document', helpers.sendDocument(payload));
-    it('... sending file', helpers.sendFile(payload, file));
+    helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have been properly removed', function(done) {
-      function checkHydration() {
+      function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
@@ -188,11 +177,12 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            setTimeout(checkHydration, 2000);
+            tryAgain();
           }
         });
       }
-      setTimeout(checkHydration, 2000);
+
+      helpers.wait(checkHydration);
     });
   });
 });

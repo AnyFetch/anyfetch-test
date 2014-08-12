@@ -2,11 +2,18 @@
 
 require('should');
 
-var helpers = require('./helpers.js');
+var helpers = require('../../helpers/api');
 
-describe("Test providers workflow", function() {
-  before(helpers.resetAccount);
+describe("Test common API usage", function() {
+  before(helpers.reset);
   before(helpers.getToken);
+
+  it("should be able to login", function(done) {
+    // We should be able to login using supplied credentials
+    helpers.basicApiRequest('get', '/')
+      .expect(200)
+      .end(done);
+  });
 
   var payload = {
     identifier:'test-workflow-identifier',
@@ -47,8 +54,7 @@ describe("Test providers workflow", function() {
   });
 
   it("should be able to search for a document", function(done) {
-    // Wait for ES indexing before keeping on
-    setTimeout(function() {
+    function checkExist(cb) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
         .expect(200)
@@ -59,12 +65,22 @@ describe("Test providers workflow", function() {
           // Test projection is working too (title auto generated from path)
           res.body.data[0].data.should.have.property('title', 'Sample path');
         })
-        .end(done);
+        .end(cb);
+    }
+
+    // Wait for ES indexing
+    var interval = setInterval(function() {
+      checkExist(function(err) {
+        clearInterval(interval);
+        done(err);
+      });
     }, 5000);
   });
 
   it("should be removed with a reset", function(done) {
-    helpers.resetAccount(function(err) {
+    helpers.basicApiRequest('del', '/company/reset')
+    .expect(204)
+    .end(function(err) {
       if(err) {
         throw err;
       }
