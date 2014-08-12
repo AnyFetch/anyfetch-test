@@ -10,7 +10,7 @@ var async = require("async");
  * Return an object containing the status for each URL.
  * The key will only appear when the request is done.
  * Use `untilChecker` to poll the object until the file appears.
- * Url must be an array.
+ * requests mut be an object, key is the url (which will be later reused in the result) and value the request to execute (without the .end())
  */
 module.exports.prepareRequests = function prepareRequests(requests) {
   var ret = {};
