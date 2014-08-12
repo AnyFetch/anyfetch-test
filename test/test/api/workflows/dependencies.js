@@ -112,42 +112,43 @@ describe("Test hydraters dependencies", function() {
     helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have created three events', function(done) {
-      function checkEvents() {
+      function checkEvents(tryAgain) {
         helpers.basicApiRequest('get', '/documents?search=Node&document_type=5252ce4ce4cfcd16f55cfa40')
         .end(function(err, res) {
           if(err) {
-            throw err;
+            return done(err);
           }
           if(res.body.count === 3) {
-            done();
+            return done();
           }
           else if(res.body.count > 3) {
-            done(new Error("Too many documents matching!"));
+            return done(new Error("Too many documents matching!"));
           }
           else {
-            setTimeout(checkEvents, 500);
+            return tryAgain();
           }
         });
       }
-      setTimeout(checkEvents, 100);
+
+      helpers.wait(checkEvents);
     });
 
     it('should have been properly removed', function(done) {
-      function checkHydration() {
+      function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
-            throw err;
+            done(err);
           }
-          if(res.statusCode === 404) {
+          else if(res.statusCode === 404) {
             done();
           }
           else {
-            setTimeout(checkHydration, 500);
+            tryAgain();
           }
         });
       }
-      setTimeout(checkHydration, 100);
+      helpers.wait(checkHydration);
     });
   });
 
@@ -165,7 +166,7 @@ describe("Test hydraters dependencies", function() {
     helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('should have been properly removed', function(done) {
-      function checkHydration() {
+      function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
@@ -176,11 +177,12 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            setTimeout(checkHydration, 500);
+            tryAgain();
           }
         });
       }
-      setTimeout(checkHydration, 100);
+
+      helpers.wait(checkHydration);
     });
   });
 });

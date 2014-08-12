@@ -175,12 +175,12 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
   }
 
   return function(done) {
-    function checkHydration() {
+    var checkHydration = function checkHydration(tryAgain) {
       module.exports.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .end(function(err, res) {
         if(err) {
-          throw err;
+          return done(err);
         }
 
         var isAllHydrated = function(hydraterToWait) {
@@ -192,16 +192,29 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
           if(cb) {
             cb(res.body);
           }
-          done();
+          return done();
         }
         else {
-          // Let's try again
-          setTimeout(checkHydration, 500);
+          return tryAgain();
         }
-
       });
-    }
+    };
 
-    setTimeout(checkHydration, 100);
+    module.exports.wait(checkHydration);
   };
+};
+
+
+/**
+ * Repeatedly call `checker` function with `done` and `tryAgain` function.
+ * Checker can ask to be called again at a later time by calling `tryAgain()` instead of `done()`
+ */
+module.exports.wait = function loopUntil(checker) {
+  var tryAgain = function() {
+    setTimeout(function() {
+      checker(tryAgain);
+    }, 500);
+  };
+
+  checker(tryAgain);
 };

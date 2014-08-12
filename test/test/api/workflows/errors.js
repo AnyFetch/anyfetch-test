@@ -9,7 +9,7 @@ var env = require('../../../../config');
 
 var checkErroredHydration = function(id, hydraterToWait, cb) {
   return function(done) {
-    function checkErroredHydration() {
+    function checkErroredHydration(tryAgain) {
       helpers.tokenApiRequest('get', '/documents/' + id + "/raw")
       .expect(200)
       .end(function(err, res) {
@@ -26,12 +26,12 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
         }
         else {
           // Let's try again
-          setTimeout(checkErroredHydration, 500);
+          tryAgain();
         }
 
       });
     }
-    setTimeout(checkErroredHydration, 100);
+    helpers.wait(checkErroredHydration);
   };
 
 };
