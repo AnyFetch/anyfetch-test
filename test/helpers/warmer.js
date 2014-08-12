@@ -1,11 +1,15 @@
 "use strict";
 // Execute requests before any "it", ensuring they'll be ready and done when mocha comes.
+// This way, we can get some parallel-sugar instead of waiting in series.
 
 
 var async = require("async");
 
+
 /**
- * Return an object containing the status for each URL, or 'pending'
+ * Return an object containing the status for each URL.
+ * The key will only appear when the request is done.
+ * Use `untilChecker` to poll the object until the file appears.
  * Url must be an array.
  */
 module.exports.prepareRequests = function prepareRequests(requests) {
