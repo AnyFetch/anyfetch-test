@@ -26,12 +26,12 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
         }
         else {
           // Let's try again
-          setTimeout(checkErroredHydration, 2000);
+          setTimeout(checkErroredHydration, 500);
         }
 
       });
     }
-    setTimeout(checkErroredHydration, 2000);
+    setTimeout(checkErroredHydration, 100);
   };
 
 };

@@ -143,11 +143,11 @@ describe("Test hydraters dependencies", function() {
             done();
           }
           else {
-            setTimeout(checkHydration, 2000);
+            setTimeout(checkHydration, 500);
           }
         });
       }
-      setTimeout(checkHydration, 2000);
+      setTimeout(checkHydration, 100);
     });
   });
 
@@ -176,11 +176,11 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            setTimeout(checkHydration, 2000);
+            setTimeout(checkHydration, 500);
           }
         });
       }
-      setTimeout(checkHydration, 2000);
+      setTimeout(checkHydration, 100);
     });
   });
 });
