@@ -22,7 +22,7 @@
     }
   ],
   "scripts": {
-    "test": "mocha --recursive -R spec test/ -t 30000 -s 15000",
+    "test": "mocha --recursive -R spec test/ -t 45000 -s 15000",
     "lint": "jshint lib/ test/ config/ bin/"
   },
   "main": "./lib/",
