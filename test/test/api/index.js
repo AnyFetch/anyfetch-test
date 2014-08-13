@@ -59,7 +59,10 @@ describe("Test common API usage", function() {
       helpers.basicApiRequest('get', '/documents?search=hello')
         .expect(200)
         .end(function(err, res) {
-          if(res.body.data.length === 0) {
+          if(err) {
+            throw err;
+          }
+          if(!res.body.data || res.body.data.length === 0) {
             return tryAgain();
           }
 
