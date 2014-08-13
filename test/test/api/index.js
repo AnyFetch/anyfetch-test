@@ -54,27 +54,27 @@ describe("Test common API usage", function() {
   });
 
   it("should be able to search for a document", function(done) {
-    function checkExist(cb) {
+    function checkExist(tryAgain) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
         .expect(200)
-        .expect(function(res) {
+        .end(function(err, res) {
+          if(res.body.data.length === 0) {
+            return tryAgain();
+          }
+
           res.body.should.have.property('data').with.lengthOf(1);
           res.body.data[0].should.have.property('id', payload.id);
 
           // Test projection is working too (title auto generated from path)
           res.body.data[0].data.should.have.property('title', 'Sample path');
-        })
-        .end(cb);
+
+          done();
+        });
     }
 
     // Wait for ES indexing
-    var interval = setInterval(function() {
-      checkExist(function(err) {
-        clearInterval(interval);
-        done(err);
-      });
-    }, 5000);
+    helpers.wait(checkExist);
   });
 
   it("should be removed with a reset", function(done) {
