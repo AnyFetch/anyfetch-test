@@ -57,7 +57,7 @@ describe("Test common API usage", function() {
     function checkExist(tryAgain) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
-        // .expect(200) We can get a 500 when searching too fast after index initialisation
+        // .expect(200) We can get a 500 when searching too fast after index initialisation (SearchPhaseExecutionException[Failed to execute phase [query_fetch], all shards failed), so we allow 500 and just use tryAgain() to make the query again at a later time
         .end(function(err, res) {
           if(err) {
             throw err;
