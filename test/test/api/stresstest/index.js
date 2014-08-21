@@ -11,7 +11,7 @@ var COUNT = process.env.STRESSTEST || 8;
 
 describe("Stress test", function() {
   // Increase timeout for this test
-  this.timeout(Math.max(15000, COUNT * 5000));
+  this.timeout(Math.max(20000, COUNT * 10000));
 
   before(helpers.reset);
   before(helpers.getToken);
