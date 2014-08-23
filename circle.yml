@@ -2,6 +2,9 @@ machine:
   node:
     version: 0.10.26
 test:
+  pre:
+    - API_ENV=staging node bin/status
+    - API_ENV=production node bin/status
   override:
     - API_ENV=staging npm test
     - API_ENV=production npm test
