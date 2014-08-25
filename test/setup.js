@@ -10,6 +10,8 @@ if(env.masterToken) {
   masterAuth = 'Bearer ' + env.masterToken;
 }
 
+console.log("Testing with", env.env, "environment");
+
 before(function createUserCredential(done) {
   env.credentials = {};
 
