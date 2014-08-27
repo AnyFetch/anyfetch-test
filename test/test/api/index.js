@@ -54,6 +54,9 @@ describe("Test common API usage", function() {
   });
 
   it("should be able to search for a document", function(done) {
+    // Longer timeout to handle SearchPhaseException
+    this.timeout(this.timeout() * 2);
+
     function checkExist(tryAgain) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
