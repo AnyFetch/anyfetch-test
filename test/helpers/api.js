@@ -183,8 +183,8 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
           return done(err);
         }
 
-        if(res.body.hydration_errored) {
-          return done(new Error(res.body.hydration_error));
+        if(res.body.hydrater_errored) {
+          return done(new Error("Got an hydration error with " + res.body.hydrater_errored + ": " + res.body.hydration_error));
         }
 
         var isAllHydrated = function(hydraterToWait) {
@@ -215,9 +215,10 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
  */
 module.exports.wait = function loopUntil(checker) {
   var tryAgain = function() {
-    setTimeout(function() {
+    var timer = setTimeout(function() {
       checker(tryAgain);
     }, 500);
+    timer.unref();
   };
 
   checker(tryAgain);
