@@ -17,7 +17,7 @@ async.waterfall([
         .expect(200)
         .end(function(err, res) {
           if(err) {
-            throw err;
+            throw new Error(hydraters[shortName] + ": " + err.toString());
           }
 
           hydratersStatus[shortName] = res.body.queued_items;

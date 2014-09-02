@@ -20,6 +20,7 @@
     "gmail": "https://gmail-staging.anyfetch.com",
     "gdrive": "https://gdrive-staging.anyfetch.com",
     "gcontacts": "https://gcontacts-staging.anyfetch.com",
-    "dropbox": "https://dropbox-staging.anyfetch.com"
+    "dropbox": "https://dropbox-staging.anyfetch.com",
+    "evernote": "https://evernote-staging.anyfetch.com"
   }
 }
