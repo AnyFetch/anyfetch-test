@@ -21,6 +21,7 @@
     "gdrive": "https://gdrive-development.anyfetch.com",
     "gcontacts": "https://gcontacts-development.anyfetch.com",
     "dropbox": "https://dropbox-development.anyfetch.com",
-    "evernote": "https://evernote-development.anyfetch.com"
+    "evernote": "https://evernote-development.anyfetch.com",
+    "gcalendar": "https://gcalendar-development.anyfetch.com"
   }
 }
