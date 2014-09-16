@@ -4,6 +4,7 @@ require('should');
 
 var async = require('async');
 var helpers = require('../../../helpers/api');
+var warmer = require('../../../helpers/warmer');
 
 var env = require('../../../../config');
 
@@ -213,7 +214,23 @@ describe("Test hydraters dependencies", function() {
       user_access: null
     }];
 
-    helpers.sendDocument.call(this, docs[0]);
+    var documentWarmer;
+    this.parent.beforeAll.call(this.parent, function(done) {
+      documentWarmer = warmer.prepareRequests({
+        document: module.exports.buildDocumentRequest(docs[0])
+      });
+
+      warmer.untilChecker(documentWarmer, 'document', function(err) {
+        documentWarmer.documentErr = err;
+      });
+
+      // Call done directly, without waiting for any return
+      done();
+    });
+
+    before(function(done) {
+      done(documentWarmer.documentErr);
+    });
 
     it('should have created one document with a hash', function(done) {
       function checkDoc1(tryAgain) {
@@ -273,14 +290,13 @@ describe("Test hydraters dependencies", function() {
       async.waterfall([
         function sendDocuments(cb) {
           async.eachSeries(docs, function sendDocument(doc, cb) {
-            helpers.sendDocument(doc, function(err) {
+            helpers.sendDocument(doc)(function(err) {
               if(err) {
                 return cb(err);
               }
 
               helpers.wait(waitHydration(doc.identifier, cb));
             });
-
           }, cb);
         },
         function checkDeletedDoc1(cb) {
