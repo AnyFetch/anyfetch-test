@@ -2,6 +2,7 @@
 
 require('should');
 
+var async = require('async');
 var helpers = require('../../../helpers/api');
 
 var env = require('../../../../config');
@@ -183,6 +184,112 @@ describe("Test hydraters dependencies", function() {
       }
 
       helpers.wait(checkHydration);
+    });
+  });
+
+  describe("should work for duplicate document", function() {
+    var docs = [{
+      identifier: 'test-deduplicator-1',
+      metadata: {
+        foo: 'bar'
+      },
+      document_type: 'document',
+      user_access: null
+    },
+    {
+      identifier: 'test-deduplicator-2',
+      metadata: {
+        foo: 'bar'
+      },
+      document_type: 'document',
+      user_access: null
+    },
+    {
+      identifier: 'test-deduplicator-3',
+      metadata: {
+        foo: 'bar'
+      },
+      document_type: 'document',
+      user_access: null
+    }];
+
+    helpers.sendDocument.call(this, docs[0]);
+
+    it('should have created one document with a hash', function(done) {
+      function checkDoc1(tryAgain) {
+        helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1')
+        .end(function(err, res) {
+          if(err) {
+            return done(err);
+          }
+
+          if(res.statusCode === 404 || res.body.hydrating.length !== 0) {
+            return tryAgain();
+          }
+
+          res.body.should.have.property('metadata');
+          res.body.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+          done();
+        });
+      }
+
+      helpers.wait(checkDoc1);
+    });
+
+    it('should have properly remove doc1 and doc2', function(done) {
+      function waitHydration(identifier, cb) {
+        return function(tryAgain) {
+          helpers.basicApiRequest('get', '/documents/identifier/' + identifier)
+          .end(function(err, res) {
+            if(err) {
+              return cb(err);
+            }
+
+            if(res.statusCode === 404 || res.body.hydrating.length !== 0) {
+              return tryAgain();
+            }
+
+            cb();
+          });
+        };
+      }
+
+      function checkDeleted(identifier, cb) {
+        helpers.basicApiRequest('get', '/documents/identifier/' + identifier)
+        .end(function(err, res) {
+          if(err) {
+            return cb(err);
+          }
+
+          if(res.status.code !== 404) {
+            cb(new Error('Document ' + identifier + ' must be removed after deduplicator hydration'));
+          }
+
+          cb();
+        });
+      }
+
+      delete docs[0];
+      async.waterfall([
+        function sendDocuments(cb) {
+          async.eachSeries(docs, function sendDocument(doc, cb) {
+            helpers.sendDocument(doc, function(err) {
+              if(err) {
+                return cb(err);
+              }
+
+              helpers.wait(waitHydration(doc.identifier, cb));
+            });
+
+          }, cb);
+        },
+        function checkDeletedDoc1(cb) {
+          checkDeleted('test-deduplicator-1', cb);
+        },
+        function checkDeletedDoc2(cb) {
+          checkDeleted('test-deduplicator-2', cb);
+        }
+      ], done);
     });
   });
 });
