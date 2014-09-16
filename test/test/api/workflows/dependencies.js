@@ -2,7 +2,6 @@
 
 require('should');
 
-var async = require('async');
 var helpers = require('../../../helpers/api');
 var warmer = require('../../../helpers/warmer');
 
@@ -236,26 +235,36 @@ describe("Test hydraters dependencies", function() {
       })(done);
     });
 
-    it('should have properly remove doc1', function(done) {
-      async.waterfall([
-        function sendDocument2(cb) {
-          helpers.sendDocument(docs[1])(cb);
-        },
-        function waitHydrationDocument2(res, cb) {
-          docs[1].id = res.body.id;
-          helpers.waitForHydration(docs[1].id, env.hydraters.deduplicator)(cb);
-        },
-        function requestDoc1(cb) {
-          helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1').end(cb);
-        },
-        function checkDeletedDoc1(res, cb) {
-          if(res.statusCode !== 404) {
-            return cb(new Error('Document 1 must be removed after deduplicator hydration'));
-          }
-
-          cb();
+    it('should have sent second document', function(done) {
+      helpers.sendDocument(docs[1])(function(err, res) {
+        if(err) {
+          return done(err);
         }
-      ], done);
+
+        docs[1].id = res.body.id;
+        done();
+      });
+    });
+
+    it('should have hydrated second document', function(done) {
+      helpers.waitForHydration(docs[1].id, env.hydraters.deduplicator, function(doc) {
+        doc.should.have.property('metadata');
+        doc.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+      })(done);
+    });
+
+    it('should have properly remove doc1', function(done) {
+      helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1').end(function(err, res) {
+        if(err) {
+          return done(err);
+        }
+
+        if(res.statusCode !== 404) {
+          return done(new Error('Document 1 must be removed after deduplicator hydration'));
+        }
+
+        done();
+      });
     });
   });
 });
