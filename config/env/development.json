@@ -14,7 +14,8 @@
     "filecleaner": "https://filecleaner-development.anyfetch.com",
     "eml": "https://eml-development.anyfetch.com",
     "embedmail": "https://embedmail-development.anyfetch.com",
-    "ics": "https://ics-development.anyfetch.com"
+    "ics": "https://ics-development.anyfetch.com",
+    "deduplicator": "https://deduplicator-development.anyfetch.com"
   },
   "providers": {
     "gmail": "https://gmail-development.anyfetch.com",
