@@ -223,16 +223,8 @@ describe("Test hydraters dependencies", function() {
         document: helpers.buildDocumentRequest(payload)
       });
 
-      warmer.untilChecker(documentWarmer, 'document', function(err) {
-        documentWarmer.documentErr = err;
-      });
-
       // Call done directly, without waiting for any return
       done();
-    });
-
-    before(function(done) {
-      done(documentWarmer.documentErr);
     });
 
     it('should have created one document with a hash', function(done) {
@@ -253,7 +245,13 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkDoc1);
+      warmer.untilChecker(documentWarmer, 'document', function(err) {
+        if(err) {
+          return done(err);
+        }
+        
+        helpers.wait(checkDoc1);
+      });
     });
 
     it('should have properly remove doc1 and doc2', function(done) {
