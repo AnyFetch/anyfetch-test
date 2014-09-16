@@ -189,35 +189,38 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for duplicate document", function() {
-    var docs = [{
+    var payload = {
       identifier: 'test-deduplicator-1',
       metadata: {
         foo: 'bar'
       },
       document_type: 'document',
       user_access: null
-    },
-    {
-      identifier: 'test-deduplicator-2',
-      metadata: {
-        foo: 'bar'
+    };
+
+    var docs = [
+      {
+        identifier: 'test-deduplicator-2',
+        metadata: {
+          foo: 'bar'
+        },
+        document_type: 'document',
+        user_access: null
       },
-      document_type: 'document',
-      user_access: null
-    },
-    {
-      identifier: 'test-deduplicator-3',
-      metadata: {
-        foo: 'bar'
-      },
-      document_type: 'document',
-      user_access: null
-    }];
+      {
+        identifier: 'test-deduplicator-3',
+        metadata: {
+          foo: 'bar'
+        },
+        document_type: 'document',
+        user_access: null
+      }
+    ];
 
     var documentWarmer;
     this.parent.beforeAll.call(this.parent, function(done) {
       documentWarmer = warmer.prepareRequests({
-        document: helpers.buildDocumentRequest(docs[0])
+        document: helpers.buildDocumentRequest(payload)
       });
 
       warmer.untilChecker(documentWarmer, 'document', function(err) {
@@ -286,11 +289,10 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      delete docs[0];
       async.waterfall([
         function sendDocuments(cb) {
           async.eachSeries(docs, function sendDocument(doc, cb) {
-            helpers.sendDocument(doc)(function(err) {
+            helpers.sendDocument(doc)(function(err, res) {
               if(err) {
                 return cb(err);
               }
