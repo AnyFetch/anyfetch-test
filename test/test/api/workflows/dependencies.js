@@ -188,7 +188,7 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
-  describe("should work for duplicate document", function() {
+  describe("should work for duplicated document", function() {
     var docs = [
       {
         identifier: 'test-deduplicator-1',
