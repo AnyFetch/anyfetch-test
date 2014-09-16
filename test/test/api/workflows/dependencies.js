@@ -217,7 +217,7 @@ describe("Test hydraters dependencies", function() {
     var documentWarmer;
     this.parent.beforeAll.call(this.parent, function(done) {
       documentWarmer = warmer.prepareRequests({
-        document: module.exports.buildDocumentRequest(docs[0])
+        document: helpers.buildDocumentRequest(docs[0])
       });
 
       warmer.untilChecker(documentWarmer, 'document', function(err) {
