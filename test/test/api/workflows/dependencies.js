@@ -217,7 +217,7 @@ describe("Test hydraters dependencies", function() {
 
     it('should have created one document with a hash', function(done) {
       function checkDoc1(tryAgain) {
-        helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1')
+        helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1/raw')
         .end(function(err, res) {
           if(err) {
             return done(err);
@@ -239,7 +239,7 @@ describe("Test hydraters dependencies", function() {
     it('should have properly remove doc1 and doc2', function(done) {
       function waitHydration(identifier, cb) {
         return function(tryAgain) {
-          helpers.basicApiRequest('get', '/documents/identifier/' + identifier)
+          helpers.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
           .end(function(err, res) {
             if(err) {
               return cb(err);
