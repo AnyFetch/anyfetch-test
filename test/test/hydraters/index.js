@@ -168,6 +168,21 @@ hydraters[env.hydraters.iptc] = {
   expected: generateCompareFunction('./samples/iptc.anyfetch.com.expected.json')
 };
 
+hydraters[env.hydraters.deduplicator] = {
+  payload: {
+    long_poll: 1,
+    document: {
+      document_type: 'document',
+      metadata: {
+        foo: 'bar'
+      },
+      identifier: 'deduplicator-test',
+      id: 'deduplicator-test'
+    }
+  },
+  expected: generateCompareFunction('./samples/deduplicator.anyfetch.com.expected.json')
+};
+
 hydraters[env.hydraters.ics] = {
   payload: {}
 };
