@@ -3,6 +3,7 @@
 require('should');
 
 var helpers = require('../../../helpers/api');
+var warmer = require('../../../helpers/warmer');
 
 var env = require('../../../../config');
 
@@ -183,6 +184,87 @@ describe("Test hydraters dependencies", function() {
       }
 
       helpers.wait(checkHydration);
+    });
+  });
+
+  describe("should work for duplicated documents", function() {
+    var docs = [
+      {
+        identifier: 'test-deduplicator-1',
+        metadata: {
+          foo: 'bar'
+        },
+        document_type: 'document',
+        user_access: null
+      },
+      {
+        identifier: 'test-deduplicator-2',
+        metadata: {
+          foo: 'bar'
+        },
+        document_type: 'document',
+        user_access: null
+      }
+    ];
+
+    var documentWarmer;
+    this.parent.beforeAll.call(this.parent, function(done) {
+      documentWarmer = warmer.prepareRequests({
+        document: helpers.buildDocumentRequest(docs[0])
+      });
+
+      // Call done directly, without waiting for any return
+      done();
+    });
+
+    it('should have created one document', function(done) {
+      warmer.untilChecker(documentWarmer, 'document', function(err, res) {
+        if(err) {
+          return done(err);
+        }
+
+        docs[0].id = res.body.id;
+        done();
+      });
+    });
+
+    it('should have updated the hash', function(done) {
+      helpers.waitForHydration(docs[0].id, env.hydraters.deduplicator, function(doc) {
+        doc.should.have.property('metadata');
+        doc.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+      })(done);
+    });
+
+    it('should have sent second document', function(done) {
+      helpers.sendDocument(docs[1])(function(err, res) {
+        if(err) {
+          return done(err);
+        }
+
+        docs[1].id = res.body.id;
+        done();
+      });
+    });
+
+    it('should have hydrated second document', function(done) {
+      helpers.waitForHydration(docs[1].id, env.hydraters.deduplicator, function(doc) {
+        doc.should.have.property('metadata');
+        doc.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+      })(done);
+    });
+
+    it('should have properly removed first document', function(done) {
+      helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1').end(function(err, res) {
+        if(err) {
+          return done(err);
+        }
+
+        if(res.statusCode !== 404) {
+          return done(new Error('Document 1 must be removed after deduplicator hydration'));
+        }
+
+        done();
+      });
     });
   });
 });

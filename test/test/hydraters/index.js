@@ -168,6 +168,10 @@ hydraters[env.hydraters.iptc] = {
   expected: generateCompareFunction('./samples/iptc.anyfetch.com.expected.json')
 };
 
+hydraters[env.hydraters.deduplicator] = {
+  payload: {},
+};
+
 hydraters[env.hydraters.ics] = {
   payload: {}
 };
