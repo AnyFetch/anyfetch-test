@@ -187,7 +187,7 @@ describe("Test hydraters dependencies", function() {
     });
   });
 
-  describe("should work for duplicated document", function() {
+  describe("should work for duplicated documents", function() {
     var docs = [
       {
         identifier: 'test-deduplicator-1',
@@ -253,7 +253,7 @@ describe("Test hydraters dependencies", function() {
       })(done);
     });
 
-    it('should have properly remove doc1', function(done) {
+    it('should have properly removed first document', function(done) {
       helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1').end(function(err, res) {
         if(err) {
           return done(err);
