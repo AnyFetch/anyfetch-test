@@ -53,6 +53,13 @@ describe("Test common API usage", function() {
       .end(done);
   });
 
+  it("should be able to get an image representation of a document", function(done) {
+    helpers.basicApiRequest('get', '/documents/' + payload.id + "/image")
+      .expect(200)
+      .expect('content-type', 'image/png')
+      .end(done);
+  });
+
   it("should be able to search for a document", function(done) {
     // Longer timeout to handle SearchPhaseException
     this.timeout(this.timeout() * 2);
