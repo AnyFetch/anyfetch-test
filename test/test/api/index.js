@@ -80,7 +80,7 @@ describe("Test common API usage", function() {
           res.body.data[0].should.have.property('id', payload.id);
 
           // Test projection is working too (title auto generated from path)
-          res.body.data[0].data.should.have.property('title', 'Sample path');
+          res.body.data[0].data.should.have.property('title', 'sample-path');
 
           done();
         });
