@@ -194,7 +194,7 @@ describe("Test hydraters dependencies", function() {
         metadata: {
           foo: 'bar'
         },
-        document_type: 'document',
+        document_type: 'event',
         user_access: null
       },
       {
@@ -202,7 +202,7 @@ describe("Test hydraters dependencies", function() {
         metadata: {
           foo: 'bar'
         },
-        document_type: 'document',
+        document_type: 'event',
         user_access: null
       }
     ];
