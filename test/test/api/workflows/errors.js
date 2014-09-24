@@ -56,6 +56,8 @@ describe("Test errored documents", function() {
     helpers.sendDocumentAndFile.call(this, payload, file);
 
     it('... waiting for hydration', function(done) {
+      this.timeout(60000);
+
       checkErroredHydration(payload.id, hydraterToWait + "/hydrate", function(document) {
         hydratedDocument = document;
       })(done);

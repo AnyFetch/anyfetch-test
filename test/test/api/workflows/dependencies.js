@@ -13,6 +13,8 @@ describe("Test hydraters dependencies", function() {
   before(helpers.getToken);
 
   describe("should work for office documents", function() {
+    this.timeout(60000);
+
     var payload = {
       identifier: env.apiUrl + '/test-office-dependencies-identifier',
       metadata: {
