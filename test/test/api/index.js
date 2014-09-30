@@ -18,10 +18,10 @@ describe("Test common API usage", function() {
   var payload = {
     identifier:'test-workflow-identifier',
     metadata: {
-      text:'hello world',
+      text: 'hello world',
       path: '/sample-path.txt'
     },
-    document_type: 'file',
+    document_type: 'document',
     user_access: null,
   };
 
