@@ -7,6 +7,12 @@ var rarity = require("rarity");
 
 var hydraters = env.hydraters;
 
+
+function repeat(string, num){
+  return new Array(parseInt(num) + 1).join(string);
+}
+
+
 async.waterfall([
   function retrieveStatus(cb) {
     var hydratersStatus = {};
@@ -27,8 +33,11 @@ async.waterfall([
   },
   function displayStatus(hydratersStatus, cb) {
     console.log("Hydraters status (" + env.env + "):");
-    Object.keys(hydratersStatus).forEach(function(shortName) {
-      console.log(hydraters[shortName], ':', hydratersStatus[shortName]);
+    var hydratersName = Object.keys(hydratersStatus);
+    hydratersName.sort();
+    hydratersName.forEach(function(shortName) {
+      var base = hydraters[shortName] + ':';
+      console.log(base, repeat(" ", 45 - base.length), hydratersStatus[shortName]);
     });
 
     cb();
