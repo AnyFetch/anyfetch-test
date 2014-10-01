@@ -18,10 +18,10 @@ describe("Test common API usage", function() {
   var payload = {
     identifier:'test-workflow-identifier',
     metadata: {
-      text:'hello world',
+      text: 'hello world',
       path: '/sample-path.txt'
     },
-    document_type: 'file',
+    document_type: 'document',
     user_access: null,
   };
 
@@ -61,9 +61,6 @@ describe("Test common API usage", function() {
   });
 
   it("should be able to search for a document", function(done) {
-    // Longer timeout to handle SearchPhaseException
-    this.timeout(this.timeout() * 2);
-
     function checkExist(tryAgain) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
