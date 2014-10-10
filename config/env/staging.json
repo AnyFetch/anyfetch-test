@@ -23,6 +23,7 @@
     "gcontacts": "https://gcontacts-staging.anyfetch.com",
     "dropbox": "https://dropbox-staging.anyfetch.com",
     "evernote": "https://evernote-staging.anyfetch.com",
-    "gcalendar": "https://gcalendar-staging.anyfetch.com"
+    "gcalendar": "https://gcalendar-staging.anyfetch.com",
+    "salesforce": "https://salesforce-staging.anyfetch.com"
   }
 }

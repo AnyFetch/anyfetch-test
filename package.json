@@ -40,6 +40,7 @@
   "dependencies": {
     "async": "0.9.x",
     "dotenv": "^0.4.0",
+    "nightmare": "^1.1.1",
     "rarity": "~2.1.1"
   },
   "devDependencies": {
