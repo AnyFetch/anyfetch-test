@@ -18,7 +18,6 @@ module.exports.authorize = function authorize() {
     nightmare
       .wait('button[name=allow_access]')
       .click('button[name=allow_access]')
-      .wait()
-      .screenshot('./after-authorize.png');
+      .wait();
   };
 };
