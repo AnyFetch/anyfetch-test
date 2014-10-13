@@ -109,7 +109,7 @@ providers[env.providers.evernote] = {
   ]
 };*/
 
-describe.only("Test providers", function() {
+describe("Test providers", function() {
   var hosts = {};
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
