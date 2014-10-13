@@ -148,7 +148,6 @@ describe("Test providers", function() {
             },
             function checkProviders(accountProviders, cb) {
               if(!accountProviders.some(function(provider) { return provider.client && provider.client.id === providers[url].id; })) {
-                console.log(accountProviders);
                 return cb(new Error("No new access token created"));
               }
               cb(null);
