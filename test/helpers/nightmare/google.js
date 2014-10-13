@@ -16,8 +16,8 @@ module.exports.login = function login(email, password) {
 module.exports.authorize = function authorize() {
   return function(nightmare) {
     nightmare
-      .wait('#submit_approve_access')
-      .wait(2000)
+      .wait('#submit_approve_access:enabled')
+      //.wait(3000)
       .click('#submit_approve_access')
       .wait();
   };
