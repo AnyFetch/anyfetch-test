@@ -155,35 +155,33 @@ describe.only("Test providers", function() {
           ], done);
         });
 
-        describe('should have uploaded all documents', function() {
+        it('should have uploaded all documents', function(done) {
           if(!providers[name].documents) {
-            return;
+            return done();
           }
 
-          providers[name].documents.forEach(function(identifier) {
-            it(identifier, function(done) {
-              function checkExist(tryAgain) {
-                api.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(identifier) + '/raw')
-                  .end(function(err, res) {
-                    if(err) {
-                      return done(err);
-                    }
+          async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
+            function checkExist(tryAgain) {
+              api.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(identifier) + '/raw')
+                .end(function(err, res) {
+                  if(err) {
+                    return cb(err);
+                  }
 
-                    if(res.statusCode !== 200 && res.statusCode !== 404) {
-                      return done(new Error('Bad status code : ' + res.statusCode));
-                    }
+                  if(res.statusCode !== 200 && res.statusCode !== 404) {
+                    return done(new Error('Bad status code : ' + res.statusCode));
+                  }
 
-                    if(res.statusCode === 404 || res.body.hydrating.length > 0) {
-                      return tryAgain();
-                    }
+                  if(res.statusCode === 404 || res.body.hydrating.length > 0) {
+                    return tryAgain();
+                  }
 
-                    done();
-                  });
-              }
+                  cb();
+                });
+            }
 
-              api.wait(checkExist);
-            });
-          });
+            api.wait(checkExist);
+          }, done);
         });
 
         after(api.reset);
