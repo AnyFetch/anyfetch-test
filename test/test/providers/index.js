@@ -20,7 +20,7 @@ it.long = process.env.LONG ? it : it.skip;
 
 var providers = {};
 
-providers[env.providers.gcontacts] = {
+providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   workflow: function (nightmare) {
     nightmare
@@ -32,9 +32,9 @@ providers[env.providers.gcontacts] = {
   ]
 };
 
-providers[env.providers.gmail] = {
+providers.gmail = {
   id: '53047faac8318c2d65000096',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
@@ -48,9 +48,9 @@ providers[env.providers.gmail] = {
   ]
 };
 
-providers[env.providers.gdrive] = {
+providers.gdrive = {
   id: '539ef7289f240405465a2e1f',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
@@ -60,9 +60,9 @@ providers[env.providers.gdrive] = {
   ]
 };
 
-providers[env.providers.gcalendar] = {
+providers.gcalendar = {
   id: '53047faac8318c2d65000099',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
@@ -72,9 +72,9 @@ providers[env.providers.gcalendar] = {
   ]
 };
 
-providers[env.providers.dropbox] = {
+providers.dropbox = {
   id: '52bff114c8318c29e9000005',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(dropboxNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(dropboxNightmare.authorize());
@@ -84,9 +84,9 @@ providers[env.providers.dropbox] = {
   ]
 };
 
-providers[env.providers.evernote] = {
+providers.evernote = {
   id: '53047faac8318c2d65000097',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(evernoteNightmare.login(process.env.EVERNOTE_EMAIL, process.env.EVERNOTE_PASSWORD))
       .use(evernoteNightmare.authorize());
@@ -97,9 +97,9 @@ providers[env.providers.evernote] = {
   ]
 };
 
-/*providers[env.providers.salesforce] = {
+/*providers.salesforce = {
   id: '53047faac8318c2d65000100',
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(salesforceNightmare.login(process.env.SALESFORCE_EMAIL, process.env.SALESFORCE_PASSWORD))
       .use(salesforceNightmare.authorize());
@@ -109,7 +109,7 @@ providers[env.providers.evernote] = {
   ]
 };*/
 
-describe("Test providers", function() {
+describe.only("Test providers", function() {
   var hosts = {};
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
@@ -122,8 +122,8 @@ describe("Test providers", function() {
   up.generateDescribe(hosts);
 
   describe.long("are working", function() {
-    Object.keys(providers).forEach(function(url) {
-      describe(url, function() {
+    Object.keys(providers).forEach(function(name) {
+      describe(name, function() {
         before(api.getToken);
 
         it('should pass OAuth authentication', function(done) {
@@ -131,8 +131,8 @@ describe("Test providers", function() {
 
          new Nightmare()
             .viewport(800, 600)
-            .use(managerNightmare.connect(providers[url].id))
-            .use(providers[url].workflow)
+            .use(managerNightmare.connect(providers[name].id))
+            .use(providers[name].workflow)
             .wait('.alert')
             .run(done);
         });
@@ -147,7 +147,7 @@ describe("Test providers", function() {
                 });
             },
             function checkProviders(accountProviders, cb) {
-              if(!accountProviders.some(function(provider) { return provider.client && provider.client.id === providers[url].id; })) {
+              if(!accountProviders.some(function(provider) { return provider.client && provider.client.id === providers[name].id; })) {
                 return cb(new Error("No new access token created"));
               }
               cb(null);
@@ -156,11 +156,11 @@ describe("Test providers", function() {
         });
 
         describe('should have uploaded all documents', function() {
-          if(!providers[url].documents) {
+          if(!providers[name].documents) {
             return;
           }
 
-          providers[url].documents.forEach(function(identifier) {
+          providers[name].documents.forEach(function(identifier) {
             it(identifier, function(done) {
               function checkExist(tryAgain) {
                 api.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(identifier) + '/raw')
