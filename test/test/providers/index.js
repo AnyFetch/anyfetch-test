@@ -109,7 +109,7 @@ providers.evernote = {
   ]
 };*/
 
-describe.only("Test providers", function() {
+describe("Test providers", function() {
   var hosts = {};
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
@@ -159,6 +159,8 @@ describe.only("Test providers", function() {
           if(!providers[name].documents) {
             return done();
           }
+
+          this.timeout(providers[name].documents.length * 10000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
