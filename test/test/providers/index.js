@@ -20,100 +20,89 @@ it.long = process.env.LONG ? it : it.skip;
 
 var providers = {};
 
+function generateDocuments(expected_documents) {
+  if(!expected_documents) {
+    return [];
+  }
+
+  return expected_documents.split(',');
+}
+
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
-  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function (nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
   },
-  documents: [
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/#contact/6605918b8df97f95'
-  ]
+  documents: generateDocuments(process.env.GCONTACTS_EXPECTED_DOCUMENTS)
 };
 
 providers.gmail = {
   id: '53047faac8318c2d65000096',
-  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GMAIL_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
   },
-  documents: [
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/?cm#all/148f5d86b880a36e',
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/?cm#all/148f5c52fddc1957',
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/?cm#all/148f946aba4e5c1d',
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/?cm#all/148f5c52c341a29f',
-    'https://mail.google.com/mail/b/test.anyfetch@gmail.com/?cm#all/148f5c52b966e69a'
-  ]
+  documents: generateDocuments(process.env.GMAIL_EXPECTED_DOCUMENTS)
 };
 
 providers.gdrive = {
   id: '539ef7289f240405465a2e1f',
-  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GDRIVE_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
   },
-  documents: [
-    'https://docs.google.com/file/d/1pP3fjTPp-VBq02Ksbkp_fo7UQkGwP-zMXa01LsZIEXo'
-  ]
+  documents: generateDocuments(process.env.GDRIVE_EXPECTED_DOCUMENTS)
 };
 
 providers.gcalendar = {
   id: '53047faac8318c2d65000099',
-  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCALENDAR_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
   },
-  documents: [
-    'https://www.google.com/calendar/event?eid=dmE5b2UxOGdycGdlZ2l0aGsxM2k4cHVhdDAgdGVzdC5hbnlmZXRjaEBt'
-  ]
+  documents: generateDocuments(process.env.GCALENDAR_EXPECTED_DOCUMENTS)
 };
 
 providers.dropbox = {
   id: '52bff114c8318c29e9000005',
-  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.DROPBOX_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(dropboxNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(dropboxNightmare.authorize());
   },
-  documents: [
-    'https://dropbox.com/346349689/pi.pdf'
-  ]
+  documents: generateDocuments(process.env.DROPBOX_EXPECTED_DOCUMENTS)
 };
 
 providers.evernote = {
   id: '53047faac8318c2d65000097',
-  skip: !(process.env.EVERNOTE_EMAIL && process.env.EVERNOTE_PASSWORD),
+  skip: !(process.env.EVERNOTE_EMAIL && process.env.EVERNOTE_PASSWORD && process.env.EVERNOTE_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(evernoteNightmare.login(process.env.EVERNOTE_EMAIL, process.env.EVERNOTE_PASSWORD))
       .use(evernoteNightmare.authorize());
   },
-  documents: [
-    'adce01b0-bb6d-4cd3-bcf7-0b1e815fe82f',
-    '51312a87-85df-46e2-8e6c-1cc684691ece'
-  ]
+  documents: generateDocuments(process.env.EVERNOTE_EXPECTED_DOCUMENTS)
 };
 
 /*providers.salesforce = {
   id: '53047faac8318c2d65000100',
-  skip: !(process.env.SALESFORCE_EMAIL && process.env.SALESFORCE_PASSWORD),
+  skip: !(process.env.SALESFORCE_EMAIL && process.env.SALESFORCE_PASSWORD && process.env.SALESFORCE_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(salesforceNightmare.login(process.env.SALESFORCE_EMAIL, process.env.SALESFORCE_PASSWORD))
       .use(salesforceNightmare.authorize());
   },
-  documents: [
-    // TO-DO
-  ]
+  documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
 };*/
 
 describe("Test providers", function() {
@@ -171,7 +160,7 @@ describe("Test providers", function() {
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
-              api.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(identifier) + '/raw')
+              api.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
                 .end(function(err, res) {
                   if(err) {
                     return cb(err);
