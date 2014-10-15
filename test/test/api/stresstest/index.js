@@ -30,6 +30,9 @@ describe("Stress test", function() {
       var payload = {
         identifier:'test-office-dependencies-identifier-' + i,
         document_type: 'file',
+        metadata: {
+          foo: 'bar' + i
+        },
         user_access: null
       };
       payloads[i] = payload;
