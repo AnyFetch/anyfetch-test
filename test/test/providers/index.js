@@ -22,6 +22,7 @@ var providers = {};
 
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
   workflow: function (nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
@@ -34,6 +35,7 @@ providers.gcontacts = {
 
 providers.gmail = {
   id: '53047faac8318c2d65000096',
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
@@ -50,6 +52,7 @@ providers.gmail = {
 
 providers.gdrive = {
   id: '539ef7289f240405465a2e1f',
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
@@ -62,6 +65,7 @@ providers.gdrive = {
 
 providers.gcalendar = {
   id: '53047faac8318c2d65000099',
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
@@ -74,6 +78,7 @@ providers.gcalendar = {
 
 providers.dropbox = {
   id: '52bff114c8318c29e9000005',
+  skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(dropboxNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
@@ -86,6 +91,7 @@ providers.dropbox = {
 
 providers.evernote = {
   id: '53047faac8318c2d65000097',
+  skip: !(process.env.EVERNOTE_EMAIL && process.env.EVERNOTE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(evernoteNightmare.login(process.env.EVERNOTE_EMAIL, process.env.EVERNOTE_PASSWORD))
@@ -99,6 +105,7 @@ providers.evernote = {
 
 /*providers.salesforce = {
   id: '53047faac8318c2d65000100',
+  skip: !(process.env.SALESFORCE_EMAIL && process.env.SALESFORCE_PASSWORD),
   workflow: function(nightmare) {
     nightmare
       .use(salesforceNightmare.login(process.env.SALESFORCE_EMAIL, process.env.SALESFORCE_PASSWORD))
@@ -123,7 +130,7 @@ describe("Test providers", function() {
 
   describe.long("are working", function() {
     Object.keys(providers).forEach(function(name) {
-      describe(name, function() {
+      (providers[name].skip ? describe.skip : describe)(name, function() {
         before(api.getToken);
 
         it('should pass OAuth authentication', function(done) {
