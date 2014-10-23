@@ -6,5 +6,5 @@ test:
     - API_ENV=staging node bin/status
     - API_ENV=production node bin/status
   override:
-    - case $CIRCLE_NODE_INDEX in 0) export API_ENV=staging; npm test ;; 1) export API_ENV=production; npm test ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) export API_ENV=staging; LONG=1 npm test ;; 1) export API_ENV=production; LONG=1 npm test ;; esac:
         parallel: true
