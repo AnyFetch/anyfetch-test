@@ -151,11 +151,7 @@ describe("Test providers", function() {
           ], done);
         });
 
-        it('should have uploaded all documents', function(done) {
-          if(!providers[name].documents) {
-            return done();
-          }
-
+        (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
           this.timeout(providers[name].documents.length * 10000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
