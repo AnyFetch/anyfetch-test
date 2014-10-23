@@ -1,15 +1,13 @@
 'use strict';
 
-var env = require('../../../config');
-
 module.exports.login = function login(email, password) {
   return function(nightmare) {
-   nightmare
-    .wait('button[type=submit]')
-    .type('input[type=email]', email)
-    .type('input[type=password]', password)
-    .click('button[type=submit]')
-    .wait();
+    nightmare
+      .wait('button[type=submit]')
+      .type('input[type=email]', email)
+      .type('input[type=password]', password)
+      .click('button[type=submit]')
+      .wait();
   };
 };
 
