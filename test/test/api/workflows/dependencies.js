@@ -194,7 +194,7 @@ describe("Test hydraters dependencies", function() {
       {
         identifier: 'test-deduplicator-1',
         metadata: {
-          foo: 'bar'
+          title: 'bar'
         },
         document_type: 'event',
         user_access: null
@@ -202,7 +202,7 @@ describe("Test hydraters dependencies", function() {
       {
         identifier: 'test-deduplicator-2',
         metadata: {
-          foo: 'bar'
+          title: 'bar'
         },
         document_type: 'event',
         user_access: null
@@ -233,7 +233,7 @@ describe("Test hydraters dependencies", function() {
     it('should have updated the hash', function(done) {
       helpers.waitForHydration(docs[0].id, env.hydraters.deduplicator, function(doc) {
         doc.should.have.property('metadata');
-        doc.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+        doc.metadata.should.have.property('hash', '6799f3ea80e325b89f19589282a343c376c1f1af');
       })(done);
     });
 
@@ -251,7 +251,7 @@ describe("Test hydraters dependencies", function() {
     it('should have hydrated second document', function(done) {
       helpers.waitForHydration(docs[1].id, env.hydraters.deduplicator, function(doc) {
         doc.should.have.property('metadata');
-        doc.metadata.should.have.property('hash', 'a5e744d0164540d33b1d7ea616c28f2fa97e754a');
+        doc.metadata.should.have.property('hash', '6799f3ea80e325b89f19589282a343c376c1f1af');
       })(done);
     });
 

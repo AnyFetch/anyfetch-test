@@ -31,7 +31,7 @@ describe("Stress test", function() {
         identifier:'test-office-dependencies-identifier-' + i,
         document_type: 'file',
         metadata: {
-          foo: 'bar' + i
+          title: 'bar' + i
         },
         user_access: null
       };
