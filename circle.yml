@@ -6,5 +6,5 @@ test:
     - API_ENV=staging node bin/status
     - API_ENV=production node bin/status
   override:
-    - ./circle.sh:
+    - sudo ./circle.sh:
         parallel: true
