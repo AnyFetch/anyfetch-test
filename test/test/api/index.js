@@ -56,7 +56,7 @@ describe("Test common API usage", function() {
   it("should be able to get an image representation of a document", function(done) {
     helpers.basicApiRequest('get', '/documents/' + payload.id + "/image")
       .expect(200)
-      .expect('content-type', 'image/png')
+      .expect('content_type', 'image/png')
       .end(done);
   });
 

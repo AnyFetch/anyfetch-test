@@ -28,7 +28,7 @@ describe("Stress test", function() {
   it("sending " + COUNT + " documents and files", function(done) {
     var sender = function(i, cb) {
       var payload = {
-        identifier:'test-office-dependencies-identifier-' + i,
+        identifier: 'test-office-dependencies-identifier-' + i,
         document_type: 'file',
         metadata: {
           title: 'bar' + i
