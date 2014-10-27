@@ -64,7 +64,7 @@ describe("Test hydraters dependencies", function() {
       hydratedDocument.metadata.should.have.property('description', '© 2010 Frédéric Ruaudel, All Rights Reserved');
       hydratedDocument.metadata.should.have.property('keywords', '500px, Adulte, Blog FR, Fotografar2014, Homme, Personne, Xavier Bernard, iPhoto');
       hydratedDocument.data.should.have.property('display');
-      hydratedDocument.data.should.have.property('thumb');
+      hydratedDocument.metadata.should.have.property('thumb');
       hydratedDocument.should.have.property('hydrated_by');
       hydratersToWait.forEach(function(hydraterToWait) {
         hydratedDocument.hydrated_by.should.containEql(hydraterToWait + "/hydrate");
