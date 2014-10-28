@@ -13,25 +13,24 @@ var managerNightmare = require('../../helpers/nightmare/manager');
 var googleNightmare = require('../../helpers/nightmare/google');
 var dropboxNightmare = require('../../helpers/nightmare/dropbox');
 var evernoteNightmare = require('../../helpers/nightmare/evernote');
-var salesforceNightmare = require('../../helpers/nightmare/salesforce');
 
 describe.long = process.env.LONG ? describe : describe.skip;
 it.long = process.env.LONG ? it : it.skip;
 
 var providers = {};
 
-function generateDocuments(expected_documents) {
-  if(!expected_documents) {
+function generateDocuments(expectedDocuments) {
+  if(!expectedDocuments) {
     return [];
   }
 
-  return expected_documents.split(',');
+  return expectedDocuments.split(',');
 }
 
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
-  workflow: function (nightmare) {
+  workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
       .use(googleNightmare.authorize());
@@ -123,9 +122,9 @@ describe("Test providers", function() {
         before(api.getToken);
 
         it('should pass OAuth authentication', function(done) {
-         this.timeout(30000);
+          this.timeout(30000);
 
-         new Nightmare()
+          new Nightmare()
             .viewport(800, 600)
             .use(managerNightmare.connect(providers[name].id))
             .use(providers[name].workflow)
@@ -143,7 +142,7 @@ describe("Test providers", function() {
                 });
             },
             function checkProviders(accountProviders, cb) {
-              if(!accountProviders.some(function(provider) { return provider.client && provider.client.id === providers[name].id; })) {
+              if(!accountProviders.some(function(provider) {return provider.client && provider.client.id === providers[name].id;})) {
                 return cb(new Error("No new access token created"));
               }
               cb(null);
@@ -152,7 +151,7 @@ describe("Test providers", function() {
         });
 
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
-          this.timeout(providers[name].documents.length * 10000);
+          this.timeout(providers[name].documents.length * 10000 + 25000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
