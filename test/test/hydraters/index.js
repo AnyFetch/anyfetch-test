@@ -80,10 +80,10 @@ hydraters[env.hydraters.image] = {
       data.should.have.property(key);
       data[key].should.eql(expected[key]);
     }
-    data.data.should.have.property('thumb');
+    data.metadata.should.have.property('thumb');
+    data.metadata.thumb.should.containDeep("data:image/png;base64,");
     data.data.should.have.property('display');
     data.data.display.should.containDeep("data:image/jpeg;base64,");
-    data.data.thumb.should.containDeep("data:image/png;base64,");
   }
 };
 
