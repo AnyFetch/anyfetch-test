@@ -210,7 +210,7 @@ describe("Test providers", function() {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
-                  return done(new Error("Unable to search for provider, got " + res.statusCode));
+                  return tryAgain();
                 }
 
                 var documentCount = providers[name].documents ? providers[name].documents.length : 1;
