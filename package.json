@@ -40,7 +40,6 @@
   "dependencies": {
     "async": "0.9.x",
     "dotenv": "^0.4.0",
-    "phantomjs": "^1.9.11",
     "nightmare": "^1.5.0",
     "rarity": "~2.1.1"
   },
