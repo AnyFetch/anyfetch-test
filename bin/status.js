@@ -8,7 +8,7 @@ var rarity = require("rarity");
 var hydraters = env.hydraters;
 
 
-function repeat(string, num){
+function repeat(string, num) {
   return new Array(parseInt(num) + 1).join(string);
 }
 

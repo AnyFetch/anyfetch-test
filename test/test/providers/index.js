@@ -13,6 +13,8 @@ var managerNightmare = require('../../helpers/nightmare/manager');
 var googleNightmare = require('../../helpers/nightmare/google');
 var dropboxNightmare = require('../../helpers/nightmare/dropbox');
 var evernoteNightmare = require('../../helpers/nightmare/evernote');
+// var salesforceNightmare = require('../../helpers/nightmare/salesforce');
+
 
 describe.long = process.env.LONG ? describe : describe.skip;
 it.long = process.env.LONG ? it : it.skip;
@@ -142,7 +144,11 @@ describe("Test providers", function() {
                 });
             },
             function checkProviders(accountProviders, cb) {
-              if(!accountProviders.some(function(provider) {return provider.client && provider.client.id === providers[name].id;})) {
+              var isCreated = accountProviders.some(function(provider) {
+                return provider.client && provider.client.id === providers[name].id;
+              });
+
+              if(!isCreated) {
                 return cb(new Error("No new access token created"));
               }
               cb(null);

@@ -16,7 +16,7 @@ describe("Test common API usage", function() {
   });
 
   var payload = {
-    identifier:'test-workflow-identifier',
+    identifier: 'test-workflow-identifier',
     metadata: {
       text: 'hello world',
       path: '/sample-path.txt'

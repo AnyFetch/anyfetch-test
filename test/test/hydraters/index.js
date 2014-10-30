@@ -185,7 +185,7 @@ describe("Test hydraters", function() {
   var hosts = {};
   Object.keys(hydraters).forEach(function(url) {
     hosts[url] = {
-      url : url + '/status',
+      url: url + '/status',
       expected: 200
     };
   });
