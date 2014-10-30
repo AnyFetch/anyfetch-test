@@ -123,6 +123,7 @@ describe("Test providers", function() {
       (providers[name].skip ? describe.skip : describe)(name, function() {
         before(api.getToken);
 
+        var accessToken = null;
         it('should pass OAuth authentication', function(done) {
           this.timeout(30000);
 
@@ -145,12 +146,18 @@ describe("Test providers", function() {
             },
             function checkProviders(accountProviders, cb) {
               var isCreated = accountProviders.some(function(provider) {
-                return provider.client && provider.client.id === providers[name].id;
+                if(provider.client && provider.client.id === providers[name].id) {
+                  accessToken = provider.id;
+                  return true;
+                }
+
+                return false;
               });
 
               if(!isCreated) {
                 return cb(new Error("No new access token created"));
               }
+
               cb(null);
             }
           ], done);
@@ -193,6 +200,23 @@ describe("Test providers", function() {
                 cb(err);
               });
           }, done);
+        });
+
+        it('should list documents', function(done) {
+          // Documents should be available on ES
+          api.basicApiRequest('get', '/documents/?provider=' + accessToken)
+            .end(function(err, res) {
+              if(res.statusCode !== 200) {
+                return done(new Error("Unable to search for provider"));
+              }
+
+              var documentCount = providers[name].documents ? providers[name].documents.length : 1;
+              if(res.body.count < documentCount) {
+                return done(new Error("Missing some documents: got " + res.body.count + ", expected at least " + documentCount));
+              }
+
+              done(err);
+            });
         });
 
         after(api.reset);
