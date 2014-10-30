@@ -168,26 +168,30 @@ describe("Test providers", function() {
                   }
 
                   if(res.statusCode !== 200 && res.statusCode !== 404) {
-                    return done(new Error('Bad status code : ' + res.statusCode));
+                    return cb(new Error('Bad status code : ' + res.statusCode));
                   }
 
                   if(res.statusCode === 404 || res.body.hydrating.length > 0) {
                     return tryAgain();
                   }
-
-                  // Everything looks great! Let's just check projection is working too
-                  api.basicApiRequest('get', '/documents/identifier/' + identifier)
-                    .end(function(err, res) {
-                      if(res.statusCode !== 200) {
-                        return done(new Error("Unable to project " + identifier));
-                      }
-
-                      cb();
-                    });
                 });
             }
 
             api.wait(checkExist);
+          }, done);
+        });
+
+        (providers[name].documents ? it : it.skip)('should have documents available for projections', function(done) {
+          // Everything looks great! Let's just check projection is working too
+          async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
+            api.basicApiRequest('get', '/documents/identifier/' + identifier)
+              .end(function(err, res) {
+                if(res.statusCode !== 200) {
+                  return cb(new Error("Unable to project " + identifier));
+                }
+
+                cb(err);
+              });
           }, done);
         });
 
