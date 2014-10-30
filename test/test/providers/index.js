@@ -161,7 +161,7 @@ describe("Test providers", function() {
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
-              api.basicApiRequest('get', '/documents/identifier/' + identifier)
+              api.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
                 .end(function(err, res) {
                   if(err) {
                     return cb(err);
@@ -175,7 +175,15 @@ describe("Test providers", function() {
                     return tryAgain();
                   }
 
-                  cb();
+                  // Everything looks great! Let's just check projection is working too
+                  api.basicApiRequest('get', '/documents/identifier/' + identifier)
+                    .end(function(err, res) {
+                      if(res.statusCode !== 200) {
+                        return done(new Error("Unable to project " + identifier));
+                      }
+
+                      cb();
+                    });
                 });
             }
 
