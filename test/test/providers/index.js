@@ -181,6 +181,8 @@ describe("Test providers", function() {
                   if(res.statusCode === 404 || res.body.hydrating.length > 0) {
                     return tryAgain();
                   }
+
+                  cb();
                 });
             }
 
@@ -204,19 +206,24 @@ describe("Test providers", function() {
 
         it('should list documents', function(done) {
           // Documents should be available on ES
-          api.basicApiRequest('get', '/documents/?provider=' + accessToken)
-            .end(function(err, res) {
-              if(res.statusCode !== 200) {
-                return done(new Error("Unable to search for provider"));
-              }
+          function checkExist(tryAgain) {
+            api.basicApiRequest('get', '/documents?provider=' + accessToken)
+              .end(function(err, res) {
+                console.log(res.body);
+                if(res.statusCode !== 200) {
+                  return done(new Error("Unable to search for provider, got " + res.statusCode));
+                }
 
-              var documentCount = providers[name].documents ? providers[name].documents.length : 1;
-              if(res.body.count < documentCount) {
-                return done(new Error("Missing some documents: got " + res.body.count + ", expected at least " + documentCount));
-              }
+                var documentCount = providers[name].documents ? providers[name].documents.length : 1;
+                if(res.body.count < documentCount) {
+                  return tryAgain();
+                }
 
-              done(err);
-            });
+                done(err);
+              });
+          }
+
+          api.wait(checkExist);
         });
 
         after(api.reset);
