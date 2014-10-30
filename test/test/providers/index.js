@@ -161,7 +161,7 @@ describe("Test providers", function() {
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
-              api.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
+              api.basicApiRequest('get', '/documents/identifier/' + identifier)
                 .end(function(err, res) {
                   if(err) {
                     return cb(err);
