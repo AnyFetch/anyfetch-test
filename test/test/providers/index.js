@@ -209,7 +209,6 @@ describe("Test providers", function() {
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
               .end(function(err, res) {
-                console.log(res.body);
                 if(res.statusCode !== 200) {
                   return done(new Error("Unable to search for provider, got " + res.statusCode));
                 }
