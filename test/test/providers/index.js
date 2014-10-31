@@ -123,6 +123,7 @@ describe("Test providers", function() {
       (providers[name].skip ? describe.skip : describe)(name, function() {
         before(api.getToken);
 
+        var accessToken = null;
         it('should pass OAuth authentication', function(done) {
           this.timeout(30000);
 
@@ -145,12 +146,18 @@ describe("Test providers", function() {
             },
             function checkProviders(accountProviders, cb) {
               var isCreated = accountProviders.some(function(provider) {
-                return provider.client && provider.client.id === providers[name].id;
+                if(provider.client && provider.client.id === providers[name].id) {
+                  accessToken = provider.id;
+                  return true;
+                }
+
+                return false;
               });
 
               if(!isCreated) {
                 return cb(new Error("No new access token created"));
               }
+
               cb(null);
             }
           ], done);
@@ -168,7 +175,7 @@ describe("Test providers", function() {
                   }
 
                   if(res.statusCode !== 200 && res.statusCode !== 404) {
-                    return done(new Error('Bad status code : ' + res.statusCode));
+                    return cb(new Error('Bad status code : ' + res.statusCode));
                   }
 
                   if(res.statusCode === 404 || res.body.hydrating.length > 0) {
@@ -181,6 +188,41 @@ describe("Test providers", function() {
 
             api.wait(checkExist);
           }, done);
+        });
+
+        (providers[name].documents ? it : it.skip)('should have documents available for projections', function(done) {
+          // Everything looks great! Let's just check projection is working too
+          async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
+            api.basicApiRequest('get', '/documents/identifier/' + identifier)
+              .end(function(err, res) {
+                if(res.statusCode !== 200) {
+                  return cb(new Error("Unable to project " + identifier + ", got " + res.statusCode + ": " + res.body));
+                }
+
+                cb(err);
+              });
+          }, done);
+        });
+
+        it('should list documents', function(done) {
+          // Documents should be available on ES
+          function checkExist(tryAgain) {
+            api.basicApiRequest('get', '/documents?provider=' + accessToken)
+              .end(function(err, res) {
+                if(res.statusCode !== 200) {
+                  return tryAgain();
+                }
+
+                var documentCount = providers[name].documents ? providers[name].documents.length : 1;
+                if(res.body.count < documentCount) {
+                  return tryAgain();
+                }
+
+                done(err);
+              });
+          }
+
+          api.wait(checkExist);
         });
 
         after(api.reset);
