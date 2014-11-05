@@ -20,7 +20,7 @@ var hydraters = {};
 
 hydraters[env.hydraters.plaintext] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/plaintext.anyfetch.com.test.docx",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/plaintext.anyfetch.com.test.docx",
     long_poll: 1,
     document: {
       document_type: "file",
@@ -34,7 +34,7 @@ hydraters[env.hydraters.plaintext] = {
 
 hydraters[env.hydraters.pdf] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/pdf.anyfetch.com.test.pdf",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/pdf.anyfetch.com.test.pdf",
     long_poll: 1,
     document: {
       document_type: 'document',
@@ -63,7 +63,7 @@ hydraters[env.hydraters.office] = {
 
 hydraters[env.hydraters.image] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/image.anyfetch.com.test.png",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/image.anyfetch.com.test.png",
     long_poll: 1,
     document: {
       document_type: 'file',
@@ -89,7 +89,7 @@ hydraters[env.hydraters.image] = {
 
 hydraters[env.hydraters.ocr] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/ocr.anyfetch.com.test.png",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/ocr.anyfetch.com.test.png",
     long_poll: 1,
     document: {
       document_type: 'image',
@@ -106,7 +106,7 @@ hydraters[env.hydraters.ocr] = {
 hydraters[env.hydraters.eml] = {
   payload: {
     access_token: "123",
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/eml.anyfetch.com.test.eml",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/eml.anyfetch.com.test.eml",
     long_poll: 1,
     document: {
       document_type: 'document',
@@ -122,7 +122,7 @@ hydraters[env.hydraters.eml] = {
 
 hydraters[env.hydraters.markdown] = {
   payload: {
-    file_path: "https://raw2.github.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/markdown.anyfetch.com.test.md",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/markdown.anyfetch.com.test.md",
     long_poll: 1,
     document: {
       document_type: 'document',
