@@ -136,31 +136,41 @@ describe("Test providers", function() {
         });
 
         it('should be registered on AnyFetch', function(done) {
-          async.waterfall([
-            function getProviders(cb) {
-              api
-                .basicApiRequest('get', '/providers')
-                .end(function(err, res) {
-                  cb(err, res ? res.body : []);
+          async.retry(4, function(cb) {
+            async.waterfall([
+              function getProviders(cb) {
+                api
+                  .basicApiRequest('get', '/providers')
+                  .end(function(err, res) {
+                    cb(err, res ? res.body : []);
+                  });
+              },
+              function checkProviders(accountProviders, cb) {
+                var isCreated = accountProviders.some(function(provider) {
+                  if(provider.client && provider.client.id === providers[name].id) {
+                    accessToken = provider.id;
+                    return true;
+                  }
+
+                  return false;
                 });
-            },
-            function checkProviders(accountProviders, cb) {
-              var isCreated = accountProviders.some(function(provider) {
-                if(provider.client && provider.client.id === providers[name].id) {
-                  accessToken = provider.id;
-                  return true;
+
+                if(!isCreated) {
+                  return cb(new Error("No new access token created"));
                 }
 
-                return false;
-              });
-
-              if(!isCreated) {
-                return cb(new Error("No new access token created"));
+                cb(null);
+              }
+            ], function(err) {
+              if(err) {
+                return setTimeout(function() {
+                  cb(err);
+                }, 250);
               }
 
-              cb(null);
-            }
-          ], done);
+              cb();
+            });
+          }, done);
         });
 
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
