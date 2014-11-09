@@ -206,7 +206,7 @@ describe("Test providers", function() {
             api.basicApiRequest('get', '/documents/identifier/' + identifier)
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
-                  return cb(new Error("Unable to project " + identifier + ", got " + res.statusCode + ": " + res.body));
+                  return cb(new Error("Unable to project " + identifier + ", got " + res.statusCode + ": " + res.body.toString()));
                 }
 
                 cb(err);
