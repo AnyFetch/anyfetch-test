@@ -70,7 +70,7 @@ describe("Test common API usage", function() {
             throw err;
           }
           if(!res.body.data || res.body.data.length === 0) {
-            return tryAgain(new Error("Bad datas : " + JSON.stringify(res.body)));
+            return tryAgain(new Error("Bad data : " + JSON.stringify(res.body)));
           }
 
           res.body.should.have.property('data').with.lengthOf(1);
