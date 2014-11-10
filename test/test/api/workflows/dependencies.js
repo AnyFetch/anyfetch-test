@@ -128,7 +128,7 @@ describe("Test hydraters dependencies", function() {
             return done(new Error("Too many documents matching!"));
           }
           else {
-            return tryAgain();
+            return tryAgain(new Error("Not enough documents : " + JSON.stringify(res.body)));
           }
         });
       }
@@ -147,7 +147,7 @@ describe("Test hydraters dependencies", function() {
             done();
           }
           else {
-            tryAgain();
+            tryAgain(new Error("Bad status code : " + res.statusCode + ' / ' + JSON.stringify(res.body)));
           }
         });
       }
@@ -180,7 +180,7 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            tryAgain();
+            tryAgain(new Error("Bad status code : " + res.statusCode + ' / ' + JSON.stringify(res.body)));
           }
         });
       }

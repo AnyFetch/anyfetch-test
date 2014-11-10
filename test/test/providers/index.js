@@ -136,7 +136,7 @@ describe("Test providers", function() {
         });
 
         it('should be registered on AnyFetch', function(done) {
-          async.retry(4, function(cb) {
+          function checkExist(tryAgain) {
             async.waterfall([
               function getProviders(cb) {
                 api
@@ -163,14 +163,14 @@ describe("Test providers", function() {
               }
             ], function(err) {
               if(err) {
-                return setTimeout(function() {
-                  cb(err);
-                }, 250);
+                return tryAgain(err);
               }
 
-              cb();
+              done();
             });
-          }, done);
+          }
+
+          api.wait(checkExist);
         });
 
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
@@ -188,8 +188,12 @@ describe("Test providers", function() {
                     return cb(new Error('Bad status code : ' + res.statusCode));
                   }
 
-                  if(res.statusCode === 404 || res.body.hydrating.length > 0) {
-                    return tryAgain();
+                  if(res.statusCode === 404) {
+                    return tryAgain(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
+                  }
+
+                  if(res.body.hydrating.length > 0) {
+                    return tryAgain(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
                   }
 
                   cb();
@@ -220,12 +224,12 @@ describe("Test providers", function() {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
-                  return tryAgain();
+                  return tryAgain(new Error("Bad status code : " + res.statusCode));
                 }
 
                 var documentCount = providers[name].documents ? providers[name].documents.length : 1;
                 if(res.body.count < documentCount) {
-                  return tryAgain();
+                  return tryAgain(new Error("Not enough documents, expected " + documentCount + ", got " + res.body.count));
                 }
 
                 done(err);
