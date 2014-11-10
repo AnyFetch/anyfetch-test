@@ -229,7 +229,7 @@ describe("Test providers", function() {
 
                 var documentCount = providers[name].documents ? providers[name].documents.length : 1;
                 if(res.body.count < documentCount) {
-                  return tryAgain(new Error("Not enough documents, expected " + documentCount + ", have " + res.body.count));
+                  return tryAgain(new Error("Not enough documents, expected " + documentCount + ", got " + res.body.count));
                 }
 
                 done(err);
