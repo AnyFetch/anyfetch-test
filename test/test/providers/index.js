@@ -135,8 +135,8 @@ describe("Test providers", function() {
             .run(done);
         });
 
-        it('should be registered on AnyFetch', function(done) {
-          async.retry(4, function(cb) {
+        var testToken = it('should be registered on AnyFetch', function(done) {
+          function checkExist(tryAgain) {
             async.waterfall([
               function getProviders(cb) {
                 api
@@ -163,17 +163,17 @@ describe("Test providers", function() {
               }
             ], function(err) {
               if(err) {
-                return setTimeout(function() {
-                  cb(err);
-                }, 250);
+                return tryAgain(err);
               }
 
-              cb();
+              done();
             });
-          }, done);
+          }
+
+          api.wait(checkExist, testToken.title);
         });
 
-        (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
+        var testUploadDocuments = (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
           this.timeout(providers[name].documents.length * 15000 + 25000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
@@ -189,14 +189,14 @@ describe("Test providers", function() {
                   }
 
                   if(res.statusCode === 404 || res.body.hydrating.length > 0) {
-                    return tryAgain();
+                    return tryAgain(new Error("Bad status code (" + res.statusCode + ") or bad hydrating length"));
                   }
 
                   cb();
                 });
             }
 
-            api.wait(checkExist);
+            api.wait(checkExist, testUploadDocuments);
           }, done);
         });
 
@@ -214,25 +214,25 @@ describe("Test providers", function() {
           }, done);
         });
 
-        it('should list documents', function(done) {
+        var testListDocuments = it('should list documents', function(done) {
           // Documents should be available on ES
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
-                  return tryAgain();
+                  return tryAgain(new Error("Bad status code : " + res.statusCode));
                 }
 
                 var documentCount = providers[name].documents ? providers[name].documents.length : 1;
                 if(res.body.count < documentCount) {
-                  return tryAgain();
+                  return tryAgain(new Error("Not enough documents, expected " + documentCount + ", have " + res.body.count));
                 }
 
                 done(err);
               });
           }
 
-          api.wait(checkExist);
+          api.wait(checkExist, testListDocuments.title);
         });
 
         after(api.reset);

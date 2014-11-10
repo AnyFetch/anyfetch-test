@@ -114,7 +114,7 @@ describe("Test hydraters dependencies", function() {
 
     helpers.sendDocumentAndFile.call(this, payload, file);
 
-    it('should have created three events', function(done) {
+    var testThreeEvents = it('should have created three events', function(done) {
       function checkEvents(tryAgain) {
         helpers.basicApiRequest('get', '/documents?search=Node&document_type=5252ce4ce4cfcd16f55cfa40')
         .end(function(err, res) {
@@ -128,15 +128,15 @@ describe("Test hydraters dependencies", function() {
             return done(new Error("Too many documents matching!"));
           }
           else {
-            return tryAgain();
+            return tryAgain(new Error("Not enough documents"));
           }
         });
       }
 
-      helpers.wait(checkEvents);
+      helpers.wait(checkEvents, testThreeEvents.title);
     });
 
-    it('should have been properly removed', function(done) {
+    var testRemovedDocument = it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
@@ -147,11 +147,11 @@ describe("Test hydraters dependencies", function() {
             done();
           }
           else {
-            tryAgain();
+            tryAgain(new Error("Bad status code : " + res.statusCode));
           }
         });
       }
-      helpers.wait(checkHydration);
+      helpers.wait(checkHydration, testRemovedDocument.title);
     });
   });
 
@@ -168,7 +168,7 @@ describe("Test hydraters dependencies", function() {
 
     helpers.sendDocumentAndFile.call(this, payload, file);
 
-    it('should have been properly removed', function(done) {
+    var testRemovedDocument = it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
@@ -180,12 +180,12 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            tryAgain();
+            tryAgain(new Error("Bad status code : " + res.statusCode));
           }
         });
       }
 
-      helpers.wait(checkHydration);
+      helpers.wait(checkHydration, testRemovedDocument.title);
     });
   });
 
