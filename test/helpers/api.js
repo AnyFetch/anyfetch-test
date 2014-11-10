@@ -223,7 +223,7 @@ module.exports.wait = function loopUntil(checker) {
       var errString = err.toString();
       if(previousError !== errString) {
         previousError = errString;
-        console.warn(errString);
+        console.warn("\x1b[0mwarn:\x1b[0m", errString);
       }
     }
 
