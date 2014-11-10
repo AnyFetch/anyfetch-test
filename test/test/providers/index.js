@@ -189,11 +189,11 @@ describe("Test providers", function() {
                   }
 
                   if(res.statusCode === 404) {
-                    return tryAgain(new Error("Bad status code (" + res.statusCode + ")"));
+                    return tryAgain(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
                   }
 
                   if(res.body.hydrating.length > 0) {
-                    return tryAgain(new Error("Bad hydrating length : " + JSON.stringify(res.body.hydrating)));
+                    return tryAgain(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
                   }
 
                   cb();
