@@ -147,7 +147,7 @@ describe("Test hydraters dependencies", function() {
             done();
           }
           else {
-            tryAgain(new Error("Bad status code : " + res.statusCode));
+            tryAgain(new Error("Bad status code : " + res.statusCode + ' / ' + JSON.stringify(res.body)));
           }
         });
       }
@@ -180,7 +180,7 @@ describe("Test hydraters dependencies", function() {
           }
           else {
             // Let's try again
-            tryAgain(new Error("Bad status code : " + res.statusCode));
+            tryAgain(new Error("Bad status code : " + res.statusCode + ' / ' + JSON.stringify(res.body)));
           }
         });
       }
