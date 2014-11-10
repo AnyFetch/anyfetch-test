@@ -114,7 +114,7 @@ describe("Test hydraters dependencies", function() {
 
     helpers.sendDocumentAndFile.call(this, payload, file);
 
-    var testThreeEvents = it('should have created three events', function(done) {
+    it('should have created three events', function(done) {
       function checkEvents(tryAgain) {
         helpers.basicApiRequest('get', '/documents?search=Node&document_type=5252ce4ce4cfcd16f55cfa40')
         .end(function(err, res) {
@@ -128,15 +128,15 @@ describe("Test hydraters dependencies", function() {
             return done(new Error("Too many documents matching!"));
           }
           else {
-            return tryAgain(new Error("Not enough documents"));
+            return tryAgain(new Error("Not enough documents : " + JSON.stringify(res.body)));
           }
         });
       }
 
-      helpers.wait(checkEvents, testThreeEvents.title);
+      helpers.wait(checkEvents);
     });
 
-    var testRemovedDocument = it('should have been properly removed', function(done) {
+    it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
@@ -151,7 +151,7 @@ describe("Test hydraters dependencies", function() {
           }
         });
       }
-      helpers.wait(checkHydration, testRemovedDocument.title);
+      helpers.wait(checkHydration);
     });
   });
 
@@ -168,7 +168,7 @@ describe("Test hydraters dependencies", function() {
 
     helpers.sendDocumentAndFile.call(this, payload, file);
 
-    var testRemovedDocument = it('should have been properly removed', function(done) {
+    it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
         helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
@@ -185,7 +185,7 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkHydration, testRemovedDocument.title);
+      helpers.wait(checkHydration);
     });
   });
 

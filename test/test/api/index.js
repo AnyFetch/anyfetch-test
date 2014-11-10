@@ -60,7 +60,7 @@ describe("Test common API usage", function() {
       .end(done);
   });
 
-  var test = it("should be able to search for a document", function(done) {
+  it("should be able to search for a document", function(done) {
     function checkExist(tryAgain) {
       // We should be able to get the document via ES
       helpers.basicApiRequest('get', '/documents?search=hello')
@@ -70,7 +70,7 @@ describe("Test common API usage", function() {
             throw err;
           }
           if(!res.body.data || res.body.data.length === 0) {
-            return tryAgain(new Error("Bad datas"));
+            return tryAgain(new Error("Bad datas : " + JSON.stringify(res.body.data)));
           }
 
           res.body.should.have.property('data').with.lengthOf(1);
@@ -84,7 +84,7 @@ describe("Test common API usage", function() {
     }
 
     // Wait for ES indexing
-    helpers.wait(checkExist, test.title);
+    helpers.wait(checkExist);
   });
 
   it("should be removed with a reset", function(done) {

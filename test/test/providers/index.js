@@ -135,7 +135,7 @@ describe("Test providers", function() {
             .run(done);
         });
 
-        var testToken = it('should be registered on AnyFetch', function(done) {
+        it('should be registered on AnyFetch', function(done) {
           function checkExist(tryAgain) {
             async.waterfall([
               function getProviders(cb) {
@@ -170,10 +170,10 @@ describe("Test providers", function() {
             });
           }
 
-          api.wait(checkExist, testToken.title);
+          api.wait(checkExist);
         });
 
-        var testUploadDocuments = (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
+        (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
           this.timeout(providers[name].documents.length * 15000 + 25000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
@@ -189,14 +189,14 @@ describe("Test providers", function() {
                   }
 
                   if(res.statusCode === 404 || res.body.hydrating.length > 0) {
-                    return tryAgain(new Error("Bad status code (" + res.statusCode + ") or bad hydrating length"));
+                    return tryAgain(new Error("Bad status code (" + res.statusCode + ") or bad hydrating length : " + JSON.stringify(res.body.hydrating)));
                   }
 
                   cb();
                 });
             }
 
-            api.wait(checkExist, testUploadDocuments);
+            api.wait(checkExist);
           }, done);
         });
 
@@ -214,7 +214,7 @@ describe("Test providers", function() {
           }, done);
         });
 
-        var testListDocuments = it('should list documents', function(done) {
+        it('should list documents', function(done) {
           // Documents should be available on ES
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
@@ -232,7 +232,7 @@ describe("Test providers", function() {
               });
           }
 
-          api.wait(checkExist, testListDocuments.title);
+          api.wait(checkExist);
         });
 
         after(api.reset);

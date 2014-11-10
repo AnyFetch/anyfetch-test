@@ -215,28 +215,16 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
  * Repeatedly call `checker` function with `done` and `tryAgain` function.
  * Checker can ask to be called again at a later time by calling `tryAgain()` instead of `done()`
  */
-module.exports.wait = function loopUntil(checker, title) {
+module.exports.wait = function loopUntil(checker) {
   var tryAgain = function(err) {
-    async.waterfall([
-      function writeError(cb) {
-        if(!err || !title) {
-          return cb();
-        }
+    if(err && process.env.VERBOSE) {
+      console.warn(err.toString());
+    }
 
-        fs.appendFile('/tmp/try-again-error', title + ' - ' + err.toString() + '\n', cb);
-      },
-      function callChecker(cb) {
-        var timer = setTimeout(function() {
-          checker(tryAgain);
-        }, 500);
-        timer.unref();
-        cb();
-      }
-    ], function(err) {
-      if(err) {
-        throw err;
-      }
-    });
+    var timer = setTimeout(function() {
+      checker(tryAgain);
+    }, 500);
+    timer.unref();
   };
 
   checker(tryAgain);
