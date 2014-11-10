@@ -2,6 +2,8 @@
 
 require('should');
 var request = require('supertest');
+var async = require('async');
+var fs = require('fs');
 
 var warmer = require('./warmer');
 
@@ -213,12 +215,28 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
  * Repeatedly call `checker` function with `done` and `tryAgain` function.
  * Checker can ask to be called again at a later time by calling `tryAgain()` instead of `done()`
  */
-module.exports.wait = function loopUntil(checker) {
-  var tryAgain = function() {
-    var timer = setTimeout(function() {
-      checker(tryAgain);
-    }, 500);
-    timer.unref();
+module.exports.wait = function loopUntil(checker, title) {
+  var tryAgain = function(err) {
+    async.waterfall([
+      function writeError(cb) {
+        if(!err || !title) {
+          return cb();
+        }
+
+        fs.appendFile('/tmp/try-again-error', title + ' - ' + err.toString() + '\n', cb);
+      },
+      function callChecker(cb) {
+        var timer = setTimeout(function() {
+          checker(tryAgain);
+        }, 500);
+        timer.unref();
+        cb();
+      }
+    ], function(err) {
+      if(err) {
+        throw err;
+      }
+    });
   };
 
   checker(tryAgain);
