@@ -216,9 +216,15 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
  * Checker can ask to be called again at a later time by calling `tryAgain()` instead of `done()`
  */
 module.exports.wait = function loopUntil(checker) {
+  var previousError;
+
   var tryAgain = function(err) {
     if(err && process.env.VERBOSE) {
-      console.warn(err.toString());
+      err = err.toString();
+      if(previousError !== err) {
+        previousError = err;
+        console.warn(err);
+      }
     }
 
     var timer = setTimeout(function() {
