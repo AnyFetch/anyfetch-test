@@ -3,6 +3,8 @@
 module.exports.login = function login(email, password) {
   return function(nightmare) {
     nightmare
+      .wait('#username')
+      .wait('#password')
       .wait('#login')
       .type('#username', email)
       .type('#password', password)

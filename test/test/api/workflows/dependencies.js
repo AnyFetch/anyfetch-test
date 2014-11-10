@@ -41,6 +41,8 @@ describe("Test hydraters dependencies", function() {
   });
 
   describe("should work for image documents", function() {
+    this.timeout(30000);
+
     var payload = {
       identifier: env.apiUrl + '/test-image-dependencies-identifier',
       metadata: {
