@@ -5,6 +5,3 @@ test:
   override:
     - ./circle.sh:
         parallel: true
-general:
-  artifacts:
-    - /tmp/try-again-error
