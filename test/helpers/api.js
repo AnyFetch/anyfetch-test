@@ -220,10 +220,10 @@ module.exports.wait = function loopUntil(checker) {
 
   var tryAgain = function(err) {
     if(err && process.env.VERBOSE) {
-      err = err.toString();
-      if(previousError !== err) {
-        previousError = err;
-        console.warn(err);
+      var errString = err.toString();
+      if(previousError !== errString) {
+        previousError = errString;
+        console.warn(errString);
       }
     }
 
