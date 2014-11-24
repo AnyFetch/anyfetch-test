@@ -13,7 +13,7 @@ var managerNightmare = require('../../helpers/nightmare/manager');
 var googleNightmare = require('../../helpers/nightmare/google');
 var dropboxNightmare = require('../../helpers/nightmare/dropbox');
 var evernoteNightmare = require('../../helpers/nightmare/evernote');
-// var salesforceNightmare = require('../../helpers/nightmare/salesforce');
+var salesforceNightmare = require('../../helpers/nightmare/salesforce');
 
 
 describe.long = process.env.LONG ? describe : describe.skip;
@@ -95,7 +95,7 @@ providers.evernote = {
   documents: generateDocuments(process.env.EVERNOTE_EXPECTED_DOCUMENTS)
 };
 
-/*providers.salesforce = {
+providers.salesforce = {
   id: '53047faac8318c2d65000100',
   skip: !(process.env.SALESFORCE_EMAIL && process.env.SALESFORCE_PASSWORD && process.env.SALESFORCE_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -104,7 +104,7 @@ providers.evernote = {
       .use(salesforceNightmare.authorize());
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
-};*/
+};
 
 describe("Test providers", function() {
   var hosts = {};

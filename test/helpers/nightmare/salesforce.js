@@ -3,12 +3,12 @@
 module.exports.login = function login(email, password) {
   return function(nightmare) {
     nightmare
-      .wait('#username')
-      .wait('#password')
-      .wait('#login')
-      .type('#username', email)
-      .type('#password', password)
-      .click('#login')
+      .wait('input#username')
+      .wait('input#password')
+      .wait('button#Login')
+      .type('input#username', email)
+      .type('input#password', password)
+      .click('button#Login')
       .wait();
   };
 };
