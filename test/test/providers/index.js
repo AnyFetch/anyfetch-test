@@ -219,6 +219,10 @@ describe("Test providers", function() {
         });
 
         it('should list documents', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
           // Documents should be available on ES
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
