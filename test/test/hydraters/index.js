@@ -2,9 +2,10 @@
 
 require('should');
 var request = require('supertest');
-
+var urlParse = require("url").parse;
 var up = require('../../helpers/up');
 var warmer = require('../../helpers/warmer');
+var wait = require('../../helpers/try-again').wait;
 var env = require('../../../config');
 
 // Build a checker-function to compare a reply with a file
@@ -21,7 +22,8 @@ var hydraters = {};
 hydraters[env.hydraters.plaintext] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/plaintext.anyfetch.com.test.docx",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.plaintext),
+    priority: 100,
     document: {
       document_type: "file",
       metadata: {},
@@ -35,7 +37,8 @@ hydraters[env.hydraters.plaintext] = {
 hydraters[env.hydraters.pdf] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/pdf.anyfetch.com.test.pdf",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.pdf),
+    priority: 100,
     document: {
       document_type: 'document',
       metadata: {
@@ -64,7 +67,8 @@ hydraters[env.hydraters.office] = {
 hydraters[env.hydraters.image] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/image.anyfetch.com.test.png",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.image),
+    priority: 100,
     document: {
       document_type: 'file',
       metadata: {
@@ -90,7 +94,8 @@ hydraters[env.hydraters.image] = {
 hydraters[env.hydraters.ocr] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/ocr.anyfetch.com.test.png",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.ocr),
+    priority: 100,
     document: {
       document_type: 'image',
       metadata: {
@@ -107,7 +112,8 @@ hydraters[env.hydraters.eml] = {
   payload: {
     access_token: "123",
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/eml.anyfetch.com.test.eml",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.eml),
+    priority: 100,
     document: {
       document_type: 'document',
       metadata: {
@@ -123,7 +129,8 @@ hydraters[env.hydraters.eml] = {
 hydraters[env.hydraters.markdown] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/markdown.anyfetch.com.test.md",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.markdown),
+    priority: 100,
     document: {
       document_type: 'document',
       metadata: {
@@ -138,7 +145,8 @@ hydraters[env.hydraters.markdown] = {
 
 hydraters[env.hydraters.embedmail] = {
   payload: {
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.embedmail),
+    priority: 100,
     document: {
       document_type: 'document',
       metadata: {
@@ -155,7 +163,8 @@ hydraters[env.hydraters.embedmail] = {
 hydraters[env.hydraters.iptc] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/iptc.anyfetch.com.test.jpg",
-    long_poll: 1,
+    callback: "http://echo.anyfetch.com/" + new Date().getTime().toString() + encodeURIComponent(env.hydraters.iptc),
+    priority: 100,
     document: {
       document_type: 'document',
       metadata: {
@@ -195,7 +204,7 @@ describe("Test hydraters", function() {
     var requests = {};
     Object.keys(hydraters).forEach(function(url) {
       if(!hydraters[url].expected) {
-        // Skip hdyraters without expectation
+        // Skip hydraters without expectation
         it("`" + url + "` should hydrate file");
         return;
       }
@@ -203,19 +212,38 @@ describe("Test hydraters", function() {
       requests[url] = request(url)
         .post('/hydrate')
         .send(hydraters[url].payload)
-        .expect(200)
-        .expect(function(res) {
-          hydraters[url].expected(res.body);
-        });
+        .expect(202);
+
     });
 
     var status = warmer.prepareRequests(requests);
 
     Object.keys(requests).forEach(function(url) {
-      it("`" + url + "` should hydrate file", function(done) {
+      it("`" + url + "` should accept to hydrate file", function(done) {
         warmer.untilChecker(status, url, done);
       });
     });
 
+    Object.keys(requests).forEach(function(url) {
+      it("`" + url + "` should hydrate file", function(done) {
+        var checker = function(tryAgain) {
+          var parsedUrl = urlParse(hydraters[url].payload.callback);
+
+          request(parsedUrl.protocol + '//' + parsedUrl.host)
+            .get(parsedUrl.path)
+            .expect(200)
+            .expect(function(res) {
+              hydraters[url].expected(res.body.body);
+            })
+            .end(function(err) {
+              if(err) {
+                return tryAgain(err);
+              }
+              done();
+            });
+        };
+        wait(checker, 250);
+      });
+    });
   });
 });
