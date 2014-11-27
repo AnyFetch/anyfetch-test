@@ -7,6 +7,7 @@ var Nightmare = require('nightmare');
 
 var up = require('../../helpers/up');
 var api = require('../../helpers/api');
+var wait = require('../../helpers/try-again').wait;
 var env = require('../../../config');
 
 var managerNightmare = require('../../helpers/nightmare/manager');
@@ -170,7 +171,7 @@ describe("Test providers", function() {
             });
           }
 
-          api.wait(checkExist);
+          wait(checkExist);
         });
 
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
@@ -200,7 +201,7 @@ describe("Test providers", function() {
                 });
             }
 
-            api.wait(checkExist);
+            wait(checkExist);
           }, done);
         });
 
@@ -240,7 +241,7 @@ describe("Test providers", function() {
               });
           }
 
-          api.wait(checkExist);
+          wait(checkExist);
         });
 
         after(api.reset);
