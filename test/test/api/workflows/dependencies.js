@@ -4,6 +4,7 @@ require('should');
 
 var helpers = require('../../../helpers/api');
 var warmer = require('../../../helpers/warmer');
+var wait = require('../../../helpers/try-again').wait;
 
 var env = require('../../../../config');
 
@@ -135,7 +136,7 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkEvents);
+      wait(checkEvents);
     });
 
     it('should have been properly removed', function(done) {
@@ -153,7 +154,7 @@ describe("Test hydraters dependencies", function() {
           }
         });
       }
-      helpers.wait(checkHydration);
+      wait(checkHydration);
     });
   });
 
@@ -187,7 +188,7 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkHydration);
+      wait(checkHydration);
     });
   });
 

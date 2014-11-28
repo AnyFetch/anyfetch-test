@@ -26,7 +26,7 @@ async.waterfall([
             throw new Error(hydraters[shortName] + ": " + err.toString());
           }
 
-          hydratersStatus[shortName] = res.body.queued_items;
+          hydratersStatus[shortName] = res.body;
           cb();
         });
     }, rarity.carry(hydratersStatus, cb));
@@ -37,7 +37,7 @@ async.waterfall([
     hydratersName.sort();
     hydratersName.forEach(function(shortName) {
       var base = hydraters[shortName] + ':';
-      console.log(base, repeat(" ", 45 - base.length), hydratersStatus[shortName]);
+      console.log(base, repeat(" ", 45 - base.length), hydratersStatus[shortName].pending);
     });
 
     cb();

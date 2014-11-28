@@ -3,6 +3,7 @@
 require('should');
 
 var helpers = require('../../../helpers/api');
+var wait = require('../../../helpers/try-again').wait;
 
 var env = require('../../../../config');
 
@@ -31,7 +32,7 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
 
       });
     }
-    helpers.wait(checkErroredHydration);
+    wait(checkErroredHydration);
   };
 
 };
