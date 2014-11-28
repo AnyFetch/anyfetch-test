@@ -23,7 +23,7 @@ var hydraters = {};
 hydraters[env.hydraters.plaintext] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/plaintext.anyfetch.com.test.docx",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: "file",
@@ -38,7 +38,7 @@ hydraters[env.hydraters.plaintext] = {
 hydraters[env.hydraters.pdf] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/pdf.anyfetch.com.test.pdf",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
@@ -68,7 +68,7 @@ hydraters[env.hydraters.office] = {
 hydraters[env.hydraters.image] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/image.anyfetch.com.test.png",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'file',
@@ -95,7 +95,7 @@ hydraters[env.hydraters.image] = {
 hydraters[env.hydraters.ocr] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/ocr.anyfetch.com.test.png",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'image',
@@ -113,7 +113,7 @@ hydraters[env.hydraters.eml] = {
   payload: {
     access_token: "123",
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/eml.anyfetch.com.test.eml",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
@@ -130,7 +130,7 @@ hydraters[env.hydraters.eml] = {
 hydraters[env.hydraters.markdown] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/markdown.anyfetch.com.test.md",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
@@ -146,7 +146,7 @@ hydraters[env.hydraters.markdown] = {
 
 hydraters[env.hydraters.embedmail] = {
   payload: {
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
@@ -164,7 +164,7 @@ hydraters[env.hydraters.embedmail] = {
 hydraters[env.hydraters.iptc] = {
   payload: {
     file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/2de85126d2bc3e648ed199c84ec7a4e07a5f9392/test/test/hydraters/samples/iptc.anyfetch.com.test.jpg",
-    callback: "http://echo.anyfetch.com/" + uuid.v4({rng: uuid.nodeRNG}) + '?_echo_reply=204',
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
