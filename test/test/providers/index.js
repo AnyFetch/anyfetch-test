@@ -174,41 +174,70 @@ describe("Test providers", function() {
           wait(checkExist);
         });
 
+        var documentIds = {};
+
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
           this.timeout(providers[name].documents.length * 15000 + 25000);
 
-          async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
-            function checkExist(tryAgain) {
-              api.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
-                .end(function(err, res) {
-                  if(err) {
-                    return cb(err);
-                  }
+          function checkExist(tryAgain) {
+            api.basicApiRequest('get', '/documents?provider=' + accessToken)
+              .end(function(err, res) {
+                if(err) {
+                  return tryAgain(err);
+                }
 
-                  if(res.statusCode !== 200 && res.statusCode !== 404) {
-                    return cb(new Error('Bad status code : ' + res.statusCode));
-                  }
+                if(res.body.count < providers[name].documents.length) {
+                  return tryAgain(new Error('Bad count : ' + res.body.count));
+                }
 
-                  if(res.statusCode === 404) {
-                    return tryAgain(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
-                  }
-
-                  if(res.body.hydrating.length > 0) {
-                    return tryAgain(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
-                  }
-
-                  cb();
+                res.body.data.forEach(function(doc) {
+                  documentIds[doc.identifier] = doc.id;
                 });
-            }
 
-            wait(checkExist);
+                var identifiers = res.body.data.map(function(doc) {
+                  return doc.identifier;
+                });
+
+                providers[name].documents.forEach(function(identifier) {
+                  identifiers.should.containEql(decodeURIComponent(identifier));
+                });
+
+                done();
+              });
+          }
+
+          wait(checkExist);
+        });
+
+        (providers[name].documents ? it : it.skip)('should have hydrated all documents', function(done) {
+          async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
+            api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)] + '/raw')
+              .end(function(err, res) {
+                if(err) {
+                  return cb(err);
+                }
+
+                if(res.statusCode !== 200 && res.statusCode !== 404) {
+                  return cb(new Error('Bad status code : ' + res.statusCode));
+                }
+
+                if(res.statusCode === 404) {
+                  return cb(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
+                }
+
+                if(res.body.hydrating.length > 0) {
+                  return cb(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
+                }
+
+                cb(err);
+              });
           }, done);
         });
 
         (providers[name].documents ? it : it.skip)('should have documents available for projections', function(done) {
           // Everything looks great! Let's just check projection is working too
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
-            api.basicApiRequest('get', '/documents/identifier/' + identifier)
+            api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)])
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
                   return cb(new Error("Unable to project " + identifier + ", got " + res.statusCode + ": " + res.body.toString()));
