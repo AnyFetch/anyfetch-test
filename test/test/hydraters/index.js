@@ -191,7 +191,21 @@ hydraters[env.hydraters.filecleaner] = {
 };
 
 hydraters[env.hydraters.event] = {
-  payload: {}
+  payload: {
+    callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
+    priority: 100,
+    document: {
+      document_type: 'event',
+      metadata: {
+        startDate: '2011-10-05T14:48:00.000Z'
+      },
+      identifier: 'event-test'
+    }
+  },
+  expected: function(data) {
+    data.should.have.property('metadata');
+    data.metadata.should.have.property('modification_date', '2011-10-05T14:48:00.000Z');
+  }
 };
 
 describe("Test hydraters", function() {
