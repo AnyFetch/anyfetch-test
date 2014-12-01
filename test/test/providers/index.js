@@ -30,7 +30,7 @@ function generateDocuments(expectedDocuments) {
   return expectedDocuments.split(',');
 }
 
-providers.gcontacts = {
+/*providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -50,7 +50,7 @@ providers.gmail = {
       .use(googleNightmare.authorize());
   },
   documents: generateDocuments(process.env.GMAIL_EXPECTED_DOCUMENTS)
-};
+};*/
 
 providers.gdrive = {
   id: '539ef7289f240405465a2e1f',
@@ -63,7 +63,7 @@ providers.gdrive = {
   documents: generateDocuments(process.env.GDRIVE_EXPECTED_DOCUMENTS)
 };
 
-providers.gcalendar = {
+/*providers.gcalendar = {
   id: '53047faac8318c2d65000099',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCALENDAR_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -105,9 +105,9 @@ providers.salesforce = {
       .use(salesforceNightmare.authorize());
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
-};
+};*/
 
-describe("Test providers", function() {
+describe.only("Test providers", function() {
   var hosts = {};
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
@@ -177,7 +177,11 @@ describe("Test providers", function() {
         var documentIds = {};
 
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
-          this.timeout(providers[name].documents.length * 15000 + 25000);
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
+          this.timeout(providers[name].documents.length * 10000 + 25000);
 
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
@@ -210,27 +214,41 @@ describe("Test providers", function() {
         });
 
         (providers[name].documents ? it : it.skip)('should have hydrated all documents', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
+          this.timeout(providers[name].documents.length * 10000);
+
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
-            api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)] + '/raw')
+            function checkExist(tryAgain) {
+              api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)] + '/raw')
               .end(function(err, res) {
-                if(err) {
-                  return cb(err);
-                }
+                  if(err) {
+                    return tryAgain(err);
+                  }
 
-                if(res.statusCode !== 200) {
-                  return cb(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
-                }
+                  if(res.statusCode !== 200) {
+                    return tryAgain(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
+                  }
 
-                if(res.body.hydrating.length > 0) {
-                  return cb(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
-                }
+                  if(res.body.hydrating.length > 0) {
+                    return tryAgain(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
+                  }
 
-                cb(err);
-              });
+                  cb(err);
+                });
+            }
+
+            wait(checkExist);
           }, done);
         });
 
         (providers[name].documents ? it : it.skip)('should have documents available for projections', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
           // Everything looks great! Let's just check projection is working too
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)])
