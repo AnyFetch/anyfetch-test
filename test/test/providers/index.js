@@ -30,7 +30,7 @@ function generateDocuments(expectedDocuments) {
   return expectedDocuments.split(',');
 }
 
-/*providers.gcontacts = {
+providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -50,7 +50,7 @@ providers.gmail = {
       .use(googleNightmare.authorize());
   },
   documents: generateDocuments(process.env.GMAIL_EXPECTED_DOCUMENTS)
-};*/
+};
 
 providers.gdrive = {
   id: '539ef7289f240405465a2e1f',
@@ -63,7 +63,7 @@ providers.gdrive = {
   documents: generateDocuments(process.env.GDRIVE_EXPECTED_DOCUMENTS)
 };
 
-/*providers.gcalendar = {
+providers.gcalendar = {
   id: '53047faac8318c2d65000099',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCALENDAR_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -105,9 +105,9 @@ providers.salesforce = {
       .use(salesforceNightmare.authorize());
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
-};*/
+};
 
-describe.only("Test providers", function() {
+describe("Test providers", function() {
   var hosts = {};
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
