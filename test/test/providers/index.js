@@ -181,7 +181,7 @@ describe("Test providers", function() {
             return done(new Error("Can't list documents without accessToken of this provider"));
           }
 
-          this.timeout(providers[name].documents.length * 10000 + 25000);
+          this.timeout(providers[name].documents.length * 10000 + 30000);
 
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
@@ -218,7 +218,7 @@ describe("Test providers", function() {
             return done(new Error("Can't list documents without accessToken of this provider"));
           }
 
-          this.timeout(providers[name].documents.length * 10000);
+          this.timeout(providers[name].documents.length * 20000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
