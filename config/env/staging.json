@@ -15,7 +15,8 @@
     "eml": "https://eml-staging.anyfetch.com",
     "embedmail": "https://embedmail-staging.anyfetch.com",
     "ics": "https://ics-staging.anyfetch.com",
-    "deduplicator": "https://deduplicator-staging.anyfetch.com"
+    "deduplicator": "https://deduplicator-staging.anyfetch.com",
+    "event": "https://event-staging.anyfetch.com"
   },
   "providers": {
     "gmail": "https://gmail-staging.anyfetch.com",
