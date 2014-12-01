@@ -217,11 +217,7 @@ describe("Test providers", function() {
                   return cb(err);
                 }
 
-                if(res.statusCode !== 200 && res.statusCode !== 404) {
-                  return cb(new Error('Bad status code : ' + res.statusCode));
-                }
-
-                if(res.statusCode === 404) {
+                if(res.statusCode !== 200) {
                   return cb(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
                 }
 
