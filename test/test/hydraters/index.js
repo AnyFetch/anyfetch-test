@@ -190,6 +190,9 @@ hydraters[env.hydraters.filecleaner] = {
   payload: {}
 };
 
+hydraters[env.hydraters.event] = {
+  payload: {}
+};
 
 describe("Test hydraters", function() {
   var hosts = {};
