@@ -203,8 +203,7 @@ hydraters[env.hydraters.event] = {
     }
   },
   expected: function(data) {
-    data.should.have.property('metadata');
-    data.metadata.should.have.property('modification_date', '2011-10-05T14:48:00.000Z');
+    data.should.have.property('modification_date', '2011-10-05T14:48:00.000Z');
   }
 };
 
@@ -249,13 +248,12 @@ describe("Test hydraters", function() {
           request(parsedUrl.protocol + '//' + parsedUrl.host)
             .get(parsedUrl.pathname)
             .expect(200)
-            .expect(function(res) {
-              hydraters[url].expected(res.body.body);
-            })
-            .end(function(err) {
+            .end(function(err, res) {
               if(err) {
                 return tryAgain(err);
               }
+
+              hydraters[url].expected(res.body.body);
               done();
             });
         };
