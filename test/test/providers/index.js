@@ -30,13 +30,19 @@ function generateDocuments(expectedDocuments) {
   return expectedDocuments.split(',');
 }
 
+if(!process.env.CIRCLE_ARTIFACTS) {
+  process.env.CIRCLE_ARTIFACTS = '/tmp';
+}
+
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcontacts-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcontacts-after-authorize.png');
   },
   documents: generateDocuments(process.env.GCONTACTS_EXPECTED_DOCUMENTS)
 };
@@ -47,7 +53,9 @@ providers.gmail = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gmail-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gmail-after-authorize.png');
   },
   documents: generateDocuments(process.env.GMAIL_EXPECTED_DOCUMENTS)
 };
@@ -58,7 +66,9 @@ providers.gdrive = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gdrive-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gdrive-after-authorize.png');
   },
   documents: generateDocuments(process.env.GDRIVE_EXPECTED_DOCUMENTS)
 };
@@ -69,7 +79,9 @@ providers.gcalendar = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcalendar-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcalendar-after-authorize.png');
   },
   documents: generateDocuments(process.env.GCALENDAR_EXPECTED_DOCUMENTS)
 };
@@ -80,7 +92,9 @@ providers.dropbox = {
   workflow: function(nightmare) {
     nightmare
       .use(dropboxNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(dropboxNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'dropbox-after-login.png')
+      .use(dropboxNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'dropbox-after-authorize.png');
   },
   documents: generateDocuments(process.env.DROPBOX_EXPECTED_DOCUMENTS)
 };
@@ -91,7 +105,9 @@ providers.evernote = {
   workflow: function(nightmare) {
     nightmare
       .use(evernoteNightmare.login(process.env.EVERNOTE_EMAIL, process.env.EVERNOTE_PASSWORD))
-      .use(evernoteNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'evernote-after-login.png')
+      .use(evernoteNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'evernote-after-authorize.png');
   },
   documents: generateDocuments(process.env.EVERNOTE_EXPECTED_DOCUMENTS)
 };
@@ -102,7 +118,9 @@ providers.salesforce = {
   workflow: function(nightmare) {
     nightmare
       .use(salesforceNightmare.login(process.env.SALESFORCE_EMAIL, process.env.SALESFORCE_PASSWORD))
-      .use(salesforceNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'salesforce-after-login.png')
+      .use(salesforceNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'salesforce-after-authorize.png');
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
 };
@@ -126,13 +144,15 @@ describe("Test providers", function() {
 
         var accessToken = null;
         it('should pass OAuth authentication', function(done) {
-          this.timeout(30000);
+          this.timeout(40000);
 
           new Nightmare()
             .viewport(800, 600)
             .use(managerNightmare.connect(providers[name].id))
+            .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + name + '-after-connect.png')
             .use(providers[name].workflow)
             .wait('.alert')
+            .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + name + '-after-workflow.png')
             .run(done);
         });
 
