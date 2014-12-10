@@ -3,10 +3,9 @@
 module.exports.login = function login(email, password) {
   return function(nightmare) {
     nightmare
-      .wait(".button primary")
-      .click(".button primary")
-      .wait('#use-password')
-      .click('#use-password')
+      .wait("a.button.primary")
+      .click("a.button.primary")
+      .wait()
       .wait('#user')
       .wait('#password')
       .wait('#login')
@@ -20,8 +19,8 @@ module.exports.login = function login(email, password) {
 module.exports.authorize = function authorize() {
   return function(nightmare) {
     nightmare
-      .wait('input[name=approve]')
-      .click('input[name=approve]')
+      .wait('.primary')
+      .click('.primary')
       .wait();
   };
 };
