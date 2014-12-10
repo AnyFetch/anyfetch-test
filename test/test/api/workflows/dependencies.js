@@ -4,6 +4,7 @@ require('should');
 
 var helpers = require('../../../helpers/api');
 var warmer = require('../../../helpers/warmer');
+var wait = require('../../../helpers/try-again').wait;
 
 var env = require('../../../../config');
 
@@ -92,7 +93,7 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly hydrated', function(done) {
       // Real test.
-      helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier + '/CV.docx'))
+      helpers.tokenApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier + '/CV.docx'))
         .expect(200)
         .expect(function(res) {
           res.body.related.should.containDeep([{
@@ -135,12 +136,12 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkEvents);
+      wait(checkEvents);
     });
 
     it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
-        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
+        helpers.tokenApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
             done(err);
@@ -153,7 +154,7 @@ describe("Test hydraters dependencies", function() {
           }
         });
       }
-      helpers.wait(checkHydration);
+      wait(checkHydration);
     });
   });
 
@@ -172,7 +173,7 @@ describe("Test hydraters dependencies", function() {
 
     it('should have been properly removed', function(done) {
       function checkHydration(tryAgain) {
-        helpers.basicApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
+        helpers.tokenApiRequest('get', '/documents/identifier/' + encodeURIComponent(payload.identifier) + '/raw')
         .end(function(err, res) {
           if(err) {
             throw err;
@@ -187,7 +188,7 @@ describe("Test hydraters dependencies", function() {
         });
       }
 
-      helpers.wait(checkHydration);
+      wait(checkHydration);
     });
   });
 
@@ -258,7 +259,7 @@ describe("Test hydraters dependencies", function() {
     });
 
     it('should have properly removed first document', function(done) {
-      helpers.basicApiRequest('get', '/documents/identifier/test-deduplicator-1').end(function(err, res) {
+      helpers.tokenApiRequest('get', '/documents/identifier/test-deduplicator-1').end(function(err, res) {
         if(err) {
           return done(err);
         }

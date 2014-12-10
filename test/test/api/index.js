@@ -3,6 +3,7 @@
 require('should');
 
 var helpers = require('../../helpers/api');
+var wait = require('../../helpers/try-again').wait;
 
 describe("Test common API usage", function() {
   before(helpers.reset);
@@ -84,7 +85,7 @@ describe("Test common API usage", function() {
     }
 
     // Wait for ES indexing
-    helpers.wait(checkExist);
+    wait(checkExist);
   });
 
   it("should be removed with a reset", function(done) {

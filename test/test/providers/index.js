@@ -7,13 +7,14 @@ var Nightmare = require('nightmare');
 
 var up = require('../../helpers/up');
 var api = require('../../helpers/api');
+var wait = require('../../helpers/try-again').wait;
 var env = require('../../../config');
 
 var managerNightmare = require('../../helpers/nightmare/manager');
 var googleNightmare = require('../../helpers/nightmare/google');
 var dropboxNightmare = require('../../helpers/nightmare/dropbox');
 var evernoteNightmare = require('../../helpers/nightmare/evernote');
-// var salesforceNightmare = require('../../helpers/nightmare/salesforce');
+var salesforceNightmare = require('../../helpers/nightmare/salesforce');
 
 
 describe.long = process.env.LONG ? describe : describe.skip;
@@ -29,13 +30,19 @@ function generateDocuments(expectedDocuments) {
   return expectedDocuments.split(',');
 }
 
+if(!process.env.CIRCLE_ARTIFACTS) {
+  process.env.CIRCLE_ARTIFACTS = '/tmp';
+}
+
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcontacts-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcontacts-after-authorize.png');
   },
   documents: generateDocuments(process.env.GCONTACTS_EXPECTED_DOCUMENTS)
 };
@@ -46,7 +53,9 @@ providers.gmail = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gmail-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gmail-after-authorize.png');
   },
   documents: generateDocuments(process.env.GMAIL_EXPECTED_DOCUMENTS)
 };
@@ -57,7 +66,9 @@ providers.gdrive = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gdrive-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gdrive-after-authorize.png');
   },
   documents: generateDocuments(process.env.GDRIVE_EXPECTED_DOCUMENTS)
 };
@@ -68,7 +79,9 @@ providers.gcalendar = {
   workflow: function(nightmare) {
     nightmare
       .use(googleNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(googleNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcalendar-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcalendar-after-authorize.png');
   },
   documents: generateDocuments(process.env.GCALENDAR_EXPECTED_DOCUMENTS)
 };
@@ -79,7 +92,9 @@ providers.dropbox = {
   workflow: function(nightmare) {
     nightmare
       .use(dropboxNightmare.login(process.env.GOOGLE_EMAIL, process.env.GOOGLE_PASSWORD))
-      .use(dropboxNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'dropbox-after-login.png')
+      .use(dropboxNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'dropbox-after-authorize.png');
   },
   documents: generateDocuments(process.env.DROPBOX_EXPECTED_DOCUMENTS)
 };
@@ -90,21 +105,25 @@ providers.evernote = {
   workflow: function(nightmare) {
     nightmare
       .use(evernoteNightmare.login(process.env.EVERNOTE_EMAIL, process.env.EVERNOTE_PASSWORD))
-      .use(evernoteNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'evernote-after-login.png')
+      .use(evernoteNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'evernote-after-authorize.png');
   },
   documents: generateDocuments(process.env.EVERNOTE_EXPECTED_DOCUMENTS)
 };
 
-/*providers.salesforce = {
+providers.salesforce = {
   id: '53047faac8318c2d65000100',
   skip: !(process.env.SALESFORCE_EMAIL && process.env.SALESFORCE_PASSWORD && process.env.SALESFORCE_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
     nightmare
       .use(salesforceNightmare.login(process.env.SALESFORCE_EMAIL, process.env.SALESFORCE_PASSWORD))
-      .use(salesforceNightmare.authorize());
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'salesforce-after-login.png')
+      .use(salesforceNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'salesforce-after-authorize.png');
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
-};*/
+};
 
 describe("Test providers", function() {
   var hosts = {};
@@ -125,13 +144,15 @@ describe("Test providers", function() {
 
         var accessToken = null;
         it('should pass OAuth authentication', function(done) {
-          this.timeout(30000);
+          this.timeout(40000);
 
           new Nightmare()
             .viewport(800, 600)
             .use(managerNightmare.connect(providers[name].id))
+            .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + name + '-after-connect.png')
             .use(providers[name].workflow)
             .wait('.alert')
+            .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + name + '-after-workflow.png')
             .run(done);
         });
 
@@ -170,25 +191,64 @@ describe("Test providers", function() {
             });
           }
 
-          api.wait(checkExist);
+          wait(checkExist);
         });
 
+        var documentIds = {};
+
         (providers[name].documents ? it : it.skip)('should have uploaded all documents', function(done) {
-          this.timeout(providers[name].documents.length * 15000 + 25000);
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
+          this.timeout(providers[name].documents.length * 10000 + 30000);
+
+          function checkExist(tryAgain) {
+            api.basicApiRequest('get', '/documents?provider=' + accessToken)
+              .end(function(err, res) {
+                if(err) {
+                  return tryAgain(err);
+                }
+
+                if(res.body.count < providers[name].documents.length) {
+                  return tryAgain(new Error('Bad count : ' + res.body.count));
+                }
+
+                res.body.data.forEach(function(doc) {
+                  documentIds[doc.identifier] = doc.id;
+                });
+
+                var identifiers = res.body.data.map(function(doc) {
+                  return doc.identifier;
+                });
+
+                providers[name].documents.forEach(function(identifier) {
+                  identifiers.should.containEql(decodeURIComponent(identifier));
+                });
+
+                done();
+              });
+          }
+
+          wait(checkExist);
+        });
+
+        (providers[name].documents ? it : it.skip)('should have hydrated all documents', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
+          this.timeout(providers[name].documents.length * 20000);
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
-              api.basicApiRequest('get', '/documents/identifier/' + identifier + '/raw')
-                .end(function(err, res) {
+              api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)] + '/raw')
+              .end(function(err, res) {
                   if(err) {
-                    return cb(err);
+                    return tryAgain(err);
                   }
 
-                  if(res.statusCode !== 200 && res.statusCode !== 404) {
-                    return cb(new Error('Bad status code : ' + res.statusCode));
-                  }
-
-                  if(res.statusCode === 404) {
+                  if(res.statusCode !== 200) {
                     return tryAgain(new Error("Bad status code for " + identifier + " (" + res.statusCode + ")"));
                   }
 
@@ -196,18 +256,22 @@ describe("Test providers", function() {
                     return tryAgain(new Error("Bad hydrating length for " + identifier + " : " + JSON.stringify(res.body.hydrating)));
                   }
 
-                  cb();
+                  cb(err);
                 });
             }
 
-            api.wait(checkExist);
+            wait(checkExist);
           }, done);
         });
 
         (providers[name].documents ? it : it.skip)('should have documents available for projections', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
           // Everything looks great! Let's just check projection is working too
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
-            api.basicApiRequest('get', '/documents/identifier/' + identifier)
+            api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)])
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
                   return cb(new Error("Unable to project " + identifier + ", got " + res.statusCode + ": " + res.body.toString()));
@@ -219,6 +283,10 @@ describe("Test providers", function() {
         });
 
         it('should list documents', function(done) {
+          if(!accessToken) {
+            return done(new Error("Can't list documents without accessToken of this provider"));
+          }
+
           // Documents should be available on ES
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
@@ -236,7 +304,7 @@ describe("Test providers", function() {
               });
           }
 
-          api.wait(checkExist);
+          wait(checkExist);
         });
 
         after(api.reset);

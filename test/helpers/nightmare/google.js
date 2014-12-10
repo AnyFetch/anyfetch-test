@@ -17,6 +17,7 @@ module.exports.authorize = function authorize() {
   return function(nightmare) {
     nightmare
       .wait('#submit_approve_access:enabled')
+      .wait(2000)
       .click('#submit_approve_access:enabled')
       .wait();
   };
