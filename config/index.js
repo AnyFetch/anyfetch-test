@@ -8,7 +8,10 @@ if(!process.env.CREDENTIALS && !process.env.TOKEN) {
   process.exit(1);
 }
 
-var env = process.env.API_ENV || "staging";
+if(!process.env.API_ENV) {
+  process.env.API_ENV = "staging";
+}
+var env = process.env.API_ENV;
 
 module.exports = require('./env/' + env + '.json');
 module.exports.env = env;

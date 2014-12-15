@@ -15,6 +15,7 @@ var googleNightmare = require('../../helpers/nightmare/google');
 var dropboxNightmare = require('../../helpers/nightmare/dropbox');
 var evernoteNightmare = require('../../helpers/nightmare/evernote');
 var salesforceNightmare = require('../../helpers/nightmare/salesforce');
+var trelloNightmare = require('../../helpers/nightmare/trello');
 
 
 describe.long = process.env.LONG ? describe : describe.skip;
@@ -123,6 +124,19 @@ providers.salesforce = {
       .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'salesforce-after-authorize.png');
   },
   documents: generateDocuments(process.env.SALESFORCE_EXPECTED_DOCUMENTS)
+};
+
+providers.trello = {
+  id: '53047faac8318c2d650001a1',
+  skip: !(process.env.TRELLO_EMAIL && process.env.TRELLO_PASSWORD && process.env.TRELLO_EXPECTED_DOCUMENTS),
+  workflow: function(nightmare) {
+    nightmare
+      .use(trelloNightmare.login(process.env.TRELLO_EMAIL, process.env.TRELLO_PASSWORD))
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'trello-after-login.png')
+      .use(trelloNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'trello-after-authorize.png');
+  },
+  documents: generateDocuments(process.env.TRELLO_EXPECTED_DOCUMENTS)
 };
 
 describe("Test providers", function() {
