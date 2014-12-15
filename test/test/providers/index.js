@@ -34,7 +34,7 @@ if(!process.env.CIRCLE_ARTIFACTS) {
   process.env.CIRCLE_ARTIFACTS = '/tmp';
 }
 
-providers.gcontacts = {
+/*providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
   workflow: function(nightmare) {
@@ -84,7 +84,7 @@ providers.gcalendar = {
       .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'gcalendar-after-authorize.png');
   },
   documents: generateDocuments(process.env.GCALENDAR_EXPECTED_DOCUMENTS)
-};
+};*/
 
 providers.dropbox = {
   id: '52bff114c8318c29e9000005',
