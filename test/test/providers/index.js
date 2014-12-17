@@ -156,6 +156,7 @@ describe("Test providers", function() {
       (providers[name].skip ? describe.skip : describe)(name, function() {
         before(api.getToken);
 
+        var hasPassedOAuthAuthentication = false;
         var accessToken = null;
         it('should pass OAuth authentication', function(done) {
           this.timeout(40000);
@@ -167,10 +168,17 @@ describe("Test providers", function() {
             .use(providers[name].workflow)
             .wait('.alert')
             .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + name + '-after-workflow.png')
-            .run(done);
+            .run(function(err) {
+              hasPassedOAuthAuthentication = true;
+              done(err);
+            });
         });
 
         it('should be registered on AnyFetch', function(done) {
+          if(!hasPassedOAuthAuthentication) {
+            return done(new Error("No OAuth authentication"));
+          }
+
           function checkExist(tryAgain) {
             async.waterfall([
               function getProviders(cb) {
