@@ -18,7 +18,7 @@ var checkErroredHydration = function(id, hydraterToWait, cb) {
           throw err;
         }
 
-        if(res.body.hydrater_errored === hydraterToWait) {
+        if(res.body.hydrater_errored && res.body.hydrater_errored.url === hydraterToWait) {
           // Return to original caller with document information
           if(cb) {
             cb(res.body);
@@ -66,7 +66,8 @@ describe("Test errored documents", function() {
 
     it('should have been properly errored', function(done) {
       // Real test.
-      hydratedDocument.should.have.property("hydrater_errored", env.hydraters.pdf + "/hydrate");
+      hydratedDocument.should.have.property("hydrater_errored");
+      hydratedDocument.hydrater_errored.should.have.property("url", env.hydraters.pdf + "/hydrate");
       hydratedDocument.should.have.property("hydration_error").and.containDeep("May not be a PDF file (continuing anyway)\nSyntax Error:");
       done();
     });
