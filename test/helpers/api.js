@@ -184,11 +184,13 @@ module.exports.waitForHydration = function waitForHydration(id, hydratersToWait,
         }
 
         if(res.body.hydrater_errored) {
-          return done(new Error("Got an hydration error with " + res.body.hydrater_errored + ": " + res.body.hydration_error));
+          return done(new Error("Got an hydration error with " + res.body.hydrater_errored.short_name + ": " + res.body.hydration_error));
         }
 
         var isAllHydrated = function(hydraterToWait) {
-          return res.body.hydrated_by.indexOf(hydraterToWait + "/hydrate") !== -1;
+          return res.body.hydrated_by.some(function(hydrater) {
+            return hydrater.url.indexOf(hydraterToWait) === 0;
+          });
         };
 
         if(hydratersToWait.every(isAllHydrated)) {
