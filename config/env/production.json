@@ -26,6 +26,7 @@
     "evernote": "https://evernote.anyfetch.com",
     "gcalendar": "https://gcalendar.anyfetch.com",
     "salesforce": "https://salesforce.anyfetch.com",
-    "trello": "https://trello.anyfetch.com"
+    "trello": "https://trello.anyfetch.com",
+    "outlook": "https://outlook.anyfetch.com"
   }
 }

@@ -144,8 +144,8 @@ describe("Test providers", function() {
   Object.keys(env.providers).forEach(function(provider) {
     provider = env.providers[provider];
     hosts[provider] = {
-      url: provider,
-      expected: 302,
+      url: provider + '/init/connect',
+      expected: 409,
     };
   });
 
