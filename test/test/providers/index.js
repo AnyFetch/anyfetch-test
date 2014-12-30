@@ -264,6 +264,10 @@ describe("Test providers", function() {
 
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
             function checkExist(tryAgain) {
+              if(!documentIds[decodeURIComponent(identifier)]) {
+                return cb(new Error("Can't retrieve id for " + decodeURIComponent(identifier)));
+              }
+
               api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)] + '/raw')
               .end(function(err, res) {
                   if(err) {
@@ -293,6 +297,10 @@ describe("Test providers", function() {
 
           // Everything looks great! Let's just check projection is working too
           async.eachLimit(providers[name].documents, 5, function(identifier, cb) {
+            if(!documentIds[decodeURIComponent(identifier)]) {
+              return cb(new Error("Can't retrieve id for " + decodeURIComponent(identifier)));
+            }
+
             api.basicApiRequest('get', '/documents/' + documentIds[decodeURIComponent(identifier)])
               .end(function(err, res) {
                 if(res.statusCode !== 200) {
