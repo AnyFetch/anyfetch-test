@@ -61,6 +61,10 @@ describe("Test hydraters dependencies", function() {
     });
 
     it('should have been properly hydrated', function(done) {
+      if(!hydratedDocument) {
+        return done(new Error("Document was not hydrated."));
+      }
+
       hydratedDocument.should.have.property('document_type').and.have.property('id', '5252ce4ce4cfcd16f55cfa3d');
       hydratedDocument.should.have.property('metadata');
       hydratedDocument.metadata.should.have.property('author', 'Frédéric RUAUDEL');

@@ -43,7 +43,7 @@ describe("Test errored documents", function() {
 
   describe("should have an error", function() {
     var payload = {
-      identifier: env.apiUrl + 'test-error-document-identifier',
+      identifier: env.apiUrl + '/test-error-document-identifier',
       metadatas: {
         path: '/test-errors-sample.pdf',
       },
