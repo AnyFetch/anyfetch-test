@@ -69,7 +69,7 @@ hydraters[env.hydraters.pdfocr] = {
     document: {
       document_type: 'document',
       metadata: {
-        path: 'pdfocranyfetch.com.test.pdf',
+        path: 'pdfocr.anyfetch.com.test.pdf',
         mime_type: 'application/pdf'
       },
       data: {},
