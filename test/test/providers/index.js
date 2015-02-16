@@ -184,8 +184,9 @@ describe("Test providers", function() {
               function getProviders(cb) {
                 api
                   .basicApiRequest('get', '/providers')
+                  .expect(200)
                   .end(function(err, res) {
-                    cb(err || (res.statusCode !== 200 ? new Error("Bad status code : " + res.statusCode) : null), res ? res.body : []);
+                    cb(err, res ? res.body : []);
                   });
               },
               function checkProviders(accountProviders, cb) {
@@ -227,13 +228,10 @@ describe("Test providers", function() {
 
           function checkExist(tryAgain) {
             api.basicApiRequest('get', '/documents?provider=' + accessToken)
+              .expect(200)
               .end(function(err, res) {
                 if(err) {
                   return tryAgain(err);
-                }
-
-                if(res.statusCode !== 200) {
-                  return tryAgain(new Error("Bad status code : " + res.statusCode));
                 }
 
                 if(res.body.count < providers[name].documents.length) {
