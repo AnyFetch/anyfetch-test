@@ -78,10 +78,7 @@ hydraters[env.hydraters.pdfocr] = {
   },
   expected: function(data) {
     var expected = require('./samples/pdfocr.anyfetch.com.expected.json');
-    for(var key in expected) {
-      data.should.have.property(key);
-      data[key].should.eql(expected[key]);
-    }
+    data.should.eql(expected);
   }
 };
 
