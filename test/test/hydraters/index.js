@@ -76,10 +76,7 @@ hydraters[env.hydraters.pdfocr] = {
       identifier: 'pdfocr-test'
     }
   },
-  expected: function(data) {
-    var expected = require('./samples/pdfocr.anyfetch.com.expected.json');
-    data.should.eql(expected);
-  }
+  expected: generateCompareFunction('./samples/pdfocr.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.office] = {
