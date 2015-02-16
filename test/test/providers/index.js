@@ -185,7 +185,7 @@ describe("Test providers", function() {
                 api
                   .basicApiRequest('get', '/providers')
                   .end(function(err, res) {
-                    cb(err, res ? res.body : []);
+                    cb(err || (res.statusCode !== 200 ? new Error("Bad status code : " + res.statusCode) : null), res ? res.body : []);
                   });
               },
               function checkProviders(accountProviders, cb) {
@@ -230,6 +230,10 @@ describe("Test providers", function() {
               .end(function(err, res) {
                 if(err) {
                   return tryAgain(err);
+                }
+
+                if(res.statusCode !== 200) {
+                  return tryAgain(new Error("Bad status code : " + res.statusCode));
                 }
 
                 if(res.body.count < providers[name].documents.length) {
