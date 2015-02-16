@@ -8,6 +8,7 @@
     "image": "https://image-staging.anyfetch.com",
     "office": "https://office-staging.anyfetch.com",
     "pdf": "https://pdf-staging.anyfetch.com",
+    "pdfocr": "https://pdfocr-staging.anyfetch.com",
     "ocr": "https://ocr-staging.anyfetch.com",
     "iptc": "https://iptc-staging.anyfetch.com",
     "markdown": "https://markdown-staging.anyfetch.com",
