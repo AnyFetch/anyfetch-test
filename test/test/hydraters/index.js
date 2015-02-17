@@ -63,26 +63,20 @@ hydraters[env.hydraters.pdf] = {
 
 hydraters[env.hydraters.pdfocr] = {
   payload: {
-    file_path: "https://raw.githubusercontent.com/AnyFetch/pdfocr-hydrater.anyfetch.com/19a501728e40693362cfe0327ff0d656f2ff0624/test/samples/test-11img.pdf",
+    file_path: "https://raw.githubusercontent.com/AnyFetch/anyfetch-test/0eed4b59315d83c99793d54e8c7ce8391161ed51/test/test/hydraters/samples/pdfocr.anyfetch.com.test.pdf",
     callback: "http://echo.anyfetch.com/" + uuid.v4() + '?_echo_reply=204',
     priority: 100,
     document: {
       document_type: 'document',
       metadata: {
-        path: 'pdfocranyfetch.com.test.pdf',
+        path: 'pdfocr.anyfetch.com.test.pdf',
         mime_type: 'application/pdf'
       },
       data: {},
       identifier: 'pdfocr-test'
     }
   },
-  expected: function(data) {
-    var expected = require('./samples/pdfocr.anyfetch.com.expected.json');
-    for(var key in expected) {
-      data.should.have.property(key);
-      data[key].should.eql(expected[key]);
-    }
-  }
+  expected: generateCompareFunction('./samples/pdfocr.anyfetch.com.expected.json')
 };
 
 hydraters[env.hydraters.office] = {
