@@ -39,14 +39,14 @@
   ],
   "dependencies": {
     "async": "0.9.x",
-    "dotenv": "^0.4.0",
-    "nightmare": "1.6.1",
+    "dotenv": "^0.5.1",
+    "nightmare": "1.7.0",
     "node-uuid": "^1.4.2",
     "rarity": "~2.1.1"
   },
   "devDependencies": {
-    "mocha": "2.0.x",
-    "should": "4.x.x",
+    "mocha": "2.1.x",
+    "should": "5.x.x",
     "supertest": "0.15.x"
   },
   "licence": "MIT",
