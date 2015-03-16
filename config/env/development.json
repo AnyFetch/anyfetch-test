@@ -28,6 +28,7 @@
     "gcalendar": "https://gcalendar-development.anyfetch.com",
     "salesforce": "https://salesforce-development.anyfetch.com",
     "trello": "https://trello-development.anyfetch.com",
-    "outlook": "https://outlook-development.anyfetch.com"
+    "outlook": "https://outlook-development.anyfetch.com",
+    "linkedin": "https://linkedin-development.anyfetch.com"
   }
 }

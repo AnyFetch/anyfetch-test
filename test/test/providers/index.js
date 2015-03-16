@@ -35,6 +35,19 @@ if(!process.env.CIRCLE_ARTIFACTS) {
   process.env.CIRCLE_ARTIFACTS = '/tmp';
 }
 
+providers.linkedin = {
+  id: '54870a64b453ff0b0088b236',
+  skip: !(process.env.LINKEDIN_EMAIL && process.env.LINKEDIN_PASSWORD && process.env.LINKEDIN_EXPECTED_DOCUMENTS),
+  workflow: function(nightmare) {
+    nightmare
+      .use(googleNightmare.login(process.env.LINKEDIN_EMAIL, process.env.LINKEDIN_PASSWORD))
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'linkedin-after-login.png')
+      .use(googleNightmare.authorize())
+      .screenshot(process.env.CIRCLE_ARTIFACTS + '/' + process.env.API_ENV + '-' + 'linkedin-after-authorize.png');
+  },
+  documents: generateDocuments(process.env.LINKEDIN_EXPECTED_DOCUMENTS)
+};
+
 providers.gcontacts = {
   id: '52bff1eec8318cb228000001',
   skip: !(process.env.GOOGLE_EMAIL && process.env.GOOGLE_PASSWORD && process.env.GCONTACTS_EXPECTED_DOCUMENTS),
